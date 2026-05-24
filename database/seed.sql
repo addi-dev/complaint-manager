@@ -18,15 +18,37 @@ INSERT INTO utilisateurs (role_id, nom, prenom, email, mot_de_passe, actif) VALU
 -- ------------------------------------------------------------
 -- clients
 -- ------------------------------------------------------------
-INSERT INTO clients (nom, prenom, email, telephone, adresse) VALUES
-  ('Hajji',      'Mohamed',  'mohamed.hajji@gmail.com',    '0661234567', '12 Rue Ibn Batouta, Casablanca'),
-  ('Ouali',      'Amina',    'amina.ouali@hotmail.com',    '0672345678', '34 Avenue Hassan II, Rabat'),
-  ('Berrada',    'Khalid',   'khalid.berrada@gmail.com',   '0683456789', '5 Rue de Fès, Marrakech'),
-  ('Lahrichi',   'Houda',    'houda.lahrichi@yahoo.fr',    '0694567890', '78 Boulevard Mohammed V, Tanger'),
-  ('Ennaji',     'Rachid',   'rachid.ennaji@gmail.com',    '0651234567', '22 Rue Al Massira, Agadir'),
-  ('Ziani',      'Latifa',   'latifa.ziani@outlook.com',   '0662345678', '9 Rue Oqba, Fès'),
-  ('Tahiri',     'Saad',     'saad.tahiri@gmail.com',      '0673456789', '15 Avenue de la Résistance, Meknès'),
-  ('Benkiran',   'Souad',    'souad.benkiran@gmail.com',   '0684567890', '3 Rue des Orangers, Oujda'),
-  ('El Fassi',   'Hassan',   'hassan.elfassi@hotmail.com', '0695678901', '101 Boulevard Zerktouni, Casablanca'),
-  ('Mouhib',     'Rim',      'rim.mouhib@gmail.com',       '0656789012', '47 Rue Tariq Ibn Ziad, Rabat');
- 
+INSERT INTO utilisateurs (role_id, nom, prenom, email, mot_de_passe, actif)
+VALUES
+(1, 'El Amrani', 'Youssef', 'youssef.elamrani1@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+(2, 'Benali', 'Salma', 'salma.benali2@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+(3, 'Alaoui', 'Hamza', 'hamza.alaoui3@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+(1, 'Tazi', 'Imane', 'imane.tazi4@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+(2, 'Fassi', 'Omar', 'omar.fassi5@example.com', '$2y$10$abcdefghijklmnopqrstuv', FALSE),
+(3, 'Idrissi', 'Sara', 'sara.idrissi6@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+(1, 'Bennani', 'Karim', 'karim.bennani7@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+(2, 'Cherkaoui', 'Nadia', 'nadia.cherkaoui8@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+(3, 'Lahlou', 'Mehdi', 'mehdi.lahlou9@example.com', '$2y$10$abcdefghijklmnopqrstuv', FALSE),
+(1, 'Kettani', 'Aya', 'aya.kettani10@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+
+(2, 'Zniber', 'Rachid', 'rachid.zniber11@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+(3, 'Skalli', 'Meryem', 'meryem.skalli12@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+(1, 'Berrada', 'Anas', 'anas.berrada13@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+(2, 'Filali', 'Lina', 'lina.filali14@example.com', '$2y$10$abcdefghijklmnopqrstuv', FALSE),
+(3, 'Mansouri', 'Zakaria', 'zakaria.mansouri15@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+(1, 'Naciri', 'Hajar', 'hajar.naciri16@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+(2, 'Boukili', 'Yassine', 'yassine.boukili17@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+(3, 'Ouazzani', 'Chaimae', 'chaimae.ouazzani18@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+(1, 'Rami', 'Soufiane', 'soufiane.rami19@example.com', '$2y$10$abcdefghijklmnopqrstuv', FALSE),
+(2, 'Tahiri', 'Asmae', 'asmae.tahiri20@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+
+(3, 'Boussaid', 'Walid', 'walid.boussaid21@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+(1, 'Sefrioui', 'Khadija', 'khadija.sefrioui22@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+(2, 'Ait Said', 'Nabil', 'nabil.aitsaid23@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+(3, 'Mikou', 'Samira', 'samira.mikou24@example.com', '$2y$10$abcdefghijklmnopqrstuv', FALSE),
+(1, 'Dahbi', 'Reda', 'reda.dahbi25@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+(2, 'Jabri', 'Ilham', 'ilham.jabri26@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+(3, 'Bakkali', 'Adil', 'adil.bakkali27@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+(1, 'Amine', 'Siham', 'siham.amine28@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE),
+(2, 'Khattabi', 'Tarik', 'tarik.khattabi29@example.com', '$2y$10$abcdefghijklmnopqrstuv', FALSE),
+(3, 'Mezzour', 'Houda', 'houda.mezzour30@example.com', '$2y$10$abcdefghijklmnopqrstuv', TRUE);

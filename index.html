@@ -1,0 +1,2103 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ReclamPro – Espace Client</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --brand: #3b6ef8;
+        --brand-dark: #2a56d6;
+        --brand-light: #eef2ff;
+        --sidebar-bg: #ffffff;
+        --main-bg: #f4f6fb;
+        --card-bg: #ffffff;
+        --text-primary: #1a1d2e;
+        --text-muted: #8c93a8;
+        --text-label: #5b6278;
+        --border: #e8eaf2;
+        --active-green: #16a34a;
+        --inactive-red: #dc2626;
+        --leave-amber: #d97706;
+        --row-hover: #f8f9ff;
+        --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.06);
+        --shadow-md: 0 4px 20px rgba(59, 110, 248, 0.12);
+        --radius: 12px;
+        --p-high: #dc2626;
+        --p-medium: #d97706;
+        --p-low: #16a34a;
+      }
+
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background: var(--main-bg);
+        color: var(--text-primary);
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* SIDEBAR */
+      .sidebar {
+        width: 240px;
+        min-height: 100vh;
+        background: var(--sidebar-bg);
+        border-right: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 10;
+        overflow-y: auto;
+      }
+      .sidebar-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 22px 20px 18px;
+        font-weight: 800;
+        font-size: 18px;
+        color: var(--brand);
+        border-bottom: 1px solid var(--border);
+        flex-shrink: 0;
+      }
+      .logo-icon {
+        width: 34px;
+        height: 34px;
+        background: var(--brand);
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 16px;
+      }
+      .sidebar-section-label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+        padding: 18px 20px 6px;
+        text-transform: uppercase;
+      }
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 16px;
+        margin: 2px 10px;
+        border-radius: 9px;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-label);
+        cursor: pointer;
+        position: relative;
+        transition:
+          background 0.15s,
+          color 0.15s;
+        text-decoration: none;
+      }
+      .nav-item:hover {
+        background: var(--brand-light);
+        color: var(--brand);
+      }
+      .nav-item.active {
+        background: var(--brand);
+        color: #fff;
+        font-weight: 600;
+      }
+      .nav-item svg {
+        width: 18px;
+        height: 18px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+        flex-shrink: 0;
+      }
+      .badge-notif {
+        margin-left: auto;
+        background: #ef4444;
+        color: #fff;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 1px 6px;
+        border-radius: 20px;
+        min-width: 18px;
+        text-align: center;
+      }
+      .sidebar-promo {
+        margin: auto 14px 18px;
+        background: linear-gradient(135deg, #3b6ef8 0%, #6c63ff 100%);
+        border-radius: var(--radius);
+        padding: 18px;
+        color: #fff;
+        flex-shrink: 0;
+      }
+      .sidebar-promo h4 {
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .sidebar-promo p {
+        font-size: 12px;
+        opacity: 0.85;
+        line-height: 1.5;
+        margin-bottom: 12px;
+      }
+      .promo-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 7px 14px;
+        border-radius: 7px;
+        cursor: pointer;
+        width: 100%;
+        transition: background 0.15s;
+      }
+      .promo-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      /* MAIN */
+      .main {
+        margin-left: 240px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* TOPBAR */
+      .topbar {
+        background: #fff;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 0 28px;
+        height: 64px;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+      }
+      .search-wrap {
+        flex: 1;
+        max-width: 440px;
+        position: relative;
+      }
+      .search-wrap svg {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 16px;
+        height: 16px;
+        stroke: var(--text-muted);
+        fill: none;
+        stroke-width: 2;
+      }
+      .search-wrap input {
+        width: 100%;
+        background: var(--main-bg);
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        padding: 9px 12px 9px 36px;
+        font-size: 13.5px;
+        font-family: inherit;
+        color: var(--text-primary);
+        outline: none;
+        transition: border-color 0.15s;
+      }
+      .search-wrap input:focus {
+        border-color: var(--brand);
+      }
+      .topbar-actions {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .icon-btn {
+        width: 36px;
+        height: 36px;
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: #fff;
+        position: relative;
+        transition: background 0.15s;
+      }
+      .icon-btn:hover {
+        background: var(--main-bg);
+      }
+      .icon-btn svg {
+        width: 18px;
+        height: 18px;
+        stroke: var(--text-label);
+        fill: none;
+        stroke-width: 2;
+      }
+      .notif-dot {
+        width: 7px;
+        height: 7px;
+        background: #ef4444;
+        border-radius: 50%;
+        border: 1.5px solid #fff;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+      }
+      .user-chip {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 5px 10px 5px 5px;
+        border: 1px solid var(--border);
+        border-radius: 11px;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .user-chip:hover {
+        background: var(--main-bg);
+      }
+      .avatar {
+        width: 30px;
+        height: 30px;
+        background: var(--brand);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 700;
+      }
+      .user-info .name {
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1.3;
+      }
+      .user-info .role {
+        font-size: 11px;
+        color: var(--text-muted);
+      }
+
+      /* CONTENT */
+      .content {
+        padding: 30px 28px;
+        flex: 1;
+      }
+      .page-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 24px;
+      }
+      .page-header h1 {
+        font-size: 24px;
+        font-weight: 800;
+        letter-spacing: -0.3px;
+      }
+      .page-header .sub {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-top: 3px;
+      }
+      .new-claim-btn {
+        background: var(--brand);
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-size: 13.5px;
+        font-weight: 700;
+        font-family: inherit;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        box-shadow: var(--shadow-md);
+        transition:
+          background 0.15s,
+          transform 0.1s;
+      }
+      .new-claim-btn:hover {
+        background: var(--brand-dark);
+        transform: translateY(-1px);
+      }
+      .new-claim-btn:active {
+        transform: translateY(0);
+      }
+
+      /* STAT CARDS */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+      .stat-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 18px 20px;
+        box-shadow: var(--shadow-sm);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .stat-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .stat-icon svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+      }
+      .stat-icon.blue {
+        background: #eef2ff;
+        color: var(--brand);
+      }
+      .stat-icon.green {
+        background: #dcfce7;
+        color: var(--active-green);
+      }
+      .stat-icon.amber {
+        background: #fef3c7;
+        color: var(--leave-amber);
+      }
+      .stat-icon.red {
+        background: #fee2e2;
+        color: var(--inactive-red);
+      }
+      .stat-val {
+        font-size: 26px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        line-height: 1;
+      }
+      .stat-lbl {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 3px;
+        font-weight: 500;
+      }
+
+      /* CARD */
+      .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+      }
+
+      /* TABLE TOOLBAR */
+      .table-toolbar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--border);
+        flex-wrap: wrap;
+      }
+      .tb-search {
+        position: relative;
+        flex: 1;
+        min-width: 180px;
+        max-width: 280px;
+      }
+      .tb-search svg {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 15px;
+        height: 15px;
+        stroke: var(--text-muted);
+        fill: none;
+        stroke-width: 2;
+      }
+      .tb-search input {
+        width: 100%;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 8px 10px 8px 30px;
+        font-size: 13px;
+        font-family: inherit;
+        outline: none;
+        color: var(--text-primary);
+        transition: border-color 0.15s;
+        background: var(--main-bg);
+      }
+      .tb-search input:focus {
+        border-color: var(--brand);
+      }
+      .filter-select {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 8px 28px 8px 12px;
+        font-size: 13px;
+        font-family: inherit;
+        color: var(--text-primary);
+        background: var(--main-bg);
+        cursor: pointer;
+        outline: none;
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238c93a8' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 8px center;
+        transition: border-color 0.15s;
+      }
+      .filter-select:focus {
+        border-color: var(--brand);
+      }
+
+      /* TABLE */
+      .table-wrap {
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 860px;
+      }
+      thead tr {
+        border-bottom: 1px solid var(--border);
+      }
+      thead th {
+        padding: 12px 16px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.07em;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        text-align: left;
+        white-space: nowrap;
+        background: #fafbff;
+      }
+      tbody tr {
+        border-bottom: 1px solid var(--border);
+        transition: background 0.12s;
+        animation: fadeIn 0.25s ease both;
+      }
+      tbody tr:last-child {
+        border-bottom: none;
+      }
+      tbody tr:hover {
+        background: var(--row-hover);
+      }
+      tbody td {
+        padding: 13px 16px;
+        font-size: 13.5px;
+        vertical-align: middle;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(4px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* BADGES */
+      .ref-badge {
+        font-size: 12px;
+        font-weight: 700;
+        font-family: "Courier New", monospace;
+        color: var(--brand);
+        background: var(--brand-light);
+        padding: 3px 8px;
+        border-radius: 6px;
+      }
+      .priority-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: 20px;
+      }
+      .p-high {
+        background: #fee2e2;
+        color: var(--p-high);
+      }
+      .p-medium {
+        background: #fef3c7;
+        color: var(--p-medium);
+      }
+      .p-low {
+        background: #dcfce7;
+        color: var(--p-low);
+      }
+      .priority-badge::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .p-high::before {
+        background: var(--p-high);
+      }
+      .p-medium::before {
+        background: var(--p-medium);
+      }
+      .p-low::before {
+        background: var(--p-low);
+      }
+
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 4px 11px;
+        border-radius: 20px;
+        white-space: nowrap;
+      }
+      .s-nouvelle {
+        background: #eff6ff;
+        color: #1d4ed8;
+      }
+      .s-attente {
+        background: #fdf2f8;
+        color: #be185d;
+      }
+      .s-affectee {
+        background: #f0fdf4;
+        color: #15803d;
+      }
+      .s-en-cours {
+        background: #fef9c3;
+        color: #a16207;
+      }
+      .s-info {
+        background: #fff7ed;
+        color: #c2410c;
+      }
+      .s-resolue {
+        background: #dcfce7;
+        color: var(--active-green);
+      }
+      .s-cloturee {
+        background: #f1f5f9;
+        color: #475569;
+      }
+      .s-rejetee {
+        background: #fee2e2;
+        color: var(--inactive-red);
+      }
+
+      .cat-badge {
+        display: inline-flex;
+        align-items: center;
+        background: #f4f6fb;
+        color: var(--text-label);
+        font-size: 12px;
+        font-weight: 600;
+        padding: 3px 10px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+      }
+      .dob {
+        color: var(--text-label);
+        font-size: 13px;
+      }
+
+      /* TABLE FOOTER */
+      .table-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 20px;
+        border-top: 1px solid var(--border);
+        background: #fafbff;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .tf-info {
+        font-size: 13px;
+        color: var(--text-muted);
+      }
+      .pagination {
+        display: flex;
+        gap: 4px;
+      }
+      .pg-btn {
+        width: 30px;
+        height: 30px;
+        border: 1px solid var(--border);
+        background: #fff;
+        border-radius: 7px;
+        font-size: 13px;
+        font-weight: 600;
+        font-family: inherit;
+        color: var(--text-label);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.15s;
+      }
+      .pg-btn:hover {
+        border-color: var(--brand);
+        color: var(--brand);
+        background: var(--brand-light);
+      }
+      .pg-btn.active {
+        background: var(--brand);
+        border-color: var(--brand);
+        color: #fff;
+      }
+
+      /* MODAL */
+      .overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.35);
+        backdrop-filter: blur(3px);
+        z-index: 50;
+        align-items: center;
+        justify-content: center;
+      }
+      .overlay.open {
+        display: flex;
+      }
+      .modal {
+        background: #fff;
+        border-radius: 16px;
+        padding: 28px;
+        width: 100%;
+        max-width: 560px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        animation: slideUp 0.2s ease;
+        margin: 16px;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      .modal-lg {
+        max-width: 720px;
+      }
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 22px;
+      }
+      .modal-header h2 {
+        font-size: 18px;
+        font-weight: 800;
+      }
+      .close-btn {
+        width: 32px;
+        height: 32px;
+        border: 1px solid var(--border);
+        background: var(--main-bg);
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-muted);
+        transition: background 0.15s;
+      }
+      .close-btn:hover {
+        background: #fee2e2;
+        color: #ef4444;
+        border-color: #fca5a5;
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .form-group.full {
+        grid-column: 1/-1;
+      }
+      .form-group label {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--text-label);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 9px 12px;
+        font-size: 13.5px;
+        font-family: inherit;
+        color: var(--text-primary);
+        outline: none;
+        transition: border-color 0.15s;
+        background: var(--main-bg);
+      }
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        border-color: var(--brand);
+        background: #fff;
+      }
+      .form-group textarea {
+        resize: vertical;
+        min-height: 90px;
+      }
+      .modal-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        margin-top: 22px;
+      }
+      .btn-cancel {
+        padding: 10px 20px;
+        border-radius: 9px;
+        border: 1px solid var(--border);
+        background: #fff;
+        font-size: 13.5px;
+        font-weight: 600;
+        font-family: inherit;
+        color: var(--text-label);
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .btn-cancel:hover {
+        background: var(--main-bg);
+      }
+      .btn-submit {
+        padding: 10px 22px;
+        border-radius: 9px;
+        border: none;
+        background: var(--brand);
+        font-size: 13.5px;
+        font-weight: 700;
+        font-family: inherit;
+        color: #fff;
+        cursor: pointer;
+        box-shadow: var(--shadow-md);
+        transition: background 0.15s;
+      }
+      .btn-submit:hover {
+        background: var(--brand-dark);
+      }
+
+      /* DETAIL MODAL */
+      .detail-section {
+        margin-bottom: 20px;
+      }
+      .detail-section-title {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.07em;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid var(--border);
+      }
+      .detail-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 7px 0;
+        border-bottom: 1px solid #f4f6fb;
+      }
+      .detail-row:last-child {
+        border-bottom: none;
+      }
+      .detail-label {
+        font-size: 12.5px;
+        color: var(--text-muted);
+        font-weight: 500;
+      }
+      .detail-val {
+        font-size: 13px;
+        font-weight: 600;
+        text-align: right;
+        max-width: 60%;
+      }
+
+      /* TIMELINE */
+      .timeline {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .tl-item {
+        display: flex;
+        gap: 12px;
+        position: relative;
+        padding-bottom: 16px;
+      }
+      .tl-item:last-child {
+        padding-bottom: 0;
+      }
+      .tl-dot-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex-shrink: 0;
+      }
+      .tl-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--brand);
+        border: 2px solid #fff;
+        outline: 2px solid var(--brand);
+        margin-top: 3px;
+      }
+      .tl-dot.muted {
+        background: var(--text-muted);
+        outline-color: var(--text-muted);
+      }
+      .tl-line {
+        flex: 1;
+        width: 2px;
+        background: var(--border);
+        margin-top: 2px;
+      }
+      .tl-content {
+        flex: 1;
+      }
+      .tl-action {
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 2px;
+      }
+      .tl-time {
+        font-size: 11.5px;
+        color: var(--text-muted);
+      }
+
+      /* COMMENTS */
+      .comment-thread {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 14px;
+        max-height: 220px;
+        overflow-y: auto;
+      }
+      .comment-item {
+        display: flex;
+        gap: 10px;
+      }
+      .cmt-avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 7px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: 700;
+        color: #fff;
+        flex-shrink: 0;
+      }
+      .cmt-body {
+        flex: 1;
+        background: var(--main-bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 8px 12px;
+      }
+      .cmt-meta {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 3px;
+      }
+      .cmt-author {
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .cmt-time {
+        font-size: 11px;
+        color: var(--text-muted);
+      }
+      .cmt-text {
+        font-size: 13px;
+        line-height: 1.5;
+        color: var(--text-label);
+      }
+      .cmt-internal {
+        border-left: 3px solid var(--leave-amber);
+      }
+      .cmt-add {
+        display: flex;
+        gap: 8px;
+        align-items: flex-end;
+      }
+      .cmt-add textarea {
+        flex: 1;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 9px 12px;
+        font-size: 13px;
+        font-family: inherit;
+        outline: none;
+        resize: none;
+        height: 60px;
+        background: var(--main-bg);
+        transition: border-color 0.15s;
+      }
+      .cmt-add textarea:focus {
+        border-color: var(--brand);
+        background: #fff;
+      }
+
+      /* ATTACHMENT ZONE */
+      .attach-zone {
+        border: 2px dashed var(--border);
+        border-radius: 10px;
+        padding: 18px;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        color: var(--text-muted);
+        font-size: 13px;
+      }
+      .attach-zone:hover {
+        border-color: var(--brand);
+        background: var(--brand-light);
+        color: var(--brand);
+      }
+      .attach-zone svg {
+        width: 24px;
+        height: 24px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+        margin: 0 auto 6px;
+        display: block;
+      }
+
+      /* TOAST */
+      .toast {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        background: #1a1d2e;
+        color: #fff;
+        padding: 12px 18px;
+        border-radius: 10px;
+        font-size: 13.5px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        transform: translateY(60px);
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 999;
+      }
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      /* STEP INDICATOR */
+      .step-wrap {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        margin-bottom: 24px;
+      }
+      .step {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-muted);
+      }
+      .step.done {
+        color: var(--active-green);
+      }
+      .step.active {
+        color: var(--brand);
+      }
+      .step-num {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 2px solid currentColor;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        flex-shrink: 0;
+      }
+      .step.done .step-num {
+        background: var(--active-green);
+        border-color: var(--active-green);
+        color: #fff;
+      }
+      .step.active .step-num {
+        background: var(--brand);
+        border-color: var(--brand);
+        color: #fff;
+      }
+      .step-line {
+        flex: 1;
+        height: 2px;
+        background: var(--border);
+        margin: 0 8px;
+        min-width: 24px;
+      }
+      .step-line.done {
+        background: var(--active-green);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-icon">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="white"
+            stroke-width="2.5"
+          >
+            <path
+              d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+            />
+          </svg>
+        </div>
+        ReclamPro
+      </div>
+
+      <div class="sidebar-section-label">Menu</div>
+
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 24 24">
+          <rect x="3" y="3" width="7" height="7" rx="1" />
+          <rect x="14" y="3" width="7" height="7" rx="1" />
+          <rect x="3" y="14" width="7" height="7" rx="1" />
+          <rect x="14" y="14" width="7" height="7" rx="1" />
+        </svg>
+        Tableau de bord
+      </a>
+
+      <a class="nav-item active" href="#">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+          />
+          <polyline points="14 2 14 8 20 8" />
+        </svg>
+        Mes réclamations
+      </a>
+
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+          />
+        </svg>
+        Mes échanges
+        <span class="badge-notif" id="sidebarMsgBadge">2</span>
+      </a>
+
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 24 24">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+          <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+        </svg>
+        Notifications
+        <span class="badge-notif" id="sidebarNotifBadge">3</span>
+      </a>
+
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 24 24">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+        Mon profil
+      </a>
+
+      <div class="sidebar-section-label">Compte</div>
+
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 24 24">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+        Déconnexion
+      </a>
+
+      <div class="sidebar-promo">
+        <h4>Suivi en temps réel</h4>
+        <p>
+          Consultez l'avancement de vos dossiers à tout moment, depuis n'importe
+          quel appareil.
+        </p>
+        <button class="promo-btn">En savoir plus</button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+      <header class="topbar">
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          <input
+            type="text"
+            placeholder="Rechercher une réclamation…"
+            oninput="filterTable()"
+            id="topSearch"
+          />
+        </div>
+        <div class="topbar-actions">
+          <div
+            class="icon-btn"
+            onclick="showToast('📅 Calendrier — fonctionnalité à venir')"
+          >
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="4" width="18" height="18" rx="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+          </div>
+          <div class="icon-btn" onclick="openNotifModal()">
+            <svg viewBox="0 0 24 24">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+            <span class="notif-dot" id="notifDot"></span>
+          </div>
+          <div class="user-chip">
+            <div class="avatar">KA</div>
+            <div class="user-info">
+              <div class="name">Karim Alaoui</div>
+              <div class="role">Client</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="content">
+        <!-- HEADER -->
+        <div class="page-header">
+          <div>
+            <h1>Mes Réclamations</h1>
+            <div class="sub" id="claimCount">6 réclamations déposées</div>
+          </div>
+          <button class="new-claim-btn" onclick="openNewModal()">
+            <svg
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Nouvelle réclamation
+          </button>
+        </div>
+
+        <!-- STAT CARDS -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon blue">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                />
+                <polyline points="14 2 14 8 20 8" />
+              </svg>
+            </div>
+            <div>
+              <div class="stat-val" id="statTotal">6</div>
+              <div class="stat-lbl">Total soumises</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon amber">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </div>
+            <div>
+              <div class="stat-val" id="statPending">3</div>
+              <div class="stat-lbl">En cours de traitement</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">
+              <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
+            <div>
+              <div class="stat-val" id="statResolved">2</div>
+              <div class="stat-lbl">Résolues</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon red">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+            </div>
+            <div>
+              <div class="stat-val" id="statInfo">1</div>
+              <div class="stat-lbl">En attente d'infos</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABLE CARD -->
+        <div class="card">
+          <div class="table-toolbar">
+            <div class="tb-search">
+              <svg viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="Référence, objet…"
+                oninput="filterTable()"
+              />
+            </div>
+            <select
+              class="filter-select"
+              id="statusFilter"
+              onchange="filterTable()"
+            >
+              <option value="">Tous les statuts</option>
+              <option value="Nouvelle">Nouvelle</option>
+              <option value="En attente d'affectation">
+                En attente d'affectation
+              </option>
+              <option value="Affectée">Affectée</option>
+              <option value="En cours de traitement">
+                En cours de traitement
+              </option>
+              <option value="En attente d'informations">
+                En attente d'informations
+              </option>
+              <option value="Résolue">Résolue</option>
+              <option value="Clôturée">Clôturée</option>
+              <option value="Rejetée">Rejetée</option>
+            </select>
+            <select
+              class="filter-select"
+              id="priorityFilter"
+              onchange="filterTable()"
+            >
+              <option value="">Toutes les priorités</option>
+              <option value="Haute">Haute</option>
+              <option value="Moyenne">Moyenne</option>
+              <option value="Faible">Faible</option>
+            </select>
+            <select class="filter-select" id="sortBy" onchange="sortTable()">
+              <option value="newest">Plus récentes</option>
+              <option value="oldest">Plus anciennes</option>
+              <option value="priority_h">Priorité (haute → faible)</option>
+              <option value="priority_l">Priorité (faible → haute)</option>
+            </select>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Référence</th>
+                  <th>Objet</th>
+                  <th>Catégorie</th>
+                  <th>Priorité</th>
+                  <th>Statut</th>
+                  <th>Date dépôt</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+
+          <div class="table-footer">
+            <div class="tf-info" id="tfInfo"></div>
+            <div class="pagination" id="pagination"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOUVELLE RÉCLAMATION MODAL -->
+    <div
+      class="overlay"
+      id="newOverlay"
+      onclick="if (event.target === this) closeNewModal();"
+    >
+      <div class="modal">
+        <div class="modal-header">
+          <h2>Déposer une réclamation</h2>
+          <button type="button" class="close-btn" onclick="closeNewModal()">
+            ✕
+          </button>
+        </div>
+
+        <!-- Step indicator -->
+        <div class="step-wrap" id="stepWrap">
+          <div class="step active" id="step1el">
+            <div class="step-num">1</div>
+            <span>Informations</span>
+          </div>
+          <div class="step-line" id="line1"></div>
+          <div class="step" id="step2el">
+            <div class="step-num">2</div>
+            <span>Description</span>
+          </div>
+          <div class="step-line" id="line2"></div>
+          <div class="step" id="step3el">
+            <div class="step-num">3</div>
+            <span>Confirmation</span>
+          </div>
+        </div>
+
+        <!-- Step 1 -->
+        <div id="formStep1">
+          <div class="form-grid">
+            <div class="form-group full">
+              <label>Objet de la réclamation *</label>
+              <input
+                type="text"
+                id="f-objet"
+                placeholder="Ex. Facture incorrecte du mois de mai"
+              />
+            </div>
+            <div class="form-group">
+              <label>Catégorie *</label>
+              <select id="f-categorie">
+                <option value="">Sélectionner…</option>
+                <option>Facturation</option>
+                <option>Livraison</option>
+                <option>Qualité produit</option>
+                <option>Service client</option>
+                <option>Remboursement</option>
+                <option>Technique</option>
+                <option>Autre</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Priorité *</label>
+              <select id="f-priorite">
+                <option value="">Sélectionner…</option>
+                <option value="Haute">Haute — urgent</option>
+                <option value="Moyenne">Moyenne — normal</option>
+                <option value="Faible">Faible — non urgent</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn-cancel" onclick="closeNewModal()">
+              Annuler
+            </button>
+            <button type="button" class="btn-submit" onclick="goStep(2)">
+              Suivant →
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div id="formStep2" style="display: none">
+          <div class="form-grid">
+            <div class="form-group full">
+              <label>Description détaillée *</label>
+              <textarea
+                id="f-description"
+                placeholder="Décrivez précisément votre problème : ce qui s'est passé, quand, et quel impact cela a eu…"
+                style="min-height: 120px"
+              ></textarea>
+            </div>
+            <div class="form-group full">
+              <label>Pièces jointes (optionnel)</label>
+              <div
+                class="attach-zone"
+                onclick="document.getElementById('fileInput').click()"
+              >
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"
+                  />
+                </svg>
+                Cliquez pour joindre un fichier (PDF, image, doc)
+              </div>
+              <input
+                type="file"
+                id="fileInput"
+                style="display: none"
+                multiple
+                accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                onchange="handleFiles(this.files)"
+              />
+              <div
+                id="fileList"
+                style="
+                  margin-top: 6px;
+                  display: flex;
+                  flex-wrap: wrap;
+                  gap: 6px;
+                "
+              ></div>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn-cancel" onclick="goStep(1)">
+              ← Retour
+            </button>
+            <button type="button" class="btn-submit" onclick="goStep(3)">
+              Vérifier →
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div id="formStep3" style="display: none">
+          <div class="card" style="margin-bottom: 16px">
+            <div style="padding: 16px 20px">
+              <div class="detail-section-title" style="margin-bottom: 12px">
+                Récapitulatif
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Objet</span
+                ><span class="detail-val" id="recap-objet">—</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Catégorie</span
+                ><span class="detail-val" id="recap-cat">—</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Priorité</span
+                ><span class="detail-val" id="recap-prio">—</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Description</span
+                ><span
+                  class="detail-val"
+                  id="recap-desc"
+                  style="
+                    font-style: italic;
+                    color: var(--text-muted);
+                    font-weight: 400;
+                    font-size: 12px;
+                  "
+                  >—</span
+                >
+              </div>
+            </div>
+          </div>
+          <p
+            style="
+              font-size: 12.5px;
+              color: var(--text-muted);
+              line-height: 1.6;
+              margin-bottom: 4px;
+            "
+          >
+            En soumettant cette réclamation, vous acceptez que nos agents
+            traitent votre dossier dans les meilleurs délais. Un numéro de
+            référence unique vous sera attribué.
+          </p>
+          <div class="modal-actions">
+            <button type="button" class="btn-cancel" onclick="goStep(2)">
+              ← Modifier
+            </button>
+            <button type="button" class="btn-submit" onclick="submitClaim()">
+              ✅ Soumettre la réclamation
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DETAIL MODAL -->
+    <div
+      class="overlay"
+      id="detailOverlay"
+      onclick="if (event.target === this) closeDetailModal();"
+    >
+      <div class="modal modal-lg" id="detailModal">
+        <div class="modal-header">
+          <div>
+            <h2 id="detail-title">Détail de la réclamation</h2>
+            <span
+              id="detail-ref"
+              class="ref-badge"
+              style="margin-top: 4px; display: inline-block"
+            ></span>
+          </div>
+          <button type="button" class="close-btn" onclick="closeDetailModal()">
+            ✕
+          </button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
+          <!-- Left -->
+          <div>
+            <div class="detail-section">
+              <div class="detail-section-title">Informations générales</div>
+              <div class="detail-row">
+                <span class="detail-label">Statut</span
+                ><span class="detail-val" id="d-status">—</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Priorité</span
+                ><span class="detail-val" id="d-priority">—</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Catégorie</span
+                ><span class="detail-val" id="d-cat">—</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Date de dépôt</span
+                ><span class="detail-val" id="d-date">—</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Agent assigné</span
+                ><span class="detail-val" id="d-agent">—</span>
+              </div>
+            </div>
+            <div class="detail-section">
+              <div class="detail-section-title">Description</div>
+              <p
+                id="d-description"
+                style="
+                  font-size: 13px;
+                  color: var(--text-label);
+                  line-height: 1.7;
+                "
+              ></p>
+            </div>
+            <div class="detail-section">
+              <div class="detail-section-title">Historique des actions</div>
+              <div class="timeline" id="d-timeline"></div>
+            </div>
+          </div>
+          <!-- Right -->
+          <div>
+            <div class="detail-section">
+              <div class="detail-section-title">Échanges avec l'agent</div>
+              <div class="comment-thread" id="d-comments"></div>
+              <div class="cmt-add">
+                <textarea
+                  id="newComment"
+                  placeholder="Ajouter un commentaire ou une précision…"
+                ></textarea>
+                <button
+                  class="btn-submit"
+                  style="height: 60px; padding: 0 16px; white-space: nowrap"
+                  onclick="addComment()"
+                >
+                  Envoyer
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTIF MODAL -->
+    <div
+      class="overlay"
+      id="notifOverlay"
+      onclick="if (event.target === this) closeNotifModal();"
+    >
+      <div class="modal" style="max-width: 400px">
+        <div class="modal-header">
+          <h2>Notifications</h2>
+          <button type="button" class="close-btn" onclick="closeNotifModal()">
+            ✕
+          </button>
+        </div>
+        <div
+          id="notifList"
+          style="display: flex; flex-direction: column; gap: 8px"
+        ></div>
+        <div class="modal-actions" style="margin-top: 14px">
+          <button
+            class="btn-cancel"
+            style="width: 100%; justify-content: center"
+            onclick="markAllRead()"
+          >
+            Tout marquer comme lu
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"><span id="toastMsg"></span></div>
+
+    <script>
+      /* ─── DATA ─── */
+      const COLORS = ['#3b6ef8','#8b5cf6','#10b981','#f59e0b','#ef4444','#06b6d4','#ec4899'];
+      let claims = [
+        {
+          id: 1, ref: 'REC-2024-001', objet: 'Facture incorrecte – mai 2024',
+          categorie: 'Facturation', priorite: 'Haute',
+          statut: 'En cours de traitement', date: '2024-05-03',
+          agent: 'Nadia Chraibi',
+          description: 'La facture reçue pour le mois de mai présente un montant erroné de 1 240 DH au lieu de 840 DH. Je demande une correction et un remboursement de la différence.',
+          timeline: [
+            { action: 'Réclamation soumise par le client', time: '03/05/2024 09:14', done: true },
+            { action: 'Dossier affecté à Nadia Chraibi', time: '03/05/2024 11:00', done: true },
+            { action: 'Analyse du dossier en cours', time: '04/05/2024 10:30', done: true },
+            { action: 'Résolution en attente', time: '—', done: false },
+          ],
+          comments: [
+            { author: 'Nadia Chraibi', time: '04/05/2024 10:35', text: 'Bonjour, nous avons bien reçu votre réclamation. Pourriez-vous nous transmettre le numéro de contrat associé à cette facture ?', internal: false, color: '#3b6ef8' },
+            { author: 'Karim Alaoui', time: '04/05/2024 14:00', text: 'Voici mon numéro de contrat : CTR-2023-0458. Merci.', internal: false, color: '#10b981' },
+          ]
+        },
+        {
+          id: 2, ref: 'REC-2024-002', objet: 'Colis non livré – commande #5821',
+          categorie: 'Livraison', priorite: 'Haute',
+          statut: 'En attente d\'informations', date: '2024-05-07',
+          agent: 'Youssef Benali',
+          description: "Ma commande numéro 5821 passée le 28 avril n'a toujours pas été livrée. Le suivi indique en transit depuis 9 jours. Je souhaite un remboursement ou un renvoi.",
+          timeline: [
+            { action: 'Réclamation soumise', time: '07/05/2024 16:20', done: true },
+            { action: 'Affectée à Youssef Benali', time: '08/05/2024 09:00', done: true },
+            { action: 'Demande d\'informations complémentaires', time: '09/05/2024 11:15', done: true },
+          ],
+          comments: [
+            { author: 'Youssef Benali', time: '09/05/2024 11:20', text: "Merci pour votre signalement. Pourriez-vous préciser l'adresse de livraison exacte et si vous avez reçu un avis de passage ?", internal: false, color: '#3b6ef8' },
+          ]
+        },
+        {
+          id: 3, ref: 'REC-2024-003', objet: 'Produit défectueux – réfrigérateur',
+          categorie: 'Qualité produit', priorite: 'Moyenne',
+          statut: 'Résolue', date: '2024-04-15',
+          agent: 'Sara Moussaoui',
+          description: 'Le réfrigérateur acheté le 10 mars présente un défaut de compresseur. La porte ne ferme plus hermétiquement après 5 semaines d\'utilisation.',
+          timeline: [
+            { action: 'Réclamation soumise', time: '15/04/2024 08:45', done: true },
+            { action: 'Affectée à Sara Moussaoui', time: '15/04/2024 10:00', done: true },
+            { action: 'Échange avec le client', time: '16/04/2024 14:00', done: true },
+            { action: 'Remplacement du produit proposé', time: '18/04/2024 09:30', done: true },
+            { action: 'Dossier résolu', time: '20/04/2024 16:00', done: true },
+          ],
+          comments: [
+            { author: 'Sara Moussaoui', time: '16/04/2024 14:05', text: 'Nous confirmons le défaut. Un technicien sera envoyé le 18 avril pour remplacement sous garantie.', internal: false, color: '#3b6ef8' },
+            { author: 'Karim Alaoui', time: '20/04/2024 16:10', text: 'Merci, le produit a bien été remplacé. Problème résolu.', internal: false, color: '#10b981' },
+          ]
+        },
+        {
+          id: 4, ref: 'REC-2024-004', objet: 'Remboursement non reçu',
+          categorie: 'Remboursement', priorite: 'Moyenne',
+          statut: 'Clôturée', date: '2024-03-22',
+          agent: 'Hassan Filali',
+          description: 'Suite à l\'annulation de ma commande le 10 mars, le remboursement promis sous 14 jours n\'a toujours pas été crédité sur mon compte.',
+          timeline: [
+            { action: 'Réclamation soumise', time: '22/03/2024 10:00', done: true },
+            { action: 'Traitement du remboursement', time: '25/03/2024 09:00', done: true },
+            { action: 'Remboursement effectué', time: '28/03/2024 12:00', done: true },
+            { action: 'Dossier clôturé', time: '01/04/2024 10:00', done: true },
+          ],
+          comments: [
+            { author: 'Hassan Filali', time: '25/03/2024 09:10', text: 'Le virement a été initié. Veuillez patienter 3 jours ouvrés.', internal: false, color: '#3b6ef8' },
+            { author: 'Karim Alaoui', time: '01/04/2024 10:00', text: 'Remboursement bien reçu. Merci.', internal: false, color: '#10b981' },
+          ]
+        },
+        {
+          id: 5, ref: 'REC-2024-005', objet: 'Problème de connexion à l\'application',
+          categorie: 'Technique', priorite: 'Faible',
+          statut: 'Nouvelle', date: '2024-05-20',
+          agent: null,
+          description: 'Depuis la mise à jour de l\'application mobile, je ne peux plus me connecter avec mon compte. L\'écran reste bloqué sur le chargement.',
+          timeline: [
+            { action: 'Réclamation soumise', time: '20/05/2024 18:30', done: true },
+          ],
+          comments: []
+        },
+        {
+          id: 6, ref: 'REC-2024-006', objet: 'Accueil téléphonique inadapté',
+          categorie: 'Service client', priorite: 'Faible',
+          statut: 'Affectée', date: '2024-05-18',
+          agent: 'Amina El Idrissi',
+          description: 'Lors de mon appel du 15 mai, j\'ai attendu plus de 45 minutes avant d\'être pris en charge, et l\'agent a raccroché sans résoudre mon problème.',
+          timeline: [
+            { action: 'Réclamation soumise', time: '18/05/2024 09:00', done: true },
+            { action: 'Affectée à Amina El Idrissi', time: '19/05/2024 08:00', done: true },
+          ],
+          comments: []
+        }
+      ];
+
+      let notifications = [
+        { id: 1, text: 'Votre réclamation REC-2024-005 a bien été enregistrée.', time: 'Il y a 4h', read: false },
+        { id: 2, text: 'Youssef Benali vous a envoyé un message sur REC-2024-002.', time: 'Hier', read: false },
+        { id: 3, text: 'Votre dossier REC-2024-003 a été résolu.', time: '20/04/2024', read: true },
+      ];
+
+      let filtered = [...claims];
+      let page = 1;
+      const PER = 8;
+      let currentClaim = null;
+      let formStep = 1;
+      let nextId = claims.length + 1;
+
+      /* ─── HELPERS ─── */
+      function colorFor(s) { let h=0; for(let c of s) h=(h*31+c.charCodeAt(0))&0xffff; return COLORS[h%COLORS.length]; }
+      function initials(n) { return n ? n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase() : '?'; }
+      function fmtDate(d) {
+        if(!d) return '—';
+        const [y,m,day] = d.split('-');
+        return ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'][+m-1]+' '+parseInt(day)+', '+y;
+      }
+
+      const statusClass = s => ({
+        'Nouvelle': 's-nouvelle',
+        "En attente d'affectation": 's-attente',
+        'Affectée': 's-affectee',
+        'En cours de traitement': 's-en-cours',
+        "En attente d'informations": 's-info',
+        'Résolue': 's-resolue',
+        'Clôturée': 's-cloturee',
+        'Rejetée': 's-rejetee',
+      }[s] || 's-nouvelle');
+
+      const prioClass = p => ({ 'Haute': 'p-high', 'Moyenne': 'p-medium', 'Faible': 'p-low' }[p] || 'p-medium');
+
+      /* ─── RENDER ─── */
+      function render() {
+        const total = filtered.length, pages = Math.max(1, Math.ceil(total / PER));
+        if(page > pages) page = pages;
+        const start = (page-1)*PER, slice = filtered.slice(start, start+PER);
+
+        document.getElementById('tableBody').innerHTML = slice.map((c, i) => `
+          <tr style="animation-delay:${i*.03}s">
+            <td><span class="ref-badge">${c.ref}</span></td>
+            <td>
+              <div style="font-weight:600;font-size:13.5px;max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.objet}</div>
+            </td>
+            <td><span class="cat-badge">${c.categorie}</span></td>
+            <td><span class="priority-badge ${prioClass(c.priorite)}">${c.priorite}</span></td>
+            <td><span class="status-badge ${statusClass(c.statut)}">${c.statut}</span></td>
+            <td><span class="dob">${fmtDate(c.date)}</span></td>
+            <td style="white-space:nowrap">
+              <div style="display:flex;gap:6px;align-items:center">
+                <button onclick="openDetail(${c.id})" title="Voir le dossier" style="width:30px;height:30px;border:1px solid var(--border);border-radius:7px;display:flex;align-items:center;justify-content:center;background:#fff;cursor:pointer;color:var(--brand);transition:background .15s;" onmouseover="this.style.background='var(--brand-light)'" onmouseout="this.style.background='#fff'">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+                ${c.statut === 'Nouvelle' || c.statut === "En attente d'informations" ? `
+                <button onclick="openDetail(${c.id})" title="Répondre" style="width:30px;height:30px;border:1px solid var(--border);border-radius:7px;display:flex;align-items:center;justify-content:center;background:#fff;cursor:pointer;color:var(--leave-amber);transition:background .15s;" onmouseover="this.style.background='#fef9c3'" onmouseout="this.style.background='#fff'">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </button>` : ''}
+              </div>
+            </td>
+          </tr>
+        `).join('');
+
+        const end = Math.min(start+PER, total);
+        document.getElementById('tfInfo').textContent = total === 0 ? 'Aucune réclamation trouvée' : `Affichage ${start+1}–${end} sur ${total} réclamation${total!==1?'s':''}`;
+
+        const pg = document.getElementById('pagination'); pg.innerHTML='';
+        const btn = (label, p2, active=false) => {
+          const b = document.createElement('button');
+          b.className = 'pg-btn' + (active?' active':'');
+          b.textContent = label;
+          b.onclick = () => { page = p2; render(); };
+          return b;
+        };
+        if(page > 1) pg.appendChild(btn('‹', page-1));
+        for(let p2=1; p2<=pages; p2++) {
+          if(pages<=6 || p2===1 || p2===pages || Math.abs(p2-page)<=1) pg.appendChild(btn(p2, p2, p2===page));
+          else if(p2===2 || p2===pages-1) { const s2=document.createElement('span'); s2.className='pg-btn'; s2.textContent='…'; s2.style.pointerEvents='none'; pg.appendChild(s2); }
+        }
+        if(page < pages) pg.appendChild(btn('›', page+1));
+
+        updateStats();
+      }
+
+      function updateStats() {
+        document.getElementById('claimCount').textContent = claims.length + ' réclamations déposées';
+        document.getElementById('statTotal').textContent = claims.length;
+        const pending = claims.filter(c => ['En cours de traitement','Affectée','En attente d\'affectation','Nouvelle'].includes(c.statut)).length;
+        const resolved = claims.filter(c => ['Résolue','Clôturée'].includes(c.statut)).length;
+        const info = claims.filter(c => c.statut === "En attente d'informations").length;
+        document.getElementById('statPending').textContent = pending;
+        document.getElementById('statResolved').textContent = resolved;
+        document.getElementById('statInfo').textContent = info;
+      }
+
+      function filterTable() {
+        const q = (document.getElementById('searchInput').value || document.getElementById('topSearch').value).toLowerCase();
+        const st = document.getElementById('statusFilter').value;
+        const pr = document.getElementById('priorityFilter').value;
+        filtered = claims.filter(c =>
+          (!q || c.ref.toLowerCase().includes(q) || c.objet.toLowerCase().includes(q) || c.categorie.toLowerCase().includes(q)) &&
+          (!st || c.statut === st) &&
+          (!pr || c.priorite === pr)
+        );
+        page = 1;
+        render();
+      }
+
+      function sortTable() {
+        const v = document.getElementById('sortBy').value;
+        const pMap = { 'Haute': 3, 'Moyenne': 2, 'Faible': 1 };
+        if(v === 'newest') filtered.sort((a,b) => b.id - a.id);
+        if(v === 'oldest') filtered.sort((a,b) => a.id - b.id);
+        if(v === 'priority_h') filtered.sort((a,b) => (pMap[b.priorite]||0) - (pMap[a.priorite]||0));
+        if(v === 'priority_l') filtered.sort((a,b) => (pMap[a.priorite]||0) - (pMap[b.priorite]||0));
+        page = 1;
+        render();
+      }
+
+      /* ─── NEW CLAIM MODAL ─── */
+      function openNewModal() {
+        goStep(1);
+        ['f-objet','f-description'].forEach(id => document.getElementById(id).value='');
+        document.getElementById('f-categorie').value = '';
+        document.getElementById('f-priorite').value = '';
+        document.getElementById('fileList').innerHTML = '';
+        document.getElementById('newOverlay').classList.add('open');
+      }
+      function closeNewModal() { document.getElementById('newOverlay').classList.remove('open'); }
+
+      function goStep(n) {
+        formStep = n;
+        if(n===1) {
+          const obj = document.getElementById('f-objet').value.trim();
+          const cat = document.getElementById('f-categorie').value;
+          const prio = document.getElementById('f-priorite').value;
+          if(n===1) { /* just navigating */ }
+        }
+        if(n===2) {
+          const obj = document.getElementById('f-objet').value.trim();
+          const cat = document.getElementById('f-categorie').value;
+          const prio = document.getElementById('f-priorite').value;
+          if(!obj || !cat || !prio) { showToast('⚠️ Veuillez remplir tous les champs obligatoires.'); return; }
+        }
+        if(n===3) {
+          const desc = document.getElementById('f-description').value.trim();
+          if(!desc) { showToast('⚠️ La description est obligatoire.'); return; }
+          document.getElementById('recap-objet').textContent = document.getElementById('f-objet').value;
+          document.getElementById('recap-cat').textContent = document.getElementById('f-categorie').value;
+          document.getElementById('recap-prio').textContent = document.getElementById('f-priorite').value;
+          document.getElementById('recap-desc').textContent = document.getElementById('f-description').value.slice(0,120) + (document.getElementById('f-description').value.length>120?'…':'');
+        }
+        for(let i=1;i<=3;i++) {
+          document.getElementById('formStep'+i).style.display = i===n?'block':'none';
+          const el = document.getElementById('step'+i+'el');
+          el.className = 'step' + (i<n?' done':i===n?' active':'');
+        }
+        document.getElementById('line1').className = 'step-line' + (n>1?' done':'');
+        document.getElementById('line2').className = 'step-line' + (n>2?' done':'');
+      }
+
+      function handleFiles(files) {
+        const list = document.getElementById('fileList');
+        Array.from(files).forEach(f => {
+          const pill = document.createElement('div');
+          pill.style.cssText = 'display:inline-flex;align-items:center;gap:6px;background:var(--brand-light);color:var(--brand);border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;border:1px solid #c7d7fe';
+          pill.innerHTML = `📎 ${f.name.slice(0,30)}${f.name.length>30?'…':''} <span style="cursor:pointer;opacity:.6" onclick="this.parentElement.remove()">✕</span>`;
+          list.appendChild(pill);
+        });
+      }
+
+      function submitClaim() {
+        const ref = 'REC-2024-00' + (nextId + 1);
+        const newClaim = {
+          id: nextId++,
+          ref,
+          objet: document.getElementById('f-objet').value,
+          categorie: document.getElementById('f-categorie').value,
+          priorite: document.getElementById('f-priorite').value,
+          statut: 'Nouvelle',
+          date: new Date().toISOString().split('T')[0],
+          agent: null,
+          description: document.getElementById('f-description').value,
+          timeline: [{ action: 'Réclamation soumise par le client', time: new Date().toLocaleString('fr-FR'), done: true }],
+          comments: []
+        };
+        claims.unshift(newClaim);
+        filtered = [...claims];
+        notifications.unshift({ id: Date.now(), text: `Votre réclamation ${ref} a bien été enregistrée.`, time: 'À l\'instant', read: false });
+        document.getElementById('notifDot').style.display = '';
+        closeNewModal();
+        render();
+        showToast('✅ Réclamation ' + ref + ' déposée avec succès !');
+      }
+
+      /* ─── DETAIL MODAL ─── */
+      function openDetail(id) {
+        currentClaim = claims.find(c => c.id === id);
+        if(!currentClaim) return;
+        const c = currentClaim;
+        document.getElementById('detail-title').textContent = c.objet;
+        document.getElementById('detail-ref').textContent = c.ref;
+        document.getElementById('d-status').innerHTML = `<span class="status-badge ${statusClass(c.statut)}">${c.statut}</span>`;
+        document.getElementById('d-priority').innerHTML = `<span class="priority-badge ${prioClass(c.priorite)}">${c.priorite}</span>`;
+        document.getElementById('d-cat').innerHTML = `<span class="cat-badge">${c.categorie}</span>`;
+        document.getElementById('d-date').textContent = fmtDate(c.date);
+        document.getElementById('d-agent').textContent = c.agent || 'Non encore affecté';
+        document.getElementById('d-description').textContent = c.description;
+        renderTimeline(c.timeline);
+        renderComments(c.comments);
+        document.getElementById('newComment').value = '';
+        document.getElementById('detailOverlay').classList.add('open');
+      }
+
+      function closeDetailModal() { document.getElementById('detailOverlay').classList.remove('open'); }
+
+      function renderTimeline(tl) {
+        document.getElementById('d-timeline').innerHTML = tl.map((t,i) => `
+          <div class="tl-item">
+            <div class="tl-dot-wrap">
+              <div class="tl-dot ${t.done?'':'muted'}"></div>
+              ${i<tl.length-1?'<div class="tl-line"></div>':''}
+            </div>
+            <div class="tl-content">
+              <div class="tl-action">${t.action}</div>
+              <div class="tl-time">${t.time}</div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function renderComments(cmts) {
+        document.getElementById('d-comments').innerHTML = cmts.length === 0
+          ? '<p style="font-size:13px;color:var(--text-muted);font-style:italic;text-align:center;padding:16px 0">Aucun échange pour le moment.</p>'
+          : cmts.map(cm => `
+              <div class="comment-item">
+                <div class="cmt-avatar" style="background:${cm.color}">${initials(cm.author)}</div>
+                <div class="cmt-body ${cm.internal?'cmt-internal':''}">
+                  <div class="cmt-meta">
+                    <span class="cmt-author">${cm.author}</span>
+                    <span class="cmt-time">${cm.time}</span>
+                  </div>
+                  <div class="cmt-text">${cm.text}</div>
+                </div>
+              </div>
+            `).join('');
+      }
+
+      function addComment() {
+        const text = document.getElementById('newComment').value.trim();
+        if(!text) { showToast('⚠️ Veuillez écrire un message avant d\'envoyer.'); return; }
+        const now = new Date().toLocaleString('fr-FR');
+        currentClaim.comments.push({ author: 'Karim Alaoui', time: now, text, internal: false, color: '#10b981' });
+        renderComments(currentClaim.comments);
+        document.getElementById('newComment').value = '';
+        document.getElementById('d-comments').scrollTop = 99999;
+        showToast('💬 Message envoyé.');
+      }
+
+      /* ─── NOTIFICATIONS ─── */
+      function openNotifModal() {
+        renderNotifs();
+        document.getElementById('notifOverlay').classList.add('open');
+      }
+      function closeNotifModal() { document.getElementById('notifOverlay').classList.remove('open'); }
+
+      function renderNotifs() {
+        document.getElementById('notifList').innerHTML = notifications.map(n => `
+          <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 14px;background:${n.read?'transparent':'var(--brand-light)'};border-radius:9px;border:1px solid ${n.read?'var(--border)':'#c7d7fe'}">
+            <div style="width:8px;height:8px;border-radius:50%;background:${n.read?'var(--text-muted)':'var(--brand)'};margin-top:5px;flex-shrink:0"></div>
+            <div>
+              <div style="font-size:13px;font-weight:${n.read?'500':'600'};line-height:1.5">${n.text}</div>
+              <div style="font-size:11.5px;color:var(--text-muted);margin-top:2px">${n.time}</div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function markAllRead() {
+        notifications.forEach(n => n.read = true);
+        document.getElementById('notifDot').style.display = 'none';
+        document.getElementById('sidebarNotifBadge').style.display = 'none';
+        renderNotifs();
+        showToast('✅ Toutes les notifications marquées comme lues.');
+      }
+
+      /* ─── TOAST ─── */
+      let toastTimer;
+      function showToast(msg) {
+        const t = document.getElementById('toast');
+        document.getElementById('toastMsg').textContent = msg;
+        t.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
+      }
+
+      /* ─── INIT ─── */
+      render();
+    </script>
+  </body>
+</html>

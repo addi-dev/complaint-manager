@@ -1,3 +1,12 @@
+<?php
+header('Access-Control-Allow-Origin: *');
+
+require __DIR__ . '/../config/app.php';
+
+// fetch roles for the dropdown
+$stmt = $pdo->query("SELECT id, nom FROM roles ORDER BY nom");
+$roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
 <!doctype html>
 <html lang="en">
 
@@ -13,6 +22,7 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="stylesheet" href="../assets/css/app.css" />
+  <link rel="stylesheet" href="../assets/css/modal.css" />
   <link rel="stylesheet" href="../assets/css/sidebar.css" />
   <link rel="stylesheet" href="../assets/css/topbar.css" />
   <link rel="stylesheet" href="../assets/css/table.css" />
@@ -68,31 +78,25 @@
               <circle cx="11" cy="11" r="8" />
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
-            <input type="text" id="searchInput" placeholder="Search students…" oninput="filterTable()" />
+            <input type="text" id="searchInput" placeholder="Rechercher..." />
           </div>
-          <select class="filter-select" id="classFilter" onchange="filterTable()">
-            {{-- INFO options are fetched from DB --}}
-            <option value="">Select class</option>
-            @foreach($classes as $class)
-            <option value="{{ $class->id }}">{{ $class->name }}</option>
-            @endforeach
+          <select class="filter-select" id="roleFilter">
+            <option value="">Tous les rôles</option>
+            <option value="admin">Admin</option>
+            <option value="agent">Agent</option>
+            <option value="superviseur">Superviseur</option>
           </select>
-          <select class="filter-select" id="statusFilter" onchange="filterTable()">
-            <option value="">All Status</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-            <option value="withdrawn">Withdrawn</option>
+          <select class="filter-select" id="statusFilter">
+            <option value="">Tous</option>
+            <option value="1">Actif</option>
+            <option value="0">Inactif</option>
           </select>
-          <select class="filter-select" id="genderFilter" onchange="filterTable()">
-            <option value="">All Genders</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-          <select class="filter-select" id="sortBy" onchange="sortTable()">
-            <option value="newest" selected>Newest first</option>
-            <option value="oldest">Oldest first</option>
-            <option value="name_asc">Name (A → Z)</option>
-            <option value="name_desc">Name (Z → A)</option>
+          <select class="filter-select" id="sortSelect">
+            <option value="">Par défaut</option>
+            <option value="name">Nom A→Z</option>
+            <option value="name_desc">Nom Z→A</option>
+            <option value="date_desc">Plus récents</option>
+            <option value="date_asc">Plus anciens</option>
           </select>
         </div>
         <div class="table-wrapper">
@@ -116,14 +120,81 @@
       </div>
     </div>
   </div>
+
+  <!-- ENROLL MODAL -->
+  <div class="overlay" id="overlay" onclick="closeOnOverlay(event)">
+    <div class="modal">
+      <form id="formModal" action="" method="POST">
+        <input type="hidden" name="_method" id="formMethod" value="POST">
+        <div class="modal-header">
+          <h2 id="modalTitle"></h2>
+          <button type="button" class="close-btn" onclick="closeModal()">✕</button>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Nom</label>
+            <input type="text" id="f-nom" placeholder="e.g. Fadil" name="nom" required />
+          </div>
+          <div class="form-group">
+            <label>Prénom</label>
+            <input type="text" id="f-prenom" placeholder="e.g. Ibtisam" name="prenom" required />
+          </div>
+          <div class="form-group full">
+            <label>Email</label>
+            <input type="email" id="f-email" placeholder="utilisateur@gmail.com" name="email" required />
+          </div>
+          <div class="form-group full">
+            <label>Mot de passe</label>
+            <input type="password" id="f-mot_de_passe" placeholder="••••••••" name="mot_de_passe" required />
+          </div>
+          <div class="form-group">
+            <label>Rôle</label>
+            <select id="f-role_id" name="role_id" required>
+              <option value="">Sélectionner un rôle</option>
+              <?php foreach ($roles as $role): ?>
+                <option value="<?= $role['id'] ?>"><?= htmlspecialchars($role['nom']) ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Actif</label>
+            <select id="f-actif" name="actif">
+              <option value="1">Oui</option>
+              <option value="0">Non</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+          <button id="submitBtn" class="btn-submit" type="submit"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script type="module" src="../assets/js/app.js"></script>
   <script type="module" src="../assets/js/users.js"></script>
   <script>
-    function openModal() {}
-
     function FilterTable() {}
 
-    function openModal() {}
+    function openModal() {
+      document.getElementById("modalTitle").textContent = "Inscrire un nouvel utilisateur";
+      document.getElementById("formModal").action = "store.php";
+      document.getElementById("formMethod").value = "POST";
+      document.getElementById("submitBtn").textContent = "Inscrire l'utilisateur";
+
+      ["f-nom", "f-prenom", "f-email", "f-mot_de_passe"].forEach(
+        (id) => (document.getElementById(id).value = "")
+      );
+
+      document.getElementById("f-role_id").value = "";
+      document.getElementById("f-actif").value = "1"; // default: actif
+      document.getElementById("overlay").classList.add("open");
+    }
+
+    function openEditModal() {
+      console.log("openEditModal");
+    }
   </script>
 </body>
 
