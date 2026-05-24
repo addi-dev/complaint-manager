@@ -66,26 +66,3 @@
     min-width: 18px;
     text-align: center;
   }
-  .sidebar-promo {
-    margin: auto 14px 18px;
-    background: linear-gradient(135deg, #3b6ef8 0%, #6c63ff 100%);
-    border-radius: var(--radius);
-    padding: 18px;
-    color: #fff;
-    flex-shrink: 0;
-  }
-  .sidebar-promo h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
-  .sidebar-promo p  { font-size: 12px; opacity: .85; line-height: 1.5; margin-bottom: 12px; }
-  .promo-btn {
-    background: rgba(255,255,255,.2);
-    border: 1px solid rgba(255,255,255,.35);
-    color: #fff;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 7px 14px;
-    border-radius: 7px;
-    cursor: pointer;
-    width: 100%;
-    transition: background .15s;
-  }
-  .promo-btn:hover { background: rgba(255,255,255,.3); }
