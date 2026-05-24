@@ -77,10 +77,10 @@ function renderUsers() {
           <td>
             <div class="action-btns">
               <button class="action-btn action-btn-edit" title="Modifier" onclick="openEditModal()">
-                <i class="fa-solid fa-pencil"></i>
+                <i class="fa-regular fa-pen-to-square"></i>
               </button>
               <button class="action-btn action-btn-delete" title="Supprimer">
-                <i class="fa-solid fa-trash"></i>
+                <i class="fa-regular fa-trash-can"></i>
               </button>
             </div>
           </td>
