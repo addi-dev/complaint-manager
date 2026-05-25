@@ -195,6 +195,14 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
     function openEditModal() {
       console.log("openEditModal");
     }
+
+    function closeModal() {
+      document.getElementById('overlay').classList.remove('open');
+    }
+
+    function closeOnOverlay(e) {
+      if (e.target === e.currentTarget) closeModal();
+    }
   </script>
 </body>
 
