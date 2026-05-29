@@ -1,4 +1,4 @@
-import { initials, colorFor } from "./string.js";
+import { initials, colorFor } from "../js/lib/string.js";
 
 const avatar = document.getElementById("avatar");
 const name = "Ibtisam Fadil";

@@ -7,15 +7,17 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-try {
-    $nom          = trim($_POST['nom']);
-    $prenom       = trim($_POST['prenom']);
-    $email        = trim($_POST['email']);
-    $mot_de_passe = password_hash($_POST['mot_de_passe'], PASSWORD_BCRYPT);
-    $role_id      = intval($_POST['role_id']);
-    $actif        = intval($_POST['actif']);
+// Read JSON body
+$body = json_decode(file_get_contents('php://input'), true);
 
-    // check email unique
+try {
+    $nom          = trim($body['nom']);
+    $prenom       = trim($body['prenom']);
+    $email        = trim($body['email']);
+    $mot_de_passe = password_hash($body['mot_de_passe'], PASSWORD_BCRYPT);
+    $role_id      = intval($body['role_id']);
+    $actif        = intval($body['actif']);
+
     $check = $pdo->prepare("SELECT id FROM utilisateurs WHERE email = ?");
     $check->execute([$email]);
     if ($check->fetch()) {

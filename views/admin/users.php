@@ -1,7 +1,7 @@
 <?php
 header('Access-Control-Allow-Origin: *');
 
-require __DIR__ . '/../config/app.php';
+require __DIR__ . '/../../config/app.php';
 
 // fetch roles for the dropdown
 $stmt = $pdo->query("SELECT id, nom FROM roles ORDER BY nom");
@@ -21,11 +21,11 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link rel="stylesheet" href="../assets/css/app.css" />
-  <link rel="stylesheet" href="../assets/css/modal.css" />
-  <link rel="stylesheet" href="../assets/css/sidebar.css" />
-  <link rel="stylesheet" href="../assets/css/topbar.css" />
-  <link rel="stylesheet" href="../assets/css/table.css" />
+  <link rel="stylesheet" href="../../assets/css/app.css" />
+  <link rel="stylesheet" href="../../assets/css/modal.css" />
+  <link rel="stylesheet" href="../../assets/css/sidebar.css" />
+  <link rel="stylesheet" href="../../assets/css/topbar.css" />
+  <link rel="stylesheet" href="../../assets/css/table.css" />
   <style>
   </style>
 </head>
@@ -183,19 +183,19 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </p>
       <div class="modal-actions">
         <button type="button" class="btn-cancel" onclick="closeDeleteModal()">Cancel</button>
-        <button type="submit" class="btn-submit" style="background:#dc2626">Delete</button>
+        <button type="button" id="confirmDelete" class="btn-submit" style="background:#dc2626">Delete</button>
       </div>
     </form>
   </div>
   <div class="toast" id="toast"><span id="toastMsg"></span></div>
-  <script type="module" src="../assets/js/app.js"></script>
-  <script type="module" src="../assets/js/users.js"></script>
+  <script type="module" src="../../assets/js/app.js"></script>
+  <script type="module" src="../../assets/js/pages/users.js"></script>
   <script>
     function FilterTable() {}
 
     function openModal() {
       document.getElementById("modalTitle").textContent = "Inscrire un nouvel utilisateur";
-      document.getElementById("formModal").action = "store.php";
+      document.getElementById("formModal").action = "../../actions/users/store.php";
       document.getElementById("formMethod").value = "POST";
       document.getElementById("submitBtn").textContent = "Inscrire l'utilisateur";
 
@@ -213,7 +213,7 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
       if (!user) return;
       document.getElementById('modalTitle').textContent = 'Modifier l\'utilisateur';
       document.getElementById('submitBtn').textContent = 'Enregistrer';
-      document.getElementById('formModal').action = `update.php`;
+      document.getElementById('formModal').action = `../../actions/users/update.php`;
       document.getElementById('formModal').dataset.mode = 'edit';
       document.getElementById('formModal').dataset.editId = id;
 

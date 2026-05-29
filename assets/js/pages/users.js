@@ -137,4 +137,91 @@ document
 document.getElementById("sortSelect").addEventListener("change", applyFilters);
 
 window.users = users;
+window.closeDeleteModal = function () {
+  document.getElementById("deleteOverlay").classList.remove("open");
+};
+window.deleteRow = function (id) {
+  const user = users.find((u) => u.id == id);
+  document.getElementById("deleteRowName").textContent =
+    (user?.nom + " " + user?.prenom).trim() || "cet utilisateur";
+  document.getElementById("deleteOverlay").classList.add("open");
 
+  document.getElementById("confirmDelete").onclick = async function () {
+    try {
+      const res = await fetch(
+        `/complaint-manager/actions/users/delete.php?id=${id}`,
+        {
+          method: "POST",
+        },
+      );
+
+      const data = await res.json();
+
+      if (data.success) {
+        closeDeleteModal();
+        const idx = users.findIndex((u) => u.id == id);
+        if (idx !== -1) users.splice(idx, 1);
+        applyFilters();
+      } else {
+        alert(data.error || "Delete failed");
+      }
+    } catch (err) {
+      alert("Something went wrong");
+    }
+  };
+};
+
+//! Handle Store.php (insertion using api)
+
+document
+  .getElementById("formModal")
+  .addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const body = {
+      nom: document.getElementById("f-nom").value,
+      prenom: document.getElementById("f-prenom").value,
+      email: document.getElementById("f-email").value,
+      mot_de_passe: document.getElementById("f-mot_de_passe").value,
+      role_id: document.getElementById("f-role_id").value,
+      actif: document.getElementById("f-actif").value,
+    };
+
+    const mode = this.dataset.mode;
+    const url =
+      mode === "edit"
+        ? `/complaint-manager/actions/users/update.php?id=${this.dataset.editId}`
+        : `/complaint-manager/actions/users/store.php`;
+
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        closeModal();
+
+        if (mode === "edit") {
+          const idx = users.findIndex((u) => u.id == this.dataset.editId);
+          if (idx !== -1) Object.assign(users[idx], body);
+        } else {
+          users.push({
+            id: data.id,
+            ...body,
+            role: "",
+            created_at: new Date().toISOString(),
+          });
+        }
+
+        applyFilters();
+      } else {
+        alert(data.error || "Failed");
+      }
+    } catch (err) {
+      alert("Something went wrong");
+    }
+  });
