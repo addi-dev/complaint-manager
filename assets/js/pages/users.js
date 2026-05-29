@@ -1,6 +1,5 @@
-import { initials, colorFor } from "./string.js";
-import { formatDate } from "./date.js";
-
+import { initials, colorFor } from "../lib/string.js";
+import { formatDate } from "../lib/date.js";
 const users = [];
 let filtered = [];
 let page = 1;
@@ -76,10 +75,10 @@ function renderUsers() {
           <td>${formatDate(data.created_at)}</td>
           <td>
             <div class="action-btns">
-              <button class="action-btn action-btn-edit" title="Modifier" onclick="openEditModal()">
+              <button class="action-btn action-btn-edit" title="Modifier" onclick="openEditModal(${data.id})">
                 <i class="fa-regular fa-pen-to-square"></i>
               </button>
-              <button class="action-btn action-btn-delete" title="Supprimer">
+              <button class="action-btn action-btn-delete" title="Supprimer" onclick="deleteRow('${data.id}')">
                 <i class="fa-regular fa-trash-can"></i>
               </button>
             </div>
@@ -136,3 +135,6 @@ document
   .getElementById("statusFilter")
   .addEventListener("change", applyFilters);
 document.getElementById("sortSelect").addEventListener("change", applyFilters);
+
+window.users = users;
+

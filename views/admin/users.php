@@ -171,7 +171,23 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </form>
     </div>
   </div>
-
+  <!-- DELETE MODAL -->
+  <div class="overlay" id="deleteOverlay" onclick="if(event.target===this)closeDeleteModal()">
+    <form class="modal" id="deleteForm" method="POST" style="max-width:380px">
+      <div class="modal-header">
+        <h2>Delete </h2>
+        <button type="button" class="close-btn" onclick="closeDeleteModal()">✕</button>
+      </div>
+      <p style="color:var(--text-label);font-size:14px;margin-bottom:22px;line-height:1.6">
+        Are you sure you want to delete <strong id="deleteRowName"></strong>? This action cannot be undone.
+      </p>
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" onclick="closeDeleteModal()">Cancel</button>
+        <button type="submit" class="btn-submit" style="background:#dc2626">Delete</button>
+      </div>
+    </form>
+  </div>
+  <div class="toast" id="toast"><span id="toastMsg"></span></div>
   <script type="module" src="../assets/js/app.js"></script>
   <script type="module" src="../assets/js/users.js"></script>
   <script>
@@ -192,8 +208,24 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
       document.getElementById("overlay").classList.add("open");
     }
 
-    function openEditModal() {
-      console.log("openEditModal");
+    function openEditModal(id) {
+      const user = users.find(u => u.id == id);
+      if (!user) return;
+      document.getElementById('modalTitle').textContent = 'Modifier l\'utilisateur';
+      document.getElementById('submitBtn').textContent = 'Enregistrer';
+      document.getElementById('formModal').action = `update.php`;
+      document.getElementById('formModal').dataset.mode = 'edit';
+      document.getElementById('formModal').dataset.editId = id;
+
+      // fill fields
+      document.getElementById('f-nom').value = user.nom || '';
+      document.getElementById('f-prenom').value = user.prenom || '';
+      document.getElementById('f-email').value = user.email || '';
+      document.getElementById('f-mot_de_passe').value = ''; // leave empty
+      document.getElementById('f-role_id').value = user.role_id || '';
+      document.getElementById('f-actif').value = user.actif ?? '1';
+
+      document.getElementById('overlay').classList.add('open');
     }
 
     function closeModal() {
@@ -202,6 +234,10 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     function closeOnOverlay(e) {
       if (e.target === e.currentTarget) closeModal();
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('deleteOverlay').classList.remove('open');
     }
   </script>
 </body>
