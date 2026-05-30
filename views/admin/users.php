@@ -8,12 +8,12 @@ $stmt = $pdo->query("SELECT id, nom FROM roles ORDER BY nom");
 $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
+  <title>Utilisateurs | <?php echo APP_NAME ?></title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link
     href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
@@ -40,12 +40,12 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
       ReclamationOS
     </div>
     <div class="sidebar-section-label">Menu</div>
-    <a class="nav-item" href=""><i class="fa-solid fa-house"></i>Dashboard</a>
-    <a class="nav-item active" href=""><i class="fa-solid fa-users"></i>Utilisateurs</a>
-    <a class="nav-item" href=""><i class="fa-solid fa-file-circle-exclamation"></i>Réclamations</a>
-    <a class="nav-item" href=""><i class="fa-solid fa-user"></i>Clients</a>
+    <a class="nav-item" href=""><i class="fa-solid fa-house"></i>Tableau de bord</a>
+    <a class="nav-item active" href="users.php"><i class="fa-solid fa-users"></i>Utilisateurs</a>
+    <a class="nav-item" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Réclamations</a>
+    <a class="nav-item" href="clients.php"><i class="fa-solid fa-user"></i>Clients</a>
     <div class="sidebar-section-label">Other</div>
-    <a class="nav-item" href=""><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
+    <a class="nav-item" href="../../actions/auth/login.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
   </aside>
 
   <div class="main">

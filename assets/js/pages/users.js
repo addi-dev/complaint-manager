@@ -1,5 +1,6 @@
 import { initials, colorFor } from "../lib/string.js";
 import { formatDate } from "../lib/date.js";
+import { showToast } from "../lib/toast.js";
 const users = [];
 let filtered = [];
 let page = 1;
@@ -161,12 +162,13 @@ window.deleteRow = function (id) {
         closeDeleteModal();
         const idx = users.findIndex((u) => u.id == id);
         if (idx !== -1) users.splice(idx, 1);
+        showToast("Utilisateur supprimé avec succès");
         applyFilters();
       } else {
-        alert(data.error || "Delete failed");
+        showToast(data.error || "Delete failed");
       }
     } catch (err) {
-      alert("Something went wrong");
+      showToast("Something went wrong");
     }
   };
 };
@@ -203,20 +205,24 @@ document
       const data = await res.json();
 
       if (data.success) {
-        closeModal();
+        const roleSelect = document.getElementById("f-role_id");
+        const roleName = roleSelect.options[roleSelect.selectedIndex].text;
 
         if (mode === "edit") {
           const idx = users.findIndex((u) => u.id == this.dataset.editId);
-          if (idx !== -1) Object.assign(users[idx], body);
+          if (idx !== -1) {
+            Object.assign(users[idx], { ...body, role: roleName });
+          }
         } else {
           users.push({
             id: data.id,
             ...body,
-            role: "",
+            role: roleName,
             created_at: new Date().toISOString(),
           });
         }
 
+        closeModal();
         applyFilters();
       } else {
         alert(data.error || "Failed");

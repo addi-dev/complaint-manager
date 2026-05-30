@@ -1704,104 +1704,263 @@
 
     <script>
       /* ─── DATA ─── */
-      const COLORS = ['#3b6ef8','#8b5cf6','#10b981','#f59e0b','#ef4444','#06b6d4','#ec4899'];
+      const COLORS = [
+        "#3b6ef8",
+        "#8b5cf6",
+        "#10b981",
+        "#f59e0b",
+        "#ef4444",
+        "#06b6d4",
+        "#ec4899",
+      ];
       let claims = [
         {
-          id: 1, ref: 'REC-2024-001', objet: 'Facture incorrecte – mai 2024',
-          categorie: 'Facturation', priorite: 'Haute',
-          statut: 'En cours de traitement', date: '2024-05-03',
-          agent: 'Nadia Chraibi',
-          description: 'La facture reçue pour le mois de mai présente un montant erroné de 1 240 DH au lieu de 840 DH. Je demande une correction et un remboursement de la différence.',
+          id: 1,
+          ref: "REC-2024-001",
+          objet: "Facture incorrecte – mai 2024",
+          categorie: "Facturation",
+          priorite: "Haute",
+          statut: "En cours de traitement",
+          date: "2024-05-03",
+          agent: "Nadia Chraibi",
+          description:
+            "La facture reçue pour le mois de mai présente un montant erroné de 1 240 DH au lieu de 840 DH. Je demande une correction et un remboursement de la différence.",
           timeline: [
-            { action: 'Réclamation soumise par le client', time: '03/05/2024 09:14', done: true },
-            { action: 'Dossier affecté à Nadia Chraibi', time: '03/05/2024 11:00', done: true },
-            { action: 'Analyse du dossier en cours', time: '04/05/2024 10:30', done: true },
-            { action: 'Résolution en attente', time: '—', done: false },
+            {
+              action: "Réclamation soumise par le client",
+              time: "03/05/2024 09:14",
+              done: true,
+            },
+            {
+              action: "Dossier affecté à Nadia Chraibi",
+              time: "03/05/2024 11:00",
+              done: true,
+            },
+            {
+              action: "Analyse du dossier en cours",
+              time: "04/05/2024 10:30",
+              done: true,
+            },
+            { action: "Résolution en attente", time: "—", done: false },
           ],
           comments: [
-            { author: 'Nadia Chraibi', time: '04/05/2024 10:35', text: 'Bonjour, nous avons bien reçu votre réclamation. Pourriez-vous nous transmettre le numéro de contrat associé à cette facture ?', internal: false, color: '#3b6ef8' },
-            { author: 'Karim Alaoui', time: '04/05/2024 14:00', text: 'Voici mon numéro de contrat : CTR-2023-0458. Merci.', internal: false, color: '#10b981' },
-          ]
+            {
+              author: "Nadia Chraibi",
+              time: "04/05/2024 10:35",
+              text: "Bonjour, nous avons bien reçu votre réclamation. Pourriez-vous nous transmettre le numéro de contrat associé à cette facture ?",
+              internal: false,
+              color: "#3b6ef8",
+            },
+            {
+              author: "Karim Alaoui",
+              time: "04/05/2024 14:00",
+              text: "Voici mon numéro de contrat : CTR-2023-0458. Merci.",
+              internal: false,
+              color: "#10b981",
+            },
+          ],
         },
         {
-          id: 2, ref: 'REC-2024-002', objet: 'Colis non livré – commande #5821',
-          categorie: 'Livraison', priorite: 'Haute',
-          statut: 'En attente d\'informations', date: '2024-05-07',
-          agent: 'Youssef Benali',
-          description: "Ma commande numéro 5821 passée le 28 avril n'a toujours pas été livrée. Le suivi indique en transit depuis 9 jours. Je souhaite un remboursement ou un renvoi.",
+          id: 2,
+          ref: "REC-2024-002",
+          objet: "Colis non livré – commande #5821",
+          categorie: "Livraison",
+          priorite: "Haute",
+          statut: "En attente d'informations",
+          date: "2024-05-07",
+          agent: "Youssef Benali",
+          description:
+            "Ma commande numéro 5821 passée le 28 avril n'a toujours pas été livrée. Le suivi indique en transit depuis 9 jours. Je souhaite un remboursement ou un renvoi.",
           timeline: [
-            { action: 'Réclamation soumise', time: '07/05/2024 16:20', done: true },
-            { action: 'Affectée à Youssef Benali', time: '08/05/2024 09:00', done: true },
-            { action: 'Demande d\'informations complémentaires', time: '09/05/2024 11:15', done: true },
+            {
+              action: "Réclamation soumise",
+              time: "07/05/2024 16:20",
+              done: true,
+            },
+            {
+              action: "Affectée à Youssef Benali",
+              time: "08/05/2024 09:00",
+              done: true,
+            },
+            {
+              action: "Demande d'informations complémentaires",
+              time: "09/05/2024 11:15",
+              done: true,
+            },
           ],
           comments: [
-            { author: 'Youssef Benali', time: '09/05/2024 11:20', text: "Merci pour votre signalement. Pourriez-vous préciser l'adresse de livraison exacte et si vous avez reçu un avis de passage ?", internal: false, color: '#3b6ef8' },
-          ]
+            {
+              author: "Youssef Benali",
+              time: "09/05/2024 11:20",
+              text: "Merci pour votre signalement. Pourriez-vous préciser l'adresse de livraison exacte et si vous avez reçu un avis de passage ?",
+              internal: false,
+              color: "#3b6ef8",
+            },
+          ],
         },
         {
-          id: 3, ref: 'REC-2024-003', objet: 'Produit défectueux – réfrigérateur',
-          categorie: 'Qualité produit', priorite: 'Moyenne',
-          statut: 'Résolue', date: '2024-04-15',
-          agent: 'Sara Moussaoui',
-          description: 'Le réfrigérateur acheté le 10 mars présente un défaut de compresseur. La porte ne ferme plus hermétiquement après 5 semaines d\'utilisation.',
+          id: 3,
+          ref: "REC-2024-003",
+          objet: "Produit défectueux – réfrigérateur",
+          categorie: "Qualité produit",
+          priorite: "Moyenne",
+          statut: "Résolue",
+          date: "2024-04-15",
+          agent: "Sara Moussaoui",
+          description:
+            "Le réfrigérateur acheté le 10 mars présente un défaut de compresseur. La porte ne ferme plus hermétiquement après 5 semaines d'utilisation.",
           timeline: [
-            { action: 'Réclamation soumise', time: '15/04/2024 08:45', done: true },
-            { action: 'Affectée à Sara Moussaoui', time: '15/04/2024 10:00', done: true },
-            { action: 'Échange avec le client', time: '16/04/2024 14:00', done: true },
-            { action: 'Remplacement du produit proposé', time: '18/04/2024 09:30', done: true },
-            { action: 'Dossier résolu', time: '20/04/2024 16:00', done: true },
+            {
+              action: "Réclamation soumise",
+              time: "15/04/2024 08:45",
+              done: true,
+            },
+            {
+              action: "Affectée à Sara Moussaoui",
+              time: "15/04/2024 10:00",
+              done: true,
+            },
+            {
+              action: "Échange avec le client",
+              time: "16/04/2024 14:00",
+              done: true,
+            },
+            {
+              action: "Remplacement du produit proposé",
+              time: "18/04/2024 09:30",
+              done: true,
+            },
+            { action: "Dossier résolu", time: "20/04/2024 16:00", done: true },
           ],
           comments: [
-            { author: 'Sara Moussaoui', time: '16/04/2024 14:05', text: 'Nous confirmons le défaut. Un technicien sera envoyé le 18 avril pour remplacement sous garantie.', internal: false, color: '#3b6ef8' },
-            { author: 'Karim Alaoui', time: '20/04/2024 16:10', text: 'Merci, le produit a bien été remplacé. Problème résolu.', internal: false, color: '#10b981' },
-          ]
+            {
+              author: "Sara Moussaoui",
+              time: "16/04/2024 14:05",
+              text: "Nous confirmons le défaut. Un technicien sera envoyé le 18 avril pour remplacement sous garantie.",
+              internal: false,
+              color: "#3b6ef8",
+            },
+            {
+              author: "Karim Alaoui",
+              time: "20/04/2024 16:10",
+              text: "Merci, le produit a bien été remplacé. Problème résolu.",
+              internal: false,
+              color: "#10b981",
+            },
+          ],
         },
         {
-          id: 4, ref: 'REC-2024-004', objet: 'Remboursement non reçu',
-          categorie: 'Remboursement', priorite: 'Moyenne',
-          statut: 'Clôturée', date: '2024-03-22',
-          agent: 'Hassan Filali',
-          description: 'Suite à l\'annulation de ma commande le 10 mars, le remboursement promis sous 14 jours n\'a toujours pas été crédité sur mon compte.',
+          id: 4,
+          ref: "REC-2024-004",
+          objet: "Remboursement non reçu",
+          categorie: "Remboursement",
+          priorite: "Moyenne",
+          statut: "Clôturée",
+          date: "2024-03-22",
+          agent: "Hassan Filali",
+          description:
+            "Suite à l'annulation de ma commande le 10 mars, le remboursement promis sous 14 jours n'a toujours pas été crédité sur mon compte.",
           timeline: [
-            { action: 'Réclamation soumise', time: '22/03/2024 10:00', done: true },
-            { action: 'Traitement du remboursement', time: '25/03/2024 09:00', done: true },
-            { action: 'Remboursement effectué', time: '28/03/2024 12:00', done: true },
-            { action: 'Dossier clôturé', time: '01/04/2024 10:00', done: true },
+            {
+              action: "Réclamation soumise",
+              time: "22/03/2024 10:00",
+              done: true,
+            },
+            {
+              action: "Traitement du remboursement",
+              time: "25/03/2024 09:00",
+              done: true,
+            },
+            {
+              action: "Remboursement effectué",
+              time: "28/03/2024 12:00",
+              done: true,
+            },
+            { action: "Dossier clôturé", time: "01/04/2024 10:00", done: true },
           ],
           comments: [
-            { author: 'Hassan Filali', time: '25/03/2024 09:10', text: 'Le virement a été initié. Veuillez patienter 3 jours ouvrés.', internal: false, color: '#3b6ef8' },
-            { author: 'Karim Alaoui', time: '01/04/2024 10:00', text: 'Remboursement bien reçu. Merci.', internal: false, color: '#10b981' },
-          ]
+            {
+              author: "Hassan Filali",
+              time: "25/03/2024 09:10",
+              text: "Le virement a été initié. Veuillez patienter 3 jours ouvrés.",
+              internal: false,
+              color: "#3b6ef8",
+            },
+            {
+              author: "Karim Alaoui",
+              time: "01/04/2024 10:00",
+              text: "Remboursement bien reçu. Merci.",
+              internal: false,
+              color: "#10b981",
+            },
+          ],
         },
         {
-          id: 5, ref: 'REC-2024-005', objet: 'Problème de connexion à l\'application',
-          categorie: 'Technique', priorite: 'Faible',
-          statut: 'Nouvelle', date: '2024-05-20',
+          id: 5,
+          ref: "REC-2024-005",
+          objet: "Problème de connexion à l'application",
+          categorie: "Technique",
+          priorite: "Faible",
+          statut: "Nouvelle",
+          date: "2024-05-20",
           agent: null,
-          description: 'Depuis la mise à jour de l\'application mobile, je ne peux plus me connecter avec mon compte. L\'écran reste bloqué sur le chargement.',
+          description:
+            "Depuis la mise à jour de l'application mobile, je ne peux plus me connecter avec mon compte. L'écran reste bloqué sur le chargement.",
           timeline: [
-            { action: 'Réclamation soumise', time: '20/05/2024 18:30', done: true },
+            {
+              action: "Réclamation soumise",
+              time: "20/05/2024 18:30",
+              done: true,
+            },
           ],
-          comments: []
+          comments: [],
         },
         {
-          id: 6, ref: 'REC-2024-006', objet: 'Accueil téléphonique inadapté',
-          categorie: 'Service client', priorite: 'Faible',
-          statut: 'Affectée', date: '2024-05-18',
-          agent: 'Amina El Idrissi',
-          description: 'Lors de mon appel du 15 mai, j\'ai attendu plus de 45 minutes avant d\'être pris en charge, et l\'agent a raccroché sans résoudre mon problème.',
+          id: 6,
+          ref: "REC-2024-006",
+          objet: "Accueil téléphonique inadapté",
+          categorie: "Service client",
+          priorite: "Faible",
+          statut: "Affectée",
+          date: "2024-05-18",
+          agent: "Amina El Idrissi",
+          description:
+            "Lors de mon appel du 15 mai, j'ai attendu plus de 45 minutes avant d'être pris en charge, et l'agent a raccroché sans résoudre mon problème.",
           timeline: [
-            { action: 'Réclamation soumise', time: '18/05/2024 09:00', done: true },
-            { action: 'Affectée à Amina El Idrissi', time: '19/05/2024 08:00', done: true },
+            {
+              action: "Réclamation soumise",
+              time: "18/05/2024 09:00",
+              done: true,
+            },
+            {
+              action: "Affectée à Amina El Idrissi",
+              time: "19/05/2024 08:00",
+              done: true,
+            },
           ],
-          comments: []
-        }
+          comments: [],
+        },
       ];
 
       let notifications = [
-        { id: 1, text: 'Votre réclamation REC-2024-005 a bien été enregistrée.', time: 'Il y a 4h', read: false },
-        { id: 2, text: 'Youssef Benali vous a envoyé un message sur REC-2024-002.', time: 'Hier', read: false },
-        { id: 3, text: 'Votre dossier REC-2024-003 a été résolu.', time: '20/04/2024', read: true },
+        {
+          id: 1,
+          text: "Votre réclamation REC-2024-005 a bien été enregistrée.",
+          time: "Il y a 4h",
+          read: false,
+        },
+        {
+          id: 2,
+          text: "Youssef Benali vous a envoyé un message sur REC-2024-002.",
+          time: "Hier",
+          read: false,
+        },
+        {
+          id: 3,
+          text: "Votre dossier REC-2024-003 a été résolu.",
+          time: "20/04/2024",
+          read: true,
+        },
       ];
 
       let filtered = [...claims];
@@ -1812,35 +1971,74 @@
       let nextId = claims.length + 1;
 
       /* ─── HELPERS ─── */
-      function colorFor(s) { let h=0; for(let c of s) h=(h*31+c.charCodeAt(0))&0xffff; return COLORS[h%COLORS.length]; }
-      function initials(n) { return n ? n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase() : '?'; }
+      function colorFor(s) {
+        let h = 0;
+        for (let c of s) h = (h * 31 + c.charCodeAt(0)) & 0xffff;
+        return COLORS[h % COLORS.length];
+      }
+      function initials(n) {
+        return n
+          ? n
+              .split(" ")
+              .map((w) => w[0])
+              .join("")
+              .slice(0, 2)
+              .toUpperCase()
+          : "?";
+      }
       function fmtDate(d) {
-        if(!d) return '—';
-        const [y,m,day] = d.split('-');
-        return ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'][+m-1]+' '+parseInt(day)+', '+y;
+        if (!d) return "—";
+        const [y, m, day] = d.split("-");
+        return (
+          [
+            "Jan",
+            "Fév",
+            "Mar",
+            "Avr",
+            "Mai",
+            "Jun",
+            "Jul",
+            "Aoû",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Déc",
+          ][+m - 1] +
+          " " +
+          parseInt(day) +
+          ", " +
+          y
+        );
       }
 
-      const statusClass = s => ({
-        'Nouvelle': 's-nouvelle',
-        "En attente d'affectation": 's-attente',
-        'Affectée': 's-affectee',
-        'En cours de traitement': 's-en-cours',
-        "En attente d'informations": 's-info',
-        'Résolue': 's-resolue',
-        'Clôturée': 's-cloturee',
-        'Rejetée': 's-rejetee',
-      }[s] || 's-nouvelle');
+      const statusClass = (s) =>
+        ({
+          Nouvelle: "s-nouvelle",
+          "En attente d'affectation": "s-attente",
+          Affectée: "s-affectee",
+          "En cours de traitement": "s-en-cours",
+          "En attente d'informations": "s-info",
+          Résolue: "s-resolue",
+          Clôturée: "s-cloturee",
+          Rejetée: "s-rejetee",
+        })[s] || "s-nouvelle";
 
-      const prioClass = p => ({ 'Haute': 'p-high', 'Moyenne': 'p-medium', 'Faible': 'p-low' }[p] || 'p-medium');
+      const prioClass = (p) =>
+        ({ Haute: "p-high", Moyenne: "p-medium", Faible: "p-low" })[p] ||
+        "p-medium";
 
       /* ─── RENDER ─── */
       function render() {
-        const total = filtered.length, pages = Math.max(1, Math.ceil(total / PER));
-        if(page > pages) page = pages;
-        const start = (page-1)*PER, slice = filtered.slice(start, start+PER);
+        const total = filtered.length,
+          pages = Math.max(1, Math.ceil(total / PER));
+        if (page > pages) page = pages;
+        const start = (page - 1) * PER,
+          slice = filtered.slice(start, start + PER);
 
-        document.getElementById('tableBody').innerHTML = slice.map((c, i) => `
-          <tr style="animation-delay:${i*.03}s">
+        document.getElementById("tableBody").innerHTML = slice
+          .map(
+            (c, i) => `
+          <tr style="animation-delay:${i * 0.03}s">
             <td><span class="ref-badge">${c.ref}</span></td>
             <td>
               <div style="font-weight:600;font-size:13.5px;max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.objet}</div>
@@ -1854,67 +2052,118 @@
                 <button onclick="openDetail(${c.id})" title="Voir le dossier" style="width:30px;height:30px;border:1px solid var(--border);border-radius:7px;display:flex;align-items:center;justify-content:center;background:#fff;cursor:pointer;color:var(--brand);transition:background .15s;" onmouseover="this.style.background='var(--brand-light)'" onmouseout="this.style.background='#fff'">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                 </button>
-                ${c.statut === 'Nouvelle' || c.statut === "En attente d'informations" ? `
+                ${
+                  c.statut === "Nouvelle" ||
+                  c.statut === "En attente d'informations"
+                    ? `
                 <button onclick="openDetail(${c.id})" title="Répondre" style="width:30px;height:30px;border:1px solid var(--border);border-radius:7px;display:flex;align-items:center;justify-content:center;background:#fff;cursor:pointer;color:var(--leave-amber);transition:background .15s;" onmouseover="this.style.background='#fef9c3'" onmouseout="this.style.background='#fff'">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                </button>` : ''}
+                </button>`
+                    : ""
+                }
               </div>
             </td>
           </tr>
-        `).join('');
+        `,
+          )
+          .join("");
 
-        const end = Math.min(start+PER, total);
-        document.getElementById('tfInfo').textContent = total === 0 ? 'Aucune réclamation trouvée' : `Affichage ${start+1}–${end} sur ${total} réclamation${total!==1?'s':''}`;
+        const end = Math.min(start + PER, total);
+        document.getElementById("tfInfo").textContent =
+          total === 0
+            ? "Aucune réclamation trouvée"
+            : `Affichage ${start + 1}–${end} sur ${total} réclamation${total !== 1 ? "s" : ""}`;
 
-        const pg = document.getElementById('pagination'); pg.innerHTML='';
-        const btn = (label, p2, active=false) => {
-          const b = document.createElement('button');
-          b.className = 'pg-btn' + (active?' active':'');
+        const pg = document.getElementById("pagination");
+        pg.innerHTML = "";
+        const btn = (label, p2, active = false) => {
+          const b = document.createElement("button");
+          b.className = "pg-btn" + (active ? " active" : "");
           b.textContent = label;
-          b.onclick = () => { page = p2; render(); };
+          b.onclick = () => {
+            page = p2;
+            render();
+          };
           return b;
         };
-        if(page > 1) pg.appendChild(btn('‹', page-1));
-        for(let p2=1; p2<=pages; p2++) {
-          if(pages<=6 || p2===1 || p2===pages || Math.abs(p2-page)<=1) pg.appendChild(btn(p2, p2, p2===page));
-          else if(p2===2 || p2===pages-1) { const s2=document.createElement('span'); s2.className='pg-btn'; s2.textContent='…'; s2.style.pointerEvents='none'; pg.appendChild(s2); }
+        if (page > 1) pg.appendChild(btn("‹", page - 1));
+        for (let p2 = 1; p2 <= pages; p2++) {
+          if (
+            pages <= 6 ||
+            p2 === 1 ||
+            p2 === pages ||
+            Math.abs(p2 - page) <= 1
+          )
+            pg.appendChild(btn(p2, p2, p2 === page));
+          else if (p2 === 2 || p2 === pages - 1) {
+            const s2 = document.createElement("span");
+            s2.className = "pg-btn";
+            s2.textContent = "…";
+            s2.style.pointerEvents = "none";
+            pg.appendChild(s2);
+          }
         }
-        if(page < pages) pg.appendChild(btn('›', page+1));
+        if (page < pages) pg.appendChild(btn("›", page + 1));
 
         updateStats();
       }
 
       function updateStats() {
-        document.getElementById('claimCount').textContent = claims.length + ' réclamations déposées';
-        document.getElementById('statTotal').textContent = claims.length;
-        const pending = claims.filter(c => ['En cours de traitement','Affectée','En attente d\'affectation','Nouvelle'].includes(c.statut)).length;
-        const resolved = claims.filter(c => ['Résolue','Clôturée'].includes(c.statut)).length;
-        const info = claims.filter(c => c.statut === "En attente d'informations").length;
-        document.getElementById('statPending').textContent = pending;
-        document.getElementById('statResolved').textContent = resolved;
-        document.getElementById('statInfo').textContent = info;
+        document.getElementById("claimCount").textContent =
+          claims.length + " réclamations déposées";
+        document.getElementById("statTotal").textContent = claims.length;
+        const pending = claims.filter((c) =>
+          [
+            "En cours de traitement",
+            "Affectée",
+            "En attente d'affectation",
+            "Nouvelle",
+          ].includes(c.statut),
+        ).length;
+        const resolved = claims.filter((c) =>
+          ["Résolue", "Clôturée"].includes(c.statut),
+        ).length;
+        const info = claims.filter(
+          (c) => c.statut === "En attente d'informations",
+        ).length;
+        document.getElementById("statPending").textContent = pending;
+        document.getElementById("statResolved").textContent = resolved;
+        document.getElementById("statInfo").textContent = info;
       }
 
       function filterTable() {
-        const q = (document.getElementById('searchInput').value || document.getElementById('topSearch').value).toLowerCase();
-        const st = document.getElementById('statusFilter').value;
-        const pr = document.getElementById('priorityFilter').value;
-        filtered = claims.filter(c =>
-          (!q || c.ref.toLowerCase().includes(q) || c.objet.toLowerCase().includes(q) || c.categorie.toLowerCase().includes(q)) &&
-          (!st || c.statut === st) &&
-          (!pr || c.priorite === pr)
+        const q = (
+          document.getElementById("searchInput").value ||
+          document.getElementById("topSearch").value
+        ).toLowerCase();
+        const st = document.getElementById("statusFilter").value;
+        const pr = document.getElementById("priorityFilter").value;
+        filtered = claims.filter(
+          (c) =>
+            (!q ||
+              c.ref.toLowerCase().includes(q) ||
+              c.objet.toLowerCase().includes(q) ||
+              c.categorie.toLowerCase().includes(q)) &&
+            (!st || c.statut === st) &&
+            (!pr || c.priorite === pr),
         );
         page = 1;
         render();
       }
 
       function sortTable() {
-        const v = document.getElementById('sortBy').value;
-        const pMap = { 'Haute': 3, 'Moyenne': 2, 'Faible': 1 };
-        if(v === 'newest') filtered.sort((a,b) => b.id - a.id);
-        if(v === 'oldest') filtered.sort((a,b) => a.id - b.id);
-        if(v === 'priority_h') filtered.sort((a,b) => (pMap[b.priorite]||0) - (pMap[a.priorite]||0));
-        if(v === 'priority_l') filtered.sort((a,b) => (pMap[a.priorite]||0) - (pMap[b.priorite]||0));
+        const v = document.getElementById("sortBy").value;
+        const pMap = { Haute: 3, Moyenne: 2, Faible: 1 };
+        if (v === "newest") filtered.sort((a, b) => b.id - a.id);
+        if (v === "oldest") filtered.sort((a, b) => a.id - b.id);
+        if (v === "priority_h")
+          filtered.sort(
+            (a, b) => (pMap[b.priorite] || 0) - (pMap[a.priorite] || 0),
+          );
+        if (v === "priority_l")
+          filtered.sort(
+            (a, b) => (pMap[a.priorite] || 0) - (pMap[b.priorite] || 0),
+          );
         page = 1;
         render();
       }
@@ -1922,122 +2171,169 @@
       /* ─── NEW CLAIM MODAL ─── */
       function openNewModal() {
         goStep(1);
-        ['f-objet','f-description'].forEach(id => document.getElementById(id).value='');
-        document.getElementById('f-categorie').value = '';
-        document.getElementById('f-priorite').value = '';
-        document.getElementById('fileList').innerHTML = '';
-        document.getElementById('newOverlay').classList.add('open');
+        ["f-objet", "f-description"].forEach(
+          (id) => (document.getElementById(id).value = ""),
+        );
+        document.getElementById("f-categorie").value = "";
+        document.getElementById("f-priorite").value = "";
+        document.getElementById("fileList").innerHTML = "";
+        document.getElementById("newOverlay").classList.add("open");
       }
-      function closeNewModal() { document.getElementById('newOverlay').classList.remove('open'); }
+      function closeNewModal() {
+        document.getElementById("newOverlay").classList.remove("open");
+      }
 
       function goStep(n) {
         formStep = n;
-        if(n===1) {
-          const obj = document.getElementById('f-objet').value.trim();
-          const cat = document.getElementById('f-categorie').value;
-          const prio = document.getElementById('f-priorite').value;
-          if(n===1) { /* just navigating */ }
+        if (n === 1) {
+          const obj = document.getElementById("f-objet").value.trim();
+          const cat = document.getElementById("f-categorie").value;
+          const prio = document.getElementById("f-priorite").value;
+          if (n === 1) {
+            /* just navigating */
+          }
         }
-        if(n===2) {
-          const obj = document.getElementById('f-objet').value.trim();
-          const cat = document.getElementById('f-categorie').value;
-          const prio = document.getElementById('f-priorite').value;
-          if(!obj || !cat || !prio) { showToast('⚠️ Veuillez remplir tous les champs obligatoires.'); return; }
+        if (n === 2) {
+          const obj = document.getElementById("f-objet").value.trim();
+          const cat = document.getElementById("f-categorie").value;
+          const prio = document.getElementById("f-priorite").value;
+          if (!obj || !cat || !prio) {
+            showToast("⚠️ Veuillez remplir tous les champs obligatoires.");
+            return;
+          }
         }
-        if(n===3) {
-          const desc = document.getElementById('f-description').value.trim();
-          if(!desc) { showToast('⚠️ La description est obligatoire.'); return; }
-          document.getElementById('recap-objet').textContent = document.getElementById('f-objet').value;
-          document.getElementById('recap-cat').textContent = document.getElementById('f-categorie').value;
-          document.getElementById('recap-prio').textContent = document.getElementById('f-priorite').value;
-          document.getElementById('recap-desc').textContent = document.getElementById('f-description').value.slice(0,120) + (document.getElementById('f-description').value.length>120?'…':'');
+        if (n === 3) {
+          const desc = document.getElementById("f-description").value.trim();
+          if (!desc) {
+            showToast("⚠️ La description est obligatoire.");
+            return;
+          }
+          document.getElementById("recap-objet").textContent =
+            document.getElementById("f-objet").value;
+          document.getElementById("recap-cat").textContent =
+            document.getElementById("f-categorie").value;
+          document.getElementById("recap-prio").textContent =
+            document.getElementById("f-priorite").value;
+          document.getElementById("recap-desc").textContent =
+            document.getElementById("f-description").value.slice(0, 120) +
+            (document.getElementById("f-description").value.length > 120
+              ? "…"
+              : "");
         }
-        for(let i=1;i<=3;i++) {
-          document.getElementById('formStep'+i).style.display = i===n?'block':'none';
-          const el = document.getElementById('step'+i+'el');
-          el.className = 'step' + (i<n?' done':i===n?' active':'');
+        for (let i = 1; i <= 3; i++) {
+          document.getElementById("formStep" + i).style.display =
+            i === n ? "block" : "none";
+          const el = document.getElementById("step" + i + "el");
+          el.className = "step" + (i < n ? " done" : i === n ? " active" : "");
         }
-        document.getElementById('line1').className = 'step-line' + (n>1?' done':'');
-        document.getElementById('line2').className = 'step-line' + (n>2?' done':'');
+        document.getElementById("line1").className =
+          "step-line" + (n > 1 ? " done" : "");
+        document.getElementById("line2").className =
+          "step-line" + (n > 2 ? " done" : "");
       }
 
       function handleFiles(files) {
-        const list = document.getElementById('fileList');
-        Array.from(files).forEach(f => {
-          const pill = document.createElement('div');
-          pill.style.cssText = 'display:inline-flex;align-items:center;gap:6px;background:var(--brand-light);color:var(--brand);border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;border:1px solid #c7d7fe';
-          pill.innerHTML = `📎 ${f.name.slice(0,30)}${f.name.length>30?'…':''} <span style="cursor:pointer;opacity:.6" onclick="this.parentElement.remove()">✕</span>`;
+        const list = document.getElementById("fileList");
+        Array.from(files).forEach((f) => {
+          const pill = document.createElement("div");
+          pill.style.cssText =
+            "display:inline-flex;align-items:center;gap:6px;background:var(--brand-light);color:var(--brand);border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;border:1px solid #c7d7fe";
+          pill.innerHTML = `📎 ${f.name.slice(0, 30)}${f.name.length > 30 ? "…" : ""} <span style="cursor:pointer;opacity:.6" onclick="this.parentElement.remove()">✕</span>`;
           list.appendChild(pill);
         });
       }
 
       function submitClaim() {
-        const ref = 'REC-2024-00' + (nextId + 1);
+        const ref = "REC-2024-00" + (nextId + 1);
         const newClaim = {
           id: nextId++,
           ref,
-          objet: document.getElementById('f-objet').value,
-          categorie: document.getElementById('f-categorie').value,
-          priorite: document.getElementById('f-priorite').value,
-          statut: 'Nouvelle',
-          date: new Date().toISOString().split('T')[0],
+          objet: document.getElementById("f-objet").value,
+          categorie: document.getElementById("f-categorie").value,
+          priorite: document.getElementById("f-priorite").value,
+          statut: "Nouvelle",
+          date: new Date().toISOString().split("T")[0],
           agent: null,
-          description: document.getElementById('f-description').value,
-          timeline: [{ action: 'Réclamation soumise par le client', time: new Date().toLocaleString('fr-FR'), done: true }],
-          comments: []
+          description: document.getElementById("f-description").value,
+          timeline: [
+            {
+              action: "Réclamation soumise par le client",
+              time: new Date().toLocaleString("fr-FR"),
+              done: true,
+            },
+          ],
+          comments: [],
         };
         claims.unshift(newClaim);
         filtered = [...claims];
-        notifications.unshift({ id: Date.now(), text: `Votre réclamation ${ref} a bien été enregistrée.`, time: 'À l\'instant', read: false });
-        document.getElementById('notifDot').style.display = '';
+        notifications.unshift({
+          id: Date.now(),
+          text: `Votre réclamation ${ref} a bien été enregistrée.`,
+          time: "À l'instant",
+          read: false,
+        });
+        document.getElementById("notifDot").style.display = "";
         closeNewModal();
         render();
-        showToast('✅ Réclamation ' + ref + ' déposée avec succès !');
+        showToast("✅ Réclamation " + ref + " déposée avec succès !");
       }
 
       /* ─── DETAIL MODAL ─── */
       function openDetail(id) {
-        currentClaim = claims.find(c => c.id === id);
-        if(!currentClaim) return;
+        currentClaim = claims.find((c) => c.id === id);
+        if (!currentClaim) return;
         const c = currentClaim;
-        document.getElementById('detail-title').textContent = c.objet;
-        document.getElementById('detail-ref').textContent = c.ref;
-        document.getElementById('d-status').innerHTML = `<span class="status-badge ${statusClass(c.statut)}">${c.statut}</span>`;
-        document.getElementById('d-priority').innerHTML = `<span class="priority-badge ${prioClass(c.priorite)}">${c.priorite}</span>`;
-        document.getElementById('d-cat').innerHTML = `<span class="cat-badge">${c.categorie}</span>`;
-        document.getElementById('d-date').textContent = fmtDate(c.date);
-        document.getElementById('d-agent').textContent = c.agent || 'Non encore affecté';
-        document.getElementById('d-description').textContent = c.description;
+        document.getElementById("detail-title").textContent = c.objet;
+        document.getElementById("detail-ref").textContent = c.ref;
+        document.getElementById("d-status").innerHTML =
+          `<span class="status-badge ${statusClass(c.statut)}">${c.statut}</span>`;
+        document.getElementById("d-priority").innerHTML =
+          `<span class="priority-badge ${prioClass(c.priorite)}">${c.priorite}</span>`;
+        document.getElementById("d-cat").innerHTML =
+          `<span class="cat-badge">${c.categorie}</span>`;
+        document.getElementById("d-date").textContent = fmtDate(c.date);
+        document.getElementById("d-agent").textContent =
+          c.agent || "Non encore affecté";
+        document.getElementById("d-description").textContent = c.description;
         renderTimeline(c.timeline);
         renderComments(c.comments);
-        document.getElementById('newComment').value = '';
-        document.getElementById('detailOverlay').classList.add('open');
+        document.getElementById("newComment").value = "";
+        document.getElementById("detailOverlay").classList.add("open");
       }
 
-      function closeDetailModal() { document.getElementById('detailOverlay').classList.remove('open'); }
+      function closeDetailModal() {
+        document.getElementById("detailOverlay").classList.remove("open");
+      }
 
       function renderTimeline(tl) {
-        document.getElementById('d-timeline').innerHTML = tl.map((t,i) => `
+        document.getElementById("d-timeline").innerHTML = tl
+          .map(
+            (t, i) => `
           <div class="tl-item">
             <div class="tl-dot-wrap">
-              <div class="tl-dot ${t.done?'':'muted'}"></div>
-              ${i<tl.length-1?'<div class="tl-line"></div>':''}
+              <div class="tl-dot ${t.done ? "" : "muted"}"></div>
+              ${i < tl.length - 1 ? '<div class="tl-line"></div>' : ""}
             </div>
             <div class="tl-content">
               <div class="tl-action">${t.action}</div>
               <div class="tl-time">${t.time}</div>
             </div>
           </div>
-        `).join('');
+        `,
+          )
+          .join("");
       }
 
       function renderComments(cmts) {
-        document.getElementById('d-comments').innerHTML = cmts.length === 0
-          ? '<p style="font-size:13px;color:var(--text-muted);font-style:italic;text-align:center;padding:16px 0">Aucun échange pour le moment.</p>'
-          : cmts.map(cm => `
+        document.getElementById("d-comments").innerHTML =
+          cmts.length === 0
+            ? '<p style="font-size:13px;color:var(--text-muted);font-style:italic;text-align:center;padding:16px 0">Aucun échange pour le moment.</p>'
+            : cmts
+                .map(
+                  (cm) => `
               <div class="comment-item">
                 <div class="cmt-avatar" style="background:${cm.color}">${initials(cm.author)}</div>
-                <div class="cmt-body ${cm.internal?'cmt-internal':''}">
+                <div class="cmt-body ${cm.internal ? "cmt-internal" : ""}">
                   <div class="cmt-meta">
                     <span class="cmt-author">${cm.author}</span>
                     <span class="cmt-time">${cm.time}</span>
@@ -2045,55 +2341,72 @@
                   <div class="cmt-text">${cm.text}</div>
                 </div>
               </div>
-            `).join('');
+            `,
+                )
+                .join("");
       }
 
       function addComment() {
-        const text = document.getElementById('newComment').value.trim();
-        if(!text) { showToast('⚠️ Veuillez écrire un message avant d\'envoyer.'); return; }
-        const now = new Date().toLocaleString('fr-FR');
-        currentClaim.comments.push({ author: 'Karim Alaoui', time: now, text, internal: false, color: '#10b981' });
+        const text = document.getElementById("newComment").value.trim();
+        if (!text) {
+          showToast("⚠️ Veuillez écrire un message avant d'envoyer.");
+          return;
+        }
+        const now = new Date().toLocaleString("fr-FR");
+        currentClaim.comments.push({
+          author: "Karim Alaoui",
+          time: now,
+          text,
+          internal: false,
+          color: "#10b981",
+        });
         renderComments(currentClaim.comments);
-        document.getElementById('newComment').value = '';
-        document.getElementById('d-comments').scrollTop = 99999;
-        showToast('💬 Message envoyé.');
+        document.getElementById("newComment").value = "";
+        document.getElementById("d-comments").scrollTop = 99999;
+        showToast("💬 Message envoyé.");
       }
 
       /* ─── NOTIFICATIONS ─── */
       function openNotifModal() {
         renderNotifs();
-        document.getElementById('notifOverlay').classList.add('open');
+        document.getElementById("notifOverlay").classList.add("open");
       }
-      function closeNotifModal() { document.getElementById('notifOverlay').classList.remove('open'); }
+      function closeNotifModal() {
+        document.getElementById("notifOverlay").classList.remove("open");
+      }
 
       function renderNotifs() {
-        document.getElementById('notifList').innerHTML = notifications.map(n => `
-          <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 14px;background:${n.read?'transparent':'var(--brand-light)'};border-radius:9px;border:1px solid ${n.read?'var(--border)':'#c7d7fe'}">
-            <div style="width:8px;height:8px;border-radius:50%;background:${n.read?'var(--text-muted)':'var(--brand)'};margin-top:5px;flex-shrink:0"></div>
+        document.getElementById("notifList").innerHTML = notifications
+          .map(
+            (n) => `
+          <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 14px;background:${n.read ? "transparent" : "var(--brand-light)"};border-radius:9px;border:1px solid ${n.read ? "var(--border)" : "#c7d7fe"}">
+            <div style="width:8px;height:8px;border-radius:50%;background:${n.read ? "var(--text-muted)" : "var(--brand)"};margin-top:5px;flex-shrink:0"></div>
             <div>
-              <div style="font-size:13px;font-weight:${n.read?'500':'600'};line-height:1.5">${n.text}</div>
+              <div style="font-size:13px;font-weight:${n.read ? "500" : "600"};line-height:1.5">${n.text}</div>
               <div style="font-size:11.5px;color:var(--text-muted);margin-top:2px">${n.time}</div>
             </div>
           </div>
-        `).join('');
+        `,
+          )
+          .join("");
       }
 
       function markAllRead() {
-        notifications.forEach(n => n.read = true);
-        document.getElementById('notifDot').style.display = 'none';
-        document.getElementById('sidebarNotifBadge').style.display = 'none';
+        notifications.forEach((n) => (n.read = true));
+        document.getElementById("notifDot").style.display = "none";
+        document.getElementById("sidebarNotifBadge").style.display = "none";
         renderNotifs();
-        showToast('✅ Toutes les notifications marquées comme lues.');
+        showToast("✅ Toutes les notifications marquées comme lues.");
       }
 
       /* ─── TOAST ─── */
       let toastTimer;
       function showToast(msg) {
-        const t = document.getElementById('toast');
-        document.getElementById('toastMsg').textContent = msg;
-        t.classList.add('show');
+        const t = document.getElementById("toast");
+        document.getElementById("toastMsg").textContent = msg;
+        t.classList.add("show");
         clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
+        toastTimer = setTimeout(() => t.classList.remove("show"), 3500);
       }
 
       /* ─── INIT ─── */

@@ -20,8 +20,7 @@ CREATE TABLE roles (
 INSERT INTO roles (nom, description) VALUES
   ('admin',       'Administrateur système'),
   ('superviseur', 'Responsable du service'),
-  ('agent',       'Agent de traitement'),
-  ('client',      'Client déclarant');
+  ('agent',       'Agent de traitement');
 
 -- ------------------------------------------------------------
 -- utilisateurs  (agents, superviseurs, admins)
@@ -120,3 +119,91 @@ CREATE TABLE reclamations (
   CONSTRAINT fk_rec_agent     FOREIGN KEY (agent_id)     REFERENCES utilisateurs(id)
 );
  
+-- ------------------------------------------------------------
+-- affectations  (historique d'attribution)
+-- ------------------------------------------------------------
+CREATE TABLE affectations (
+  id               INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  reclamation_id   INT UNSIGNED NOT NULL,
+  utilisateur_id   INT UNSIGNED NOT NULL,   -- agent assigné
+  affecte_par      INT UNSIGNED NOT NULL,   -- superviseur/admin qui a affecté
+  note             TEXT,
+  created_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_aff_reclamation FOREIGN KEY (reclamation_id) REFERENCES reclamations(id),
+  CONSTRAINT fk_aff_utilisateur FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs(id),
+  CONSTRAINT fk_aff_par         FOREIGN KEY (affecte_par)    REFERENCES utilisateurs(id)
+);
+
+-- ------------------------------------------------------------
+-- commentaires  (échanges client ↔ agent + notes internes)
+-- ------------------------------------------------------------
+CREATE TABLE commentaires (
+  id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  reclamation_id  INT UNSIGNED NOT NULL,
+  auteur_id       INT UNSIGNED NULL,       -- NULL = commentaire client non connecté
+  client_id       INT UNSIGNED NULL,       -- renseigné si auteur est le client
+  contenu         TEXT         NOT NULL,
+  interne         BOOLEAN      NOT NULL DEFAULT FALSE,  -- TRUE = note interne agents
+  created_at      TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_com_reclamation FOREIGN KEY (reclamation_id) REFERENCES reclamations(id),
+  CONSTRAINT fk_com_auteur      FOREIGN KEY (auteur_id)      REFERENCES utilisateurs(id),
+  CONSTRAINT fk_com_client      FOREIGN KEY (client_id)      REFERENCES clients(id)
+);
+
+-- ------------------------------------------------------------
+-- pieces_jointes
+-- ------------------------------------------------------------
+CREATE TABLE pieces_jointes (
+  id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  reclamation_id  INT UNSIGNED  NOT NULL,
+  nom_fichier     VARCHAR(255)  NOT NULL,
+  chemin          VARCHAR(500)  NOT NULL,
+  type_mime       VARCHAR(100),
+  taille          INT UNSIGNED,          -- taille en octets
+  created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_pj_reclamation FOREIGN KEY (reclamation_id) REFERENCES reclamations(id)
+);
+
+-- ------------------------------------------------------------
+-- historique_actions  (journal horodaté de chaque changement)
+-- ------------------------------------------------------------
+CREATE TABLE historique_actions (
+  id               INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  reclamation_id   INT UNSIGNED NOT NULL,
+  utilisateur_id   INT UNSIGNED NULL,
+  ancien_statut_id INT UNSIGNED NULL,
+  nouveau_statut_id INT UNSIGNED NULL,
+  action           VARCHAR(255) NOT NULL,  -- description courte de l'action
+  details          TEXT,
+  created_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_hist_reclamation    FOREIGN KEY (reclamation_id)    REFERENCES reclamations(id),
+  CONSTRAINT fk_hist_utilisateur    FOREIGN KEY (utilisateur_id)    REFERENCES utilisateurs(id),
+  CONSTRAINT fk_hist_ancien_statut  FOREIGN KEY (ancien_statut_id)  REFERENCES statuts(id),
+  CONSTRAINT fk_hist_nouveau_statut FOREIGN KEY (nouveau_statut_id) REFERENCES statuts(id)
+);
+
+-- ------------------------------------------------------------
+-- notifications
+-- ------------------------------------------------------------
+CREATE TABLE notifications (
+  id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  utilisateur_id  INT UNSIGNED NOT NULL,
+  reclamation_id  INT UNSIGNED NULL,
+  type            VARCHAR(50)  NOT NULL,    -- AFFECTATION | STATUT | INFO | RESOLUTION
+  message         TEXT         NOT NULL,
+  lu              BOOLEAN      NOT NULL DEFAULT FALSE,
+  created_at      TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_notif_utilisateur  FOREIGN KEY (utilisateur_id)  REFERENCES utilisateurs(id),
+  CONSTRAINT fk_notif_reclamation  FOREIGN KEY (reclamation_id)  REFERENCES reclamations(id)
+);
+
+-- ============================================================
+-- Indexes utiles pour les recherches multicritères
+-- ============================================================
+CREATE INDEX idx_rec_client    ON reclamations(client_id);
+CREATE INDEX idx_rec_statut    ON reclamations(statut_id);
+CREATE INDEX idx_rec_priorite  ON reclamations(priorite_id);
+CREATE INDEX idx_rec_agent     ON reclamations(agent_id);
+CREATE INDEX idx_rec_created   ON reclamations(created_at);
+CREATE INDEX idx_notif_user_lu ON notifications(utilisateur_id, lu);
+CREATE INDEX idx_hist_rec      ON historique_actions(reclamation_id, created_at);

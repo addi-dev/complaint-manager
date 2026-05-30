@@ -5,7 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
         *,
         *::before,
@@ -15,11 +16,25 @@
             padding: 0;
         }
 
+        :root {
+            --brand: #6c4ef8;
+            --brand-dark: #5a3de0;
+            --main-bg: #f4f6fb;
+            --card-bg: #ffffff;
+            --text-primary: #1a1d2e;
+            --text-muted: #8c93a8;
+            --text-label: #5b6278;
+            --border: #e8eaf2;
+            --shadow-md: 0 4px 20px rgba(59, 110, 248, 0.12);
+        }
+
         body {
-            font-family: 'Sora', sans-serif;
+            font-family: "Plus Jakarta Sans", sans-serif;
             height: 100vh;
             display: flex;
             overflow: hidden;
+            background: var(--main-bg);
+            color: var(--text-primary);
         }
 
         /* ── Left: photo panel ── */
@@ -46,7 +61,7 @@
             align-items: center;
             justify-content: center;
             padding: 2.5rem 3rem;
-            background: #fff;
+            background: var(--main-bg);
             overflow-y: auto;
         }
 
@@ -59,15 +74,16 @@
 
         h1 {
             font-size: 1.85rem;
-            font-weight: 700;
-            color: #111;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
             margin-bottom: 0.5rem;
             text-align: center;
         }
 
         .subtitle {
             font-size: 0.88rem;
-            color: #888;
+            color: var(--text-muted);
             margin-bottom: 2rem;
             text-align: center;
         }
@@ -83,7 +99,7 @@
             display: block;
             font-size: 0.82rem;
             font-weight: 600;
-            color: #555;
+            color: var(--text-label);
             margin-bottom: 0.4rem;
         }
 
@@ -94,23 +110,23 @@
         .field input {
             width: 100%;
             padding: 0.85rem 1rem;
-            border: 1.5px solid #e0e0e0;
-            border-radius: 0.75rem;
-            font-family: 'Sora', sans-serif;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-family: "Plus Jakarta Sans", sans-serif;
             font-size: 0.9rem;
-            color: #222;
+            color: var(--text-primary);
             outline: none;
             transition: border-color 0.2s, box-shadow 0.2s;
-            background: #fff;
+            background: var(--card-bg);
         }
 
         .field input::placeholder {
-            color: #bbb;
+            color: var(--text-muted);
         }
 
         .field input:focus {
-            border-color: #6c3de8;
-            box-shadow: 0 0 0 3px rgba(108, 61, 232, 0.12);
+            border-color: var(--brand);
+            box-shadow: 0 0 0 3px rgba(108, 78, 248, 0.1);
         }
 
         /* Eye toggle */
@@ -122,14 +138,14 @@
             background: none;
             border: none;
             cursor: pointer;
-            color: #aaa;
+            color: var(--text-muted);
             padding: 0;
             display: flex;
             align-items: center;
         }
 
         .eye-btn:hover {
-            color: #666;
+            color: var(--text-label);
         }
 
         /* Forgot password */
@@ -143,7 +159,7 @@
 
         .forgot-wrap a {
             font-size: 0.8rem;
-            color: #6c3de8;
+            color: var(--brand);
             font-weight: 600;
             text-decoration: none;
         }
@@ -157,21 +173,21 @@
             width: 100%;
             max-width: 460px;
             padding: 1rem;
-            background: #6c3de8;
+            background: var(--brand);
             color: #fff;
             border: none;
-            border-radius: 2rem;
-            font-family: 'Sora', sans-serif;
+            border-radius: 10px;
+            font-family: "Plus Jakarta Sans", sans-serif;
             font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
-            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-            box-shadow: 0 4px 18px rgba(108, 61, 232, 0.35);
+            transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+            box-shadow: var(--shadow-md);
         }
 
         .btn-submit:hover {
-            background: #5a2fd0;
-            box-shadow: 0 6px 24px rgba(108, 61, 232, 0.45);
+            background: var(--brand-dark);
+            box-shadow: 0 6px 24px rgba(108, 78, 248, 0.3);
             transform: translateY(-1px);
         }
 

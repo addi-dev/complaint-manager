@@ -1,5 +1,6 @@
 <?php
 // config/app.php
+require __DIR__ . '/constants.php';
 $host = 'localhost';
 $db   = 'reclamations';
 $user = 'root';
