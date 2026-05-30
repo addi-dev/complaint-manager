@@ -46,6 +46,7 @@ CREATE TABLE clients (
   nom         VARCHAR(100) NOT NULL,
   prenom      VARCHAR(100) NOT NULL,
   email       VARCHAR(150) NOT NULL UNIQUE,
+  mot_de_passe VARCHAR(255),
   telephone   VARCHAR(20),
   adresse     TEXT,
   created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
