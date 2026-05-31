@@ -41,6 +41,7 @@ function getUsers() {
   fetch("http://localhost/complaint-manager/api/users_api.php")
     .then((res) => res.json())
     .then((data) => {
+      users.length = 0;
       users.push(...data.users);
       applyFilters();
     })

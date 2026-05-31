@@ -22,10 +22,6 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="stylesheet" href="../../assets/css/app.css" />
-  <link rel="stylesheet" href="../../assets/css/modal.css" />
-  <link rel="stylesheet" href="../../assets/css/sidebar.css" />
-  <link rel="stylesheet" href="../../assets/css/topbar.css" />
-  <link rel="stylesheet" href="../../assets/css/table.css" />
   <style>
   </style>
 </head>

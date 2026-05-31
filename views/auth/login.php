@@ -65,7 +65,6 @@
             overflow-y: auto;
         }
 
-        /* Logo */
         .logo {
             width: 52px;
             height: 52px;
@@ -86,6 +85,36 @@
             color: var(--text-muted);
             margin-bottom: 2rem;
             text-align: center;
+        }
+
+        /* Alert */
+        .alert {
+            width: 100%;
+            max-width: 460px;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .alert.show {
+            display: flex;
+        }
+
+        .alert-error {
+            background: #fef2f2;
+            color: #ef4444;
+            border: 1px solid #fecaca;
+        }
+
+        .alert-success {
+            background: #f0fdf4;
+            color: #22c55e;
+            border: 1px solid #bbf7d0;
         }
 
         /* Field group */
@@ -148,7 +177,7 @@
             color: var(--text-label);
         }
 
-        /* Forgot password */
+        /* Forgot */
         .forgot-wrap {
             width: 100%;
             max-width: 460px;
@@ -168,7 +197,7 @@
             text-decoration: underline;
         }
 
-        /* Submit */
+        /* Submit button */
         .btn-submit {
             width: 100%;
             max-width: 460px;
@@ -183,6 +212,10 @@
             cursor: pointer;
             transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
             box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
         }
 
         .btn-submit:hover {
@@ -193,6 +226,34 @@
 
         .btn-submit:active {
             transform: translateY(0);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Spinner */
+        .spinner {
+            width: 17px;
+            height: 17px;
+            border: 2.5px solid rgba(255, 255, 255, 0.35);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.65s linear infinite;
+            display: none;
+            flex-shrink: 0;
+        }
+
+        .btn-submit.loading .spinner {
+            display: block;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         /* Responsive */
@@ -230,6 +291,11 @@
         <h1>Welcome back</h1>
         <p class="subtitle">Sign in to your account</p>
 
+        <!-- Alert box -->
+        <div class="alert" id="alert">
+            <span id="alert-msg"></span>
+        </div>
+
         <!-- Email -->
         <div class="field">
             <label for="email">Email Address</label>
@@ -244,7 +310,8 @@
             <div class="input-wrap">
                 <input type="password" id="password" placeholder="Enter your password" />
                 <button class="eye-btn" onclick="togglePassword()" type="button" aria-label="Toggle password visibility">
-                    <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
                         <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
                         <line x1="1" y1="1" x2="23" y2="23" />
@@ -257,7 +324,10 @@
             <a href="#">Forgot password?</a>
         </div>
 
-        <button class="btn-submit">Login</button>
+        <button class="btn-submit" id="loginBtn" onclick="handleLogin()">
+            <div class="spinner"></div>
+            <span class="btn-text">Login</span>
+        </button>
 
     </div>
 
@@ -269,8 +339,79 @@
             input.type = isHidden ? 'text' : 'password';
             icon.innerHTML = isHidden ?
                 `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>` :
-                `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>`;
+                `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                   <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                   <line x1="1" y1="1" x2="23" y2="23"/>`;
         }
+
+        function showAlert(message, type = 'error') {
+            const box = document.getElementById('alert');
+            const msg = document.getElementById('alert-msg');
+            box.className = 'alert alert-' + type + ' show';
+            msg.textContent = message;
+        }
+
+        function hideAlert() {
+            document.getElementById('alert').className = 'alert';
+        }
+
+        function setLoading(state) {
+            const btn = document.getElementById('loginBtn');
+            btn.disabled = state;
+            btn.classList.toggle('loading', state);
+            btn.querySelector('.btn-text').textContent = state ? 'Signing in...' : 'Login';
+        }
+
+        async function handleLogin() {
+            hideAlert();
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            if (!email) {
+                showAlert('Please enter your email address.');
+                return;
+            }
+            if (!password) {
+                showAlert('Please enter your password.');
+                return;
+            }
+
+            setLoading(true);
+
+            try {
+                const res = await fetch('../../actions/auth/login.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email,
+                        password
+                    })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    showAlert('Login successful! Redirecting…', 'success');
+                    setTimeout(() => window.location.href = data.redirect, 1000);
+                } else {
+                    showAlert(data.message || 'Invalid email or password.');
+                }
+
+            } catch (err) {
+                showAlert('Network error. Please try again.');
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        // Allow Enter key to submit
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') handleLogin();
+        });
     </script>
 
 </body>

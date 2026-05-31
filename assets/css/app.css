@@ -1,3 +1,7 @@
+@import "modal.css";
+@import "sidebar.css";
+@import "table.css";
+@import "topbar.css";
 *,
 *::before,
 *::after {

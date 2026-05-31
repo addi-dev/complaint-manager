@@ -41,6 +41,7 @@ function getClients() {
   fetch("http://localhost/complaint-manager/api/clients_api.php")
     .then((res) => res.json())
     .then((data) => {
+      clients.length = 0
       clients.push(...data.clients);
       applyFilters();
     })
