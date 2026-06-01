@@ -12,10 +12,10 @@ if (!Auth::check()) {
 
 // If logged in → redirect by role
 $redirects = [
-    'admin'      => '/views/admin/dashboard.php',
-    'supervisor' => '/views/admin/dashboard.php',
-    'agent'      => '/views/agent/dashboard.php',
-    'client'     => '/views/client/dashboard.php',
+    'admin'      => '/complaint-manager/views/admin',
+    'supervisor' => '/complaint-manager/views/admin',
+    'agent'      => '/complaint-manager/views/agent',
+    'client'     => '/complaint-manager/views/client',
 ];
 
 $role = $_SESSION['user_role'];

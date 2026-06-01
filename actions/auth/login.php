@@ -54,7 +54,10 @@ if (!$email || !$password) {
 }
 
 // ── 1. Try utilisateurs ───────────────────────────────────────────────────────
-$stmt = $pdo->prepare("SELECT id, nom, prenom, email, mot_de_passe, role_id FROM utilisateurs WHERE email = ? LIMIT 1");
+$stmt = $pdo->prepare("SELECT u.id, u.nom, u.prenom, u.email, u.mot_de_passe, r.nom AS role_nom
+    FROM utilisateurs u
+    JOIN roles r ON r.id = u.role_id
+    WHERE u.email = ? LIMIT 1");
 $stmt->execute([$email]);
 $user = $stmt->fetch();
 
@@ -62,18 +65,18 @@ if ($user && password_verify($password, $user['mot_de_passe'])) {
     $_SESSION['user_id']    = $user['id'];
     $_SESSION['user_name']  = $user['nom'];
     $_SESSION['user_email'] = $user['email'];
-    $_SESSION['user_role']  = $user['role_id'];
+    $_SESSION['user_role']  = $user['role_nom'];
     $_SESSION['user_table'] = 'utilisateurs';
     $_SESSION['logged_in']  = true;
 
     $redirects = [
-        'admin'      => '/views/admin/dashboard.php',
-        'supervisor' => '/views/admin/dashboard.php',
-        'agent'      => '/views/agent/dashboard.php',
+        'admin'      => '/complaint-manager/views/admin',
+        'superviseur' => '/complaint-manager/views/admin',
+        'agent'      => '/complaint-manager/views/agent',
     ];
 
     Response::success('Login successful.', [
-        'redirect' => $redirects[$user['role_id']] ?? 'complaint-manager/views/auth/login.php'
+        'redirect' => $redirects[$user['role_nom']] ?? '/complaint-manager/views/auth/login.php'
     ]);
 }
 

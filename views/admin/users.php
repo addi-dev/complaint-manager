@@ -1,9 +1,12 @@
 <?php
-header('Access-Control-Allow-Origin: *');
+session_start();
 
+require_once __DIR__ . '/../../core/Auth.php';
 require __DIR__ . '/../../config/app.php';
 
-// fetch roles for the dropdown
+Auth::requireRole('admin');
+
+// fetch roles for dropdown
 $stmt = $pdo->query("SELECT id, nom FROM roles ORDER BY nom");
 $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -36,12 +39,12 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
       ReclamationOS
     </div>
     <div class="sidebar-section-label">Menu</div>
-    <a class="nav-item" href=""><i class="fa-solid fa-house"></i>Tableau de bord</a>
+    <a class="nav-item" href="index.php"><i class="fa-solid fa-house"></i>Tableau de bord</a>
     <a class="nav-item active" href="users.php"><i class="fa-solid fa-users"></i>Utilisateurs</a>
     <a class="nav-item" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Réclamations</a>
     <a class="nav-item" href="clients.php"><i class="fa-solid fa-user"></i>Clients</a>
     <div class="sidebar-section-label">Other</div>
-    <a class="nav-item" href="../../actions/auth/login.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
+    <a class="nav-item" href="../../actions/auth/logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
   </aside>
 
   <div class="main">

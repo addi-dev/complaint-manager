@@ -9,8 +9,8 @@ if (!empty($_SESSION['logged_in'])) {
             'id'    => $_SESSION['user_id'],
             'name'  => $_SESSION['user_name'],
             'email' => $_SESSION['user_email'],
-            'role'  => $_SESSION['user_role'],   // 'admin'|'supervisor'|'agent'|'client'
-            'from'  => $_SESSION['user_table'],  // 'utilisateurs' or 'clients'
+            'role'  => $_SESSION['user_role'],
+            'from'  => $_SESSION['user_table'],
         ]
     ]);
 } else {

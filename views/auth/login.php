@@ -1,3 +1,21 @@
+<?php
+session_start();
+
+if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+    $redirects = [
+        'admin'       => '/complaint-manager/views/admin',
+        'superviseur' => '/complaint-manager/views/supervisor',
+        'agent'       => '/complaint-manager/views/agent',
+        'client'      => '/complaint-manager/views/client',
+    ];
+
+    $role = $_SESSION['user_role'] ?? '';
+    $url  = $redirects[$role] ?? '/complaint-manager/views/auth/login.php';
+
+    header('Location: ' . $url);
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -382,6 +400,7 @@
             try {
                 const res = await fetch('../../actions/auth/login.php', {
                     method: 'POST',
+                    credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json'
                     },

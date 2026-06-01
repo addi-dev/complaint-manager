@@ -68,7 +68,7 @@ function renderClients() {
             </div>
           </td>
           <td>${data.telephone}</td>
-          <td>${data.total_reclamations}</td>
+          <td style="text-align: center;">${data.total_reclamations}</td>
           <td>
             <span class="status-badge status-${data.actif == 1 ? "active" : "inactive"}">
               ${data.actif == 1 ? "Actif" : "Inactif"}

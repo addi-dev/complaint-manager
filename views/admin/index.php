@@ -1,7 +1,14 @@
 <?php
-// views/admin/clients.php
+session_start();
+
+require_once __DIR__ . '/../../core/Auth.php';
 require __DIR__ . '/../../config/app.php';
 
+Auth::requireRole('admin');
+
+// fetch roles for dropdown
+$stmt = $pdo->query("SELECT id, nom FROM roles ORDER BY nom");
+$roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -9,7 +16,7 @@ require __DIR__ . '/../../config/app.php';
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reclamations | <?php echo APP_NAME ?></title>
+    <title>Clients | <?php echo APP_NAME ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
@@ -32,9 +39,9 @@ require __DIR__ . '/../../config/app.php';
             ReclamationOS
         </div>
         <div class="sidebar-section-label">Menu</div>
-        <a class="nav-item" href=""><i class="fa-solid fa-house"></i>Tableau de bord</a>
+        <a class="nav-item active" href=""><i class="fa-solid fa-house"></i>Tableau de bord</a>
         <a class="nav-item" href="users.php"><i class="fa-solid fa-users"></i>Utilisateurs</a>
-        <a class="nav-item active" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Réclamations</a>
+        <a class="nav-item" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Réclamations</a>
         <a class="nav-item" href="clients.php"><i class="fa-solid fa-user"></i>Clients</a>
         <div class="sidebar-section-label">Other</div>
         <a class="nav-item" href="../../actions/auth/logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
@@ -54,12 +61,12 @@ require __DIR__ . '/../../config/app.php';
         <div class="content">
             <div class="page-header">
                 <div>
-                    <h1>Reclamations</h1>
+                    <h1>Clients</h1>
                     <div class="sub" id="enrollCount"></div>
                 </div>
                 <button class="enroll-btn" onclick="openModal()">
                     <i class="fa-solid fa-plus"></i>
-                    Inscrire une reclamation
+                    Inscrire un client
                 </button>
             </div>
             <div class="card">
@@ -91,14 +98,11 @@ require __DIR__ . '/../../config/app.php';
                     <table>
                         <thead>
                             <tr>
-                                <th>Numéro</th>
-                                <th>Client</th>
-                                <th>Objet</th>
-                                <th>Catégorie</th>
-                                <th>Priorité</th>
-                                <th>Statut</th>
-                                <th>Agent</th>
-                                <th>Créée le</th>
+                                <th>Nom Complét</th>
+                                <th>Téléphone</th>
+                                <th>Total réclamations</th>
+                                <th>Status</th>
+                                <th>Ajouter le</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -114,7 +118,7 @@ require __DIR__ . '/../../config/app.php';
     </div>
     <div class="toast" id="toast"><span id="toastMsg"></span></div>
     <script type="module" src="../../assets/js/app.js"></script>
-    <script type="module" src="../../assets/js/pages/reclamations.js"></script>
+    <script type="module" src="../../assets/js/pages/clients.js"></script>
 </body>
 
 </html>

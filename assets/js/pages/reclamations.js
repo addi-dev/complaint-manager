@@ -63,11 +63,10 @@ function renderReclamations() {
           </td>
           <td>${data.client}</td>
           <td>${data.objet}</td>
-          <td>
-            <span class="status-badge status-${data.actif == 1 ? "active" : "inactive"}">
-              ${data.actif == 1 ? "Actif" : "Inactif"}
-            </span>
-          </td>
+          <td>${data.categorie}</td>
+          <td>${data.priorite}</td>
+          <td>${data.statut}</td>
+          <td>${data.agent}</td>
           <td>${formatDate(data.created_at)}</td>
           <td>
             <div class="action-btns">
@@ -117,7 +116,7 @@ function renderReclamations() {
 
   //! Show Reclamations count
   document.getElementById("enrollCount").innerHTML =
-    reclamations.length + " " + "clients inscrits";
+    `${reclamations.length} réclamation${reclamations.length > 1 ? 's' : ''}`
 }
 
 getReclamations();

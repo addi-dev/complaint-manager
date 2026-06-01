@@ -23,7 +23,7 @@ class Auth
     public static function requireRole(string ...$roles): void
     {
         if (!self::check() || !in_array($_SESSION['user_role'], $roles)) {
-            Response::redirect('/views/auth/login.php');
+            Response::redirect('/complaint-manager/views/auth/login.php');
         }
     }
 }
