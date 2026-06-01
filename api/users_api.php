@@ -8,7 +8,7 @@ require __DIR__ . '/../config/app.php';
 try {
     $stmt = $pdo->query("SELECT u.id, u.nom, u.prenom, u.email, u.actif, u.created_at, u.role_id, r.nom AS role
 FROM utilisateurs u
-JOIN roles r ON u.role_id = r.id;");
+JOIN roles r ON u.role_id = r.id ORDER BY u.created_at DESC;");
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode([

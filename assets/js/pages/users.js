@@ -38,7 +38,7 @@ function applyFilters() {
 }
 
 function getUsers() {
-  fetch("http://localhost/complaint-manager/api/users_api.php")
+  fetch("../../api/users_api.php")
     .then((res) => res.json())
     .then((data) => {
       users.length = 0;
@@ -206,29 +206,12 @@ document
       const data = await res.json();
 
       if (data.success) {
-        const roleSelect = document.getElementById("f-role_id");
-        const roleName = roleSelect.options[roleSelect.selectedIndex].text;
-
-        if (mode === "edit") {
-          const idx = users.findIndex((u) => u.id == this.dataset.editId);
-          if (idx !== -1) {
-            Object.assign(users[idx], { ...body, role: roleName });
-          }
-        } else {
-          users.push({
-            id: data.id,
-            ...body,
-            role: roleName,
-            created_at: new Date().toISOString(),
-          });
-        }
-
         closeModal();
-        applyFilters();
+        getUsers();
       } else {
-        alert(data.error || "Failed");
+        showToast(data.error || "Échec de l'opération");
       }
     } catch (err) {
-      alert("Something went wrong");
+      showToast("Une erreur est survenue");
     }
   });

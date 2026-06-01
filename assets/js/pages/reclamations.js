@@ -38,7 +38,7 @@ function applyFilters() {
 }
 
 function getReclamations() {
-  fetch("http://localhost/complaint-manager/api/reclamations_api.php")
+  fetch("../../api/reclamations_api.php")
     .then((res) => res.json())
     .then((data) => {
       reclamations.length = 0;

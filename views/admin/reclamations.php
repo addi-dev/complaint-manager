@@ -1,7 +1,14 @@
 <?php
-// views/admin/clients.php
+session_start();
+
+require_once __DIR__ . '/../../core/Auth.php';
 require __DIR__ . '/../../config/app.php';
 
+Auth::requireRole('admin');
+
+// fetch roles for dropdown
+$stmt = $pdo->query("SELECT id, nom FROM roles ORDER BY nom");
+$roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="fr">

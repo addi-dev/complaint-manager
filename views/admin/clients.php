@@ -1,7 +1,14 @@
 <?php
-// views/admin/clients.php
+session_start();
+
+require_once __DIR__ . '/../../core/Auth.php';
 require __DIR__ . '/../../config/app.php';
 
+Auth::requireRole('admin');
+
+// fetch roles for dropdown
+$stmt = $pdo->query("SELECT id, nom FROM roles ORDER BY nom");
+$roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -109,9 +116,75 @@ require __DIR__ . '/../../config/app.php';
             </div>
         </div>
     </div>
+    <!-- ENROLL MODAL -->
+  <div class="overlay" id="overlay" onclick="closeOnOverlay(event)">
+    <div class="modal">
+      <form id="formModal" action="" method="POST">
+        <input type="hidden" name="_method" id="formMethod" value="POST">
+        <div class="modal-header">
+          <h2 id="modalTitle"></h2>
+          <button type="button" class="close-btn" onclick="closeModal()">✕</button>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Nom</label>
+            <input type="text" id="f-nom" placeholder="ex: Fadil" name="nom" required />
+          </div>
+          <div class="form-group">
+            <label>Prénom</label>
+            <input type="text" id="f-prenom" placeholder="ex: Ibtisam" name="prenom" required />
+          </div>
+          <div class="form-group full">
+            <label>Email</label>
+            <input type="email" id="f-email" placeholder="client@gmail.com" name="email" required />
+          </div>
+          <div class="form-group full">
+            <label>Mot de passe</label>
+            <input type="password" id="f-mot_de_passe" placeholder="••••••••" name="mot_de_passe" required />
+          </div>
+          <div class="form-group full">
+            <label>Téléphone</label>
+            <input type="text" id="f-telephone" placeholder="ex: 0612345678" name="telephone" required />
+          </div>
+          <div class="form-group full">
+            <label>Address</label>
+            <input type="text" id="f-adresse" placeholder="ex: Tanger, Maroc" name="adresse" required />
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+          <button id="submitBtn" class="btn-submit" type="submit"></button>
+        </div>
+      </form>
+    </div>
+  </div>
     <div class="toast" id="toast"><span id="toastMsg"></span></div>
     <script type="module" src="../../assets/js/app.js"></script>
     <script type="module" src="../../assets/js/pages/clients.js"></script>
+    <script>
+    function openModal() {
+      document.getElementById("modalTitle").textContent = "Inscrire un nouvel client";
+      document.getElementById("formModal").action = "../../actions/clients/store.php";
+      document.getElementById("formMethod").value = "POST";
+      document.getElementById("submitBtn").textContent = "Inscrire le client";
+
+      ["f-nom", "f-prenom", "f-email", "f-mot_de_passe"].forEach(
+        (id) => (document.getElementById(id).value = "")
+      );
+
+      
+      document.getElementById("overlay").classList.add("open");
+    }
+    function openEditModal(){
+        console.log('hi')
+    }
+    function closeModal() {
+      document.getElementById('overlay').classList.remove('open');
+    }
+    function closeOnOverlay(e) {
+      if (e.target === e.currentTarget) closeModal();
+    }
+    </script>
 </body>
 
 </html>

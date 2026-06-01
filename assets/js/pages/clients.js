@@ -38,10 +38,10 @@ function applyFilters() {
 }
 
 function getClients() {
-  fetch("http://localhost/complaint-manager/api/clients_api.php")
+  fetch("../../api/clients_api.php")
     .then((res) => res.json())
     .then((data) => {
-      clients.length = 0
+      clients.length = 0;
       clients.push(...data.clients);
       applyFilters();
     })
@@ -136,3 +136,45 @@ document
   .getElementById("statusFilter")
   .addEventListener("change", applyFilters);
 document.getElementById("sortSelect").addEventListener("change", applyFilters);
+window.clients = clients;
+//! Handle Store.php (insertion using api)
+
+document
+  .getElementById("formModal")
+  .addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const body = {
+      nom: document.getElementById("f-nom").value,
+      prenom: document.getElementById("f-prenom").value,
+      email: document.getElementById("f-email").value,
+      mot_de_passe: document.getElementById("f-mot_de_passe").value,
+      telephone: document.getElementById("f-telephone").value,
+      adresse: document.getElementById("f-adresse").value,
+    };
+
+    const mode = this.dataset.mode;
+    const url =
+      mode === "edit"
+        ? `/complaint-manager/actions/clients/update.php?id=${this.dataset.editId}`
+        : `/complaint-manager/actions/clients/store.php`;
+
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        closeModal();
+        getClients();
+      } else {
+        showToast(data.error || "Échec de l'opération");
+      }
+    } catch (err) {
+      showToast("Une erreur est survenue");
+    }
+  });
