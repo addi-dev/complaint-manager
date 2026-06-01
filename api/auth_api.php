@@ -7,7 +7,8 @@ if (!empty($_SESSION['logged_in'])) {
         'logged_in' => true,
         'user' => [
             'id'    => $_SESSION['user_id'],
-            'name'  => $_SESSION['user_name'],
+            'nom'  => $_SESSION['user_nom'],
+            'prenom'  => $_SESSION['user_prenom'],
             'email' => $_SESSION['user_email'],
             'role'  => $_SESSION['user_role'],
             'from'  => $_SESSION['user_table'],

@@ -13,7 +13,8 @@ class Auth
         if (!self::check()) return null;
         return [
             'id'    => $_SESSION['user_id'],
-            'name'  => $_SESSION['user_name'],
+            'nom'  => $_SESSION['user_nom'],
+            'prenom'  => $_SESSION['user_prenom'],
             'email' => $_SESSION['user_email'],
             'role'  => $_SESSION['user_role'],
             'table' => $_SESSION['user_table'],

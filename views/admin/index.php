@@ -52,8 +52,8 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="user-chip">
                     <div class="avatar" id="avatar"></div>
                     <div class="user-info">
-                        <div class="name">Ibtissam Fadil</div>
-                        <div class="role">Admin</div>
+                        <div class="name"></div>
+                        <div class="role"></div>
                     </div>
                 </div>
             </div>
