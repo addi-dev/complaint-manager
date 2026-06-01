@@ -10,13 +10,14 @@ class Auth
 
     public static function user(): ?array
     {
-        if (!self::check()) return null;
+        if (!self::check())
+            return null;
         return [
-            'id'    => $_SESSION['user_id'],
-            'nom'  => $_SESSION['user_nom'],
-            'prenom'  => $_SESSION['user_prenom'],
+            'id' => $_SESSION['user_id'],
+            'nom' => $_SESSION['user_nom'],
+            'prenom' => $_SESSION['user_prenom'],
             'email' => $_SESSION['user_email'],
-            'role'  => $_SESSION['user_role'],
+            'role' => $_SESSION['user_role'],
             'table' => $_SESSION['user_table'],
         ];
     }
@@ -26,5 +27,9 @@ class Auth
         if (!self::check() || !in_array($_SESSION['user_role'], $roles)) {
             Response::redirect('/complaint-manager/views/auth/login.php');
         }
+    }
+    public static function getRole(): ?string
+    {
+        return self::check() ? $_SESSION['user_role'] : null;
     }
 }

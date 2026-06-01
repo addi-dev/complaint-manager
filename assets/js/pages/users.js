@@ -161,15 +161,15 @@ window.deleteRow = function (id) {
 
       if (data.success) {
         closeDeleteModal();
-        const idx = users.findIndex((u) => u.id == id);
-        if (idx !== -1) users.splice(idx, 1);
         showToast("Utilisateur supprimé avec succès");
-        applyFilters();
+        getUsers();
       } else {
-        showToast(data.error || "Delete failed");
+        console.error(data.error);
+        showToast("Échec de la suppression");
       }
     } catch (err) {
-      showToast("Something went wrong");
+      console.error(err);
+      showToast("Une erreur est survenue");
     }
   };
 };
@@ -207,9 +207,14 @@ document
 
       if (data.success) {
         closeModal();
+        showToast(
+          mode === "edit"
+            ? "Utilisateur mis à jour avec succès"
+            : "Utilisateur ajouté avec succès",
+        );
         getUsers();
       } else {
-        showToast(data.error || "Échec de l'opération");
+        showToast("Échec de l'opération");
       }
     } catch (err) {
       showToast("Une erreur est survenue");

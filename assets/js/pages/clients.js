@@ -15,7 +15,9 @@ function applyFilters() {
   filtered = clients.filter((u) => {
     const fullname = (u.nom + " " + u.prenom).toLowerCase();
     const matchSearch =
-      fullname.includes(search) || u.email.toLowerCase().includes(search);
+      fullname.includes(search) ||
+      u.email.toLowerCase().includes(search) ||
+      u.telephone.includes(search);
     const matchRole = !roleFilter || u.role.toLowerCase() === roleFilter;
     const matchStatus = statusFilter === "" ? true : u.actif == statusFilter;
     return matchSearch && matchRole && matchStatus;
@@ -70,9 +72,7 @@ function renderClients() {
           <td>${data.telephone}</td>
           <td style="text-align: center;">${data.total_reclamations}</td>
           <td>
-            <span class="status-badge status-${data.actif == 1 ? "active" : "inactive"}">
-              ${data.actif == 1 ? "Actif" : "Inactif"}
-            </span>
+            ${data.adresse}
           </td>
           <td>${formatDate(data.created_at)}</td>
           <td>
@@ -137,6 +137,45 @@ document
   .addEventListener("change", applyFilters);
 document.getElementById("sortSelect").addEventListener("change", applyFilters);
 window.clients = clients;
+
+window.closeDeleteModal = function () {
+  document.getElementById("deleteOverlay").classList.remove("open");
+};
+// handle Delete
+window.deleteRow = function (id) {
+  const client = clients.find((u) => u.id == id);
+  document.getElementById("deleteRowName").textContent =
+    (client?.nom + " " + client?.prenom).trim() || "cet client";
+  document.getElementById("deleteOverlay").classList.add("open");
+
+  document.getElementById("confirmDelete").onclick = async function () {
+    try {
+      const res = await fetch(
+        `/complaint-manager/actions/clients/delete.php?id=${id}`,
+        {
+          method: "POST",
+        },
+      );
+
+      const data = await res.json();
+
+      if (data.success) {
+        closeDeleteModal();
+        showToast("Client supprimé avec succès");
+        getClients();
+      } else {
+        console.error(data.error);
+        closeDeleteModal();
+        showToast("Échec de la suppression");
+      }
+    } catch (err) {
+      console.error(err);
+      closeDeleteModal();
+      showToast("Une erreur est survenue");
+    }
+  };
+};
+
 //! Handle Store.php (insertion using api)
 
 document
@@ -170,11 +209,18 @@ document
 
       if (data.success) {
         closeModal();
+        showToast(
+          mode === "edit"
+            ? "Client mis à jour avec succès"
+            : "Client ajouté avec succès",
+        );
         getClients();
       } else {
-        showToast(data.error || "Échec de l'opération");
+        closeModal();
+        showToast("Échec de l'opération");
       }
     } catch (err) {
+      closeModal();
       showToast("Une erreur est survenue");
     }
   });

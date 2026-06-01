@@ -18,12 +18,9 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reclamations | <?php echo APP_NAME ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="../../assets/css/app.css" />
     <style>
     </style>
@@ -41,10 +38,12 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="sidebar-section-label">Menu</div>
         <a class="nav-item" href=""><i class="fa-solid fa-house"></i>Tableau de bord</a>
         <a class="nav-item" href="users.php"><i class="fa-solid fa-users"></i>Utilisateurs</a>
-        <a class="nav-item active" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Réclamations</a>
+        <a class="nav-item active" href="reclamations.php"><i
+                class="fa-solid fa-file-circle-exclamation"></i>Réclamations</a>
         <a class="nav-item" href="clients.php"><i class="fa-solid fa-user"></i>Clients</a>
         <div class="sidebar-section-label">Other</div>
-        <a class="nav-item" href="../../actions/auth/logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
+        <a class="nav-item" href="../../actions/auth/logout.php"><i
+                class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
     </aside>
     <div class="main">
         <header class="topbar">
@@ -64,10 +63,6 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <h1>Reclamations</h1>
                     <div class="sub" id="enrollCount"></div>
                 </div>
-                <button class="enroll-btn" onclick="openModal()">
-                    <i class="fa-solid fa-plus"></i>
-                    Inscrire une reclamation
-                </button>
             </div>
             <div class="card">
                 <div class="table-toolbar">

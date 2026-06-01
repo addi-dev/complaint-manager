@@ -5,10 +5,6 @@ require_once __DIR__ . '/../../core/Auth.php';
 require __DIR__ . '/../../config/app.php';
 
 Auth::requireRole('admin');
-
-// fetch roles for dropdown
-$stmt = $pdo->query("SELECT id, nom FROM roles ORDER BY nom");
-$roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!doctype html>
 <html lang="fr">
@@ -18,12 +14,9 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Utilisateurs | <?php echo APP_NAME ?></title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
     rel="stylesheet" />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="stylesheet" href="../../assets/css/app.css" />
   <style>
   </style>
@@ -44,7 +37,8 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <a class="nav-item" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Réclamations</a>
     <a class="nav-item" href="clients.php"><i class="fa-solid fa-user"></i>Clients</a>
     <div class="sidebar-section-label">Other</div>
-    <a class="nav-item" href="../../actions/auth/logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
+    <a class="nav-item" href="../../actions/auth/logout.php"><i
+        class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
   </aside>
 
   <div class="main">
@@ -190,7 +184,7 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <script type="module" src="../../assets/js/app.js"></script>
   <script type="module" src="../../assets/js/pages/users.js"></script>
   <script>
-    function FilterTable() {}
+    function FilterTable() { }
 
     function openModal() {
       document.getElementById("modalTitle").textContent = "Inscrire un nouvel utilisateur";
@@ -203,7 +197,9 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
       );
 
       document.getElementById("f-role_id").value = "";
-      document.getElementById("f-actif").value = "1"; // default: actif
+      document.getElementById("f-actif").value = "1";
+      document.getElementById("f-mot_de_passe").required = true;
+      document.getElementById("f-mot_de_passe").placeholder = "••••••••";
       document.getElementById("overlay").classList.add("open");
     }
 
@@ -223,7 +219,8 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
       document.getElementById('f-mot_de_passe').value = ''; // leave empty
       document.getElementById('f-role_id').value = user.role_id || '';
       document.getElementById('f-actif').value = user.actif ?? '1';
-
+      document.getElementById("f-mot_de_passe").required = false;
+      document.getElementById("f-mot_de_passe").placeholder = "Laisser vide pour ne pas modifier";
       document.getElementById('overlay').classList.add('open');
     }
 
