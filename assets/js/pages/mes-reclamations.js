@@ -1,0 +1,112 @@
+import { initials, colorFor } from "../lib/string.js";
+import { formatDate } from "../lib/date.js";
+import { showToast } from "../lib/toast.js";
+
+const mes_reclamations = [];
+let filtered = [];
+let page = 1;
+const PER = 10;
+
+function applyFilters() {
+  const search = document.getElementById("searchInput").value.toLowerCase();
+  const sortBy = document.getElementById("sortSelect").value;
+
+  filtered = mes_reclamations.filter((r) => {
+    const matchSearch =
+      r.objet.toLowerCase().includes(search) ||
+      r.numero_unique.toLowerCase().includes(search);
+    return matchSearch;
+  });
+
+  filtered.sort((a, b) => {
+    if (sortBy === "objet_asc") return a.objet.localeCompare(b.objet);
+    if (sortBy === "objet_desc") return b.objet.localeCompare(a.objet);
+    if (sortBy === "date_asc")
+      return new Date(a.created_at) - new Date(b.created_at);
+    if (sortBy === "date_desc")
+      return new Date(b.created_at) - new Date(a.created_at);
+    return 0;
+  });
+
+  page = 1;
+  renderMesReclamations();
+}
+
+function getMesReclamations() {
+  fetch("../../api/mes_reclamations_api.php")
+    .then((res) => res.json())
+    .then((data) => {
+      mes_reclamations.length = 0;
+      console.log(data)
+      mes_reclamations.push(...data.mes_reclamations);
+      applyFilters();
+    })
+    .catch((err) => console.error(err));
+}
+
+function renderMesReclamations() {
+  const total = filtered.length;
+  const pages = Math.max(1, Math.ceil(total / PER));
+  if (page > pages) page = pages;
+  const start = (page - 1) * PER;
+  const slice = filtered.slice(start, start + PER);
+
+  document.getElementById("tableBody").innerHTML = slice
+    .map(
+      (r, i) => `
+        <tr style="animation-delay:${i * 0.03}s" data-id="${r.id}">
+          <td>${r.numero_unique}</td>
+          <td class="table-objet">${r.objet}</td>
+          <td><span class="role-badge role-${r.categorie.toLowerCase()}">${r.categorie}</span></td>
+          <td><span class="role-badge role-${r.priorite.toLowerCase()}">${r.priorite}</span></td>
+          <td><span class="status-badge status-${r.statut.toLowerCase()}">${r.statut}</span></td>
+          <td>${formatDate(r.created_at)}</td>
+          <td>
+            <div class="action-btns">
+              <button class="action-btn action-btn-edit" title="Modifier" onclick="openEditModal(${r.id})">
+                <i class="fa-regular fa-pen-to-square"></i>
+              </button>
+              <button class="action-btn action-btn-delete" title="Supprimer" onclick="deleteRow('${r.id}')">
+                <i class="fa-regular fa-trash-can"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `,
+    )
+    .join("");
+
+  const end = Math.min(start + PER, total);
+  document.getElementById("tfInfo").innerHTML =
+    total === 0
+      ? "Aucune réclamation trouvée"
+      : `${start + 1}–${end} sur ${total} réclamations`;
+
+  const pg = document.getElementById("pagination");
+  pg.innerHTML = "";
+  const btn = (label, p, active = false) => {
+    const b = document.createElement("button");
+    b.className = "pg-btn" + (active ? " active" : "");
+    b.textContent = label;
+    b.onclick = () => {
+      page = p;
+      renderMesReclamations();
+    };
+    return b;
+  };
+  if (page > 1) pg.appendChild(btn("‹", page - 1));
+  for (let p2 = 1; p2 <= pages; p2++) {
+    if (pages <= 6 || p2 === 1 || p2 === pages || Math.abs(p2 - page) <= 1)
+      pg.appendChild(btn(p2, p2, p2 === page));
+    else if (p2 === 2 || p2 === pages - 1) {
+      const s = document.createElement("span");
+      s.className = "pg-btn";
+      s.textContent = "…";
+      s.style.pointerEvents = "none";
+      pg.appendChild(s);
+    }
+  }
+  if (page < pages) pg.appendChild(btn("›", page + 1));
+}
+
+getMesReclamations();

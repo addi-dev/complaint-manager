@@ -2,7 +2,8 @@
 session_start();
 
 require __DIR__ . '/../../config/app.php';
-
+$categories = $pdo->query("SELECT id, libelle FROM categories_reclamation")->fetchAll();
+$priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -112,9 +113,79 @@ require __DIR__ . '/../../config/app.php';
             </div>
         </div>
     </div>
+    <!-- ENROLL MODAL -->
+    <div class="overlay" id="overlay" onclick="closeOnOverlay(event)">
+        <div class="modal">
+            <form id="formModal" action="" method="POST">
+                <input type="hidden" name="_method" id="formMethod" value="POST">
+                <div class="modal-header">
+                    <h2 id="modalTitle"></h2>
+                    <button type="button" class="close-btn" onclick="closeModal()">✕</button>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group full">
+                        <label>Objet</label>
+                        <input type="text" id="f-objet" placeholder="Ex: Problème de connexion" name="objet" />
+                    </div>
+                    <div class="form-group full">
+                        <label>Description</label>
+                        <textarea id="f-description" placeholder="Décrivez votre problème ici..."
+                            name="description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Catégorie</label>
+                        <select name="categorie_id" id="f-category">
+                            <option value="">Sélectionner une categorie</option>
+                            <?php foreach ($categories as $cat): ?>
+                                <option value="<?= $cat['id'] ?>">
+                                    <?= $cat['libelle'] ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Priorité</label>
+                        <select name="priorite_id" id="f-priority">
+                            <option value="">Sélectionner une priorité</option>
+                            <?php foreach ($priorites as $priority): ?>
+                                <option value="<?= $priority['id'] ?>">
+                                    <?= $priority['libelle'] ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+                    <button id="submitBtn" class="btn-submit" type="submit"></button>
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="toast" id="toast"><span id="toastMsg"></span></div>
     <script type="module" src="../../assets/js/app.js"></script>
     <script type="module" src="../../assets/js/pages/mes-reclamations.js"></script>
+    <script>
+        function openModal() {
+            document.getElementById("modalTitle").textContent = "Insérer une nouvelle réclamation";
+            document.getElementById("formModal").action = "../../actions/reclamations/store.php";
+            document.getElementById("formMethod").value = "POST";
+            document.getElementById("submitBtn").textContent = "Insérer la réclamation";
+
+            ["f-objet", "f-description", "f-category", "f-priority"].forEach(
+                (id) => (document.getElementById(id).value = "")
+            );
+
+            document.getElementById("overlay").classList.add("open");
+        }
+        function closeModal() {
+            document.getElementById('overlay').classList.remove('open');
+        }
+
+        function closeOnOverlay(e) {
+            if (e.target === e.currentTarget) closeModal();
+        }
+    </script>
 </body>
 
 </html>

@@ -53,7 +53,7 @@ function renderUsers() {
   const pages = Math.max(1, Math.ceil(total / PER));
   if (page > pages) page = pages;
   const start = (page - 1) * PER;
-  const slice = filtered.slice(start, start + PER); // ← defined here, used below
+  const slice = filtered.slice(start, start + PER);
 
   document.getElementById("tableBody").innerHTML = slice
     .map(

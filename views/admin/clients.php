@@ -126,15 +126,15 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="form-grid">
                     <div class="form-group">
                         <label>Nom</label>
-                        <input type="text" id="f-nom" placeholder="ex: Fadil" name="nom" required />
+                        <input type="text" id="f-nom" placeholder="ex: Fadil" name="nom" />
                     </div>
                     <div class="form-group">
                         <label>Prénom</label>
-                        <input type="text" id="f-prenom" placeholder="ex: Ibtisam" name="prenom" required />
+                        <input type="text" id="f-prenom" placeholder="ex: Ibtisam" name="prenom" />
                     </div>
                     <div class="form-group full">
                         <label>Email</label>
-                        <input type="email" id="f-email" placeholder="client@gmail.com" name="email" required />
+                        <input type="email" id="f-email" placeholder="client@gmail.com" name="email"  />
                     </div>
                     <div class="form-group full">
                         <label>Mot de passe</label>
@@ -143,11 +143,11 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                     <div class="form-group full">
                         <label>Téléphone</label>
-                        <input type="text" id="f-telephone" placeholder="ex: 0612345678" name="telephone" required />
+                        <input type="text" id="f-telephone" placeholder="ex: 0612345678" name="telephone"  />
                     </div>
                     <div class="form-group full">
                         <label>Address</label>
-                        <input type="text" id="f-adresse" placeholder="ex: Tanger, Maroc" name="adresse" required />
+                        <input type="text" id="f-adresse" placeholder="ex: Tanger, Maroc" name="adresse"  />
                     </div>
                 </div>
                 <div class="modal-actions">

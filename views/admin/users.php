@@ -130,19 +130,19 @@ Auth::requireRole('admin');
           </div>
           <div class="form-group">
             <label>Prénom</label>
-            <input type="text" id="f-prenom" placeholder="ex: Ibtisam" name="prenom" required />
+            <input type="text" id="f-prenom" placeholder="ex: Ibtisam" name="prenom" />
           </div>
           <div class="form-group full">
             <label>Email</label>
-            <input type="email" id="f-email" placeholder="utilisateur@gmail.com" name="email" required />
+            <input type="email" id="f-email" placeholder="utilisateur@gmail.com" name="email" />
           </div>
           <div class="form-group full">
             <label>Mot de passe</label>
-            <input type="password" id="f-mot_de_passe" placeholder="••••••••" name="mot_de_passe" required />
+            <input type="password" id="f-mot_de_passe" placeholder="••••••••" name="mot_de_passe" />
           </div>
           <div class="form-group">
             <label>Rôle</label>
-            <select id="f-role_id" name="role_id" required>
+            <select id="f-role_id" name="role_id">
               <option value="">Sélectionner un rôle</option>
               <option value="1">Admin</option>
               <option value="2">Superviseur</option>
