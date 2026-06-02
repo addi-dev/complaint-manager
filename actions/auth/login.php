@@ -96,9 +96,9 @@ if ($client && password_verify($password, $client['mot_de_passe'])) {
     $_SESSION['logged_in']  = true;
 
     Response::success('Login successful.', [
-        'redirect' => '/views/client/dashboard.php'
+        'redirect' => 'complaint-manager/views/client'
     ]);
 }
 
 // ── 3. No match ───────────────────────────────────────────────────────────────
-Response::error('Invalid email or password.');
+Response::error('Adresse e-mail ou mot de passe invalide.');

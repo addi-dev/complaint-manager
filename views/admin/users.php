@@ -144,9 +144,9 @@ Auth::requireRole('admin');
             <label>Rôle</label>
             <select id="f-role_id" name="role_id" required>
               <option value="">Sélectionner un rôle</option>
-              <?php foreach ($roles as $role): ?>
-                <option value="<?= $role['id'] ?>"><?= htmlspecialchars($role['nom']) ?></option>
-              <?php endforeach; ?>
+              <option value="1">Admin</option>
+              <option value="2">Superviseur</option>
+              <option value="3">Agent</option>
             </select>
           </div>
           <div class="form-group">

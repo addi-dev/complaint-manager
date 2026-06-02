@@ -183,7 +183,7 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
             document.getElementById("formMethod").value = "POST";
             document.getElementById("submitBtn").textContent = "Inscrire le client";
 
-            ["f-nom", "f-prenom", "f-email", "f-mot_de_passe"].forEach(
+            ["f-nom", "f-prenom", "f-email", "f-mot_de_passe", 'f-telephone', 'f-adresse'].forEach(
                 (id) => (document.getElementById(id).value = "")
             );
 
