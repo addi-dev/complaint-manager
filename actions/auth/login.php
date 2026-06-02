@@ -96,7 +96,7 @@ if ($client && password_verify($password, $client['mot_de_passe'])) {
     $_SESSION['logged_in']  = true;
 
     Response::success('Login successful.', [
-        'redirect' => 'complaint-manager/views/client'
+        'redirect' => '/complaint-manager/views/client'
     ]);
 }
 

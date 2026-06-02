@@ -299,16 +299,6 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     <!-- Right form panel -->
     <div class="form-panel">
 
-        <!-- Logo -->
-        <svg class="logo" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="52" height="52" rx="14" fill="transparent" />
-            <path d="M13 38V20C13 13.373 18.373 8 25 8h2C33.627 8 39 13.373 39 20v18l-4-3-4 3-4-3-4 3-4-3-4 3Z"
-                fill="#5B21B6" />
-            <circle cx="21" cy="22" r="2.5" fill="white" />
-            <circle cx="31" cy="22" r="2.5" fill="white" />
-            <circle cx="32" cy="40" r="6" fill="#F97316" />
-        </svg>
-
         <h1>Bienvenue</h1>
         <p class="subtitle">Connectez-vous à votre compte</p>
 
