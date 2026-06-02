@@ -1,10 +1,12 @@
 <?php
 // api/reclamations_api.php
+session_start();
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
 require __DIR__ . '/../config/app.php';
-
+require __DIR__ . '/../core/Auth.php';
+Auth::requireRole('admin');
 try {
     $stmt = $pdo->query("
         SELECT
@@ -53,8 +55,8 @@ try {
     unset($rec);
 
     echo json_encode([
-        'success'       => true,
-        'reclamations'  => $reclamations,
+        'success' => true,
+        'reclamations' => $reclamations,
     ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 } catch (PDOException $e) {
     http_response_code(500);

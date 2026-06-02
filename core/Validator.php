@@ -17,7 +17,7 @@ class Validator
     {
         $label = $label ?: $field;
         if (empty(trim($this->data[$field] ?? ''))) {
-            $this->errors[$field] = "$label is required.";
+            $this->errors[$field] = "$label est obligatoire.";
         }
         return $this;
     }
@@ -26,7 +26,7 @@ class Validator
     {
         $label = $label ?: $field;
         if (!empty($this->data[$field]) && !filter_var($this->data[$field], FILTER_VALIDATE_EMAIL)) {
-            $this->errors[$field] = "$label must be a valid email address.";
+            $this->errors[$field] = "$label doit être une adresse e-mail valide.";
         }
         return $this;
     }
@@ -35,7 +35,7 @@ class Validator
     {
         $label = $label ?: $field;
         if (!empty($this->data[$field]) && strlen($this->data[$field]) < $min) {
-            $this->errors[$field] = "$label must be at least $min characters.";
+            $this->errors[$field] = "$label doit contenir au moins $min caractères.";
         }
         return $this;
     }
@@ -44,7 +44,7 @@ class Validator
     {
         $label = $label ?: $field;
         if (!empty($this->data[$field]) && strlen($this->data[$field]) > $max) {
-            $this->errors[$field] = "$label must not exceed $max characters.";
+            $this->errors[$field] = "$label ne doit pas dépasser $max caractères.";
         }
         return $this;
     }
@@ -53,7 +53,7 @@ class Validator
     {
         $label = $label ?: $field;
         if (!empty($this->data[$field]) && !is_numeric($this->data[$field])) {
-            $this->errors[$field] = "$label must be a number.";
+            $this->errors[$field] = "$label doit être un nombre.";
         }
         return $this;
     }

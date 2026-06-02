@@ -1,10 +1,12 @@
 <?php
 // api/users_api.php
+session_start();
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
 require __DIR__ . '/../config/app.php';
-
+require __DIR__ . '/../core/Auth.php';
+Auth::requireRole('admin');
 try {
     $stmt = $pdo->query("SELECT u.id, u.nom, u.prenom, u.email, u.actif, u.created_at, u.role_id, r.nom AS role
 FROM utilisateurs u
@@ -13,7 +15,7 @@ JOIN roles r ON u.role_id = r.id ORDER BY u.created_at DESC;");
 
     echo json_encode([
         'success' => true,
-        'users'    => $users
+        'users' => $users
     ]);
 } catch (PDOException $e) {
     http_response_code(500);

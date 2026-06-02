@@ -15,8 +15,8 @@ try {
     $prenom       = trim($body['prenom']);
     $email        = trim($body['email']);
     $mot_de_passe = password_hash($body['mot_de_passe'], PASSWORD_BCRYPT);
-    $telephone      = intval($body['telephone']);
-    $adresse        = intval($body['adresse']);
+    $telephone      = trim($body['telephone']);
+    $adresse        = trim($body['adresse']);
 
     $check = $pdo->prepare("SELECT id FROM clients WHERE email = ?");
     $check->execute([$email]);
@@ -41,6 +41,8 @@ try {
 
     echo json_encode(['success' => true, 'id' => $pdo->lastInsertId()]);
 } catch (Exception $e) {
-    echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+    error_log('[API Error] ' . $e->getMessage());
+    http_response_code(500);
+    echo json_encode(['success' => false, 'message' => 'An internal server error occurred.']);
 }
 exit;

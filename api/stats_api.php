@@ -1,9 +1,12 @@
 <?php
+// api/stats_api.php
+session_start();
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
 require __DIR__ . '/../config/app.php';
-
+require __DIR__ . '/../core/Auth.php';
+Auth::requireRole('admin');
 try {
     $totalClients = $pdo->query("SELECT COUNT(*) FROM clients")->fetchColumn();
 
@@ -78,6 +81,7 @@ try {
         'recent' => $recent,
     ]);
 } catch (PDOException $e) {
+    error_log('[API Error] ' . $e->getMessage());
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    echo json_encode(['success' => false, 'message' => 'An internal server error occurred.']);
 }

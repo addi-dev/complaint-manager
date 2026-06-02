@@ -213,10 +213,14 @@ document
             : "Utilisateur ajouté avec succès",
         );
         getUsers();
+      } else if (data.errors) {
+        Object.values(data.errors).forEach((msg) => showToast(msg));
       } else {
+        console.error(data.message);
         showToast("Échec de l'opération");
       }
     } catch (err) {
+      console.log(err)
       showToast("Une erreur est survenue");
     }
   });
