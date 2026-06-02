@@ -1,30 +1,32 @@
 <?php
+require __DIR__ . '/../../config/app.php';
 session_start();
 
 if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     $redirects = [
-        'admin'       => '/complaint-manager/views/admin',
+        'admin' => '/complaint-manager/views/admin',
         'superviseur' => '/complaint-manager/views/supervisor',
-        'agent'       => '/complaint-manager/views/agent',
-        'client'      => '/complaint-manager/views/client',
+        'agent' => '/complaint-manager/views/agent',
+        'client' => '/complaint-manager/views/client',
     ];
 
     $role = $_SESSION['user_role'] ?? '';
-    $url  = $redirects[$role] ?? '/complaint-manager/views/auth/login.php';
+    $url = $redirects[$role] ?? '/complaint-manager/views/auth/login.php';
 
     header('Location: ' . $url);
     exit;
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>Connexion | <?php echo APP_NAME ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
     <style>
         *,
         *::before,
@@ -300,14 +302,15 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
         <!-- Logo -->
         <svg class="logo" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="52" height="52" rx="14" fill="transparent" />
-            <path d="M13 38V20C13 13.373 18.373 8 25 8h2C33.627 8 39 13.373 39 20v18l-4-3-4 3-4-3-4 3-4-3-4 3Z" fill="#5B21B6" />
+            <path d="M13 38V20C13 13.373 18.373 8 25 8h2C33.627 8 39 13.373 39 20v18l-4-3-4 3-4-3-4 3-4-3-4 3Z"
+                fill="#5B21B6" />
             <circle cx="21" cy="22" r="2.5" fill="white" />
             <circle cx="31" cy="22" r="2.5" fill="white" />
             <circle cx="32" cy="40" r="6" fill="#F97316" />
         </svg>
 
-        <h1>Welcome back</h1>
-        <p class="subtitle">Sign in to your account</p>
+        <h1>Bienvenue</h1>
+        <p class="subtitle">Connectez-vous à votre compte</p>
 
         <!-- Alert box -->
         <div class="alert" id="alert">
@@ -316,20 +319,22 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
 
         <!-- Email -->
         <div class="field">
-            <label for="email">Email Address</label>
+            <label for="email">Adresse e-mail</label>
             <div class="input-wrap">
-                <input type="email" id="email" placeholder="Enter your email address" />
+                <input type="email" id="email" placeholder="Entrez votre adresse e-mail" />
             </div>
         </div>
 
         <!-- Password -->
         <div class="field">
-            <label for="password">Password</label>
+            <label for="password">Mot de passe</label>
             <div class="input-wrap">
-                <input type="password" id="password" placeholder="Enter your password" />
-                <button class="eye-btn" onclick="togglePassword()" type="button" aria-label="Toggle password visibility">
+                <input type="password" id="password" placeholder="Entrez votre mot de passe" />
+                <button class="eye-btn" onclick="togglePassword()" type="button"
+                    aria-label="Afficher ou masquer le mot de passe">
                     <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
                         <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
                         <line x1="1" y1="1" x2="23" y2="23" />
@@ -338,13 +343,13 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
             </div>
         </div>
 
-        <div class="forgot-wrap">
-            <a href="#">Forgot password?</a>
+        <div class="forgot-wrap" style="display:none">
+            <a href="#">Mot de passe oublié ?</a>
         </div>
 
         <button class="btn-submit" id="loginBtn" onclick="handleLogin()">
             <div class="spinner"></div>
-            <span class="btn-text">Login</span>
+            <span class="btn-text">Connexion</span>
         </button>
 
     </div>
@@ -377,7 +382,7 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
             const btn = document.getElementById('loginBtn');
             btn.disabled = state;
             btn.classList.toggle('loading', state);
-            btn.querySelector('.btn-text').textContent = state ? 'Signing in...' : 'Login';
+            btn.querySelector('.btn-text').textContent = state ? 'Connexion en cours...' : 'Connexion';
         }
 
         async function handleLogin() {
@@ -387,12 +392,11 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
             const password = document.getElementById('password').value;
 
             if (!email) {
-                showAlert('Please enter your email address.');
+                showAlert('Veuillez entrer votre adresse e-mail.');
                 return;
             }
             if (!password) {
-                showAlert('Please enter your password.');
-                return;
+                showAlert('Veuillez entrer votre mot de passe.'); return;
             }
 
             setLoading(true);
@@ -413,14 +417,14 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
                 const data = await res.json();
 
                 if (data.success) {
-                    showAlert('Login successful! Redirecting…', 'success');
+                    showAlert('Connexion réussie ! Redirection…', 'success');
                     setTimeout(() => window.location.href = data.redirect, 1000);
                 } else {
-                    showAlert(data.message || 'Invalid email or password.');
+                    showAlert(data.message || 'Email ou mot de passe invalide.');
                 }
 
             } catch (err) {
-                showAlert('Network error. Please try again.');
+                showAlert('Erreur réseau. Veuillez réessayer.');
                 console.error(err);
             } finally {
                 setLoading(false);
@@ -428,7 +432,7 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
         }
 
         // Allow Enter key to submit
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Enter') handleLogin();
         });
     </script>

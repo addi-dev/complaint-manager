@@ -36,7 +36,7 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
             ReclamationOS
         </div>
         <div class="sidebar-section-label">Menu</div>
-        <a class="nav-item" href=""><i class="fa-solid fa-house"></i>Tableau de bord</a>
+        <a class="nav-item" href="index.php"><i class="fa-solid fa-house"></i>Tableau de bord</a>
         <a class="nav-item" href="users.php"><i class="fa-solid fa-users"></i>Utilisateurs</a>
         <a class="nav-item active" href="reclamations.php"><i
                 class="fa-solid fa-file-circle-exclamation"></i>Réclamations</a>

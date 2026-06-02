@@ -25,7 +25,7 @@ class Auth
     public static function requireRole(string ...$roles): void
     {
         if (!self::check() || !in_array($_SESSION['user_role'], $roles)) {
-            Response::redirect('/complaint-manager/views/auth/login.php');
+            Response::unauthorized();
         }
     }
     public static function getRole(): ?string
