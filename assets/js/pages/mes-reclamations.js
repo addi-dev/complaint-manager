@@ -10,12 +10,22 @@ const PER = 10;
 function applyFilters() {
   const search = document.getElementById("searchInput").value.toLowerCase();
   const sortBy = document.getElementById("sortSelect").value;
+  const statusFilter = document.getElementById("statusFilter").value;
+  const priorityFilter = document.getElementById("priorityFilter").value;
+  const categoryFilter = document.getElementById("categoryFilter").value;
 
   filtered = mes_reclamations.filter((r) => {
     const matchSearch =
       r.objet.toLowerCase().includes(search) ||
-      r.numero_unique.toLowerCase().includes(search);
-    return matchSearch;
+      r.numero_unique.toLowerCase().includes(search) ||
+      r.description.toLowerCase().includes(search);
+    const matchStatus =
+      !statusFilter || r.statut_code.toLowerCase() === statusFilter;
+    const matchPriority =
+      !priorityFilter || r.priorite_niveau == priorityFilter;
+    const matchCategory = !categoryFilter || r.categorie_id == categoryFilter;
+
+    return matchSearch && matchStatus && matchPriority && matchCategory;
   });
 
   filtered.sort((a, b) => {
@@ -37,7 +47,7 @@ function getMesReclamations() {
     .then((res) => res.json())
     .then((data) => {
       mes_reclamations.length = 0;
-      console.log(data)
+      console.log(data);
       mes_reclamations.push(...data.mes_reclamations);
       applyFilters();
     })
@@ -55,12 +65,12 @@ function renderMesReclamations() {
     .map(
       (r, i) => `
         <tr style="animation-delay:${i * 0.03}s" data-id="${r.id}">
-          <td>${r.numero_unique}</td>
+          <td><span class='ref-badge'>${r.numero_unique}</span></td>
           <td class="table-objet">${r.objet}</td>
-          <td><span class="role-badge role-${r.categorie.toLowerCase()}">${r.categorie}</span></td>
-          <td><span class="role-badge role-${r.priorite.toLowerCase()}">${r.priorite}</span></td>
+          <td><span class="category-badge">${r.categorie}</span></td>
+          <td><span class="priority-badge ${r.priorite.toLowerCase()}">${r.priorite}</span></td>
           <td><span class="status-badge status-${r.statut.toLowerCase()}">${r.statut}</span></td>
-          <td>${formatDate(r.created_at)}</td>
+          <td><span class="date">${formatDate(r.created_at)}</span></td>
           <td>
             <div class="action-btns">
               <button class="action-btn action-btn-edit" title="Modifier" onclick="openEditModal(${r.id})">
@@ -107,6 +117,23 @@ function renderMesReclamations() {
     }
   }
   if (page < pages) pg.appendChild(btn("›", page + 1));
+  //! Show reclamations count
+  document.getElementById("enrollCount").innerHTML =
+    `${mes_reclamations.length} réclamation${mes_reclamations.length > 1 ? "s" : ""}`;
 }
 
 getMesReclamations();
+
+// Apply Filters
+
+document.getElementById("searchInput").addEventListener("input", applyFilters);
+document
+  .getElementById("priorityFilter")
+  .addEventListener("change", applyFilters);
+document
+  .getElementById("statusFilter")
+  .addEventListener("change", applyFilters);
+document
+  .getElementById("categoryFilter")
+  .addEventListener("change", applyFilters);
+document.getElementById("sortSelect").addEventListener("change", applyFilters);

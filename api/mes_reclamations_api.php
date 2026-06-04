@@ -25,6 +25,7 @@ try {
         c.telephone AS client_telephone,
 
         cat.libelle AS categorie,
+        cat.id AS categorie_id,
 
         p.libelle AS priorite,
         p.niveau AS priorite_niveau,

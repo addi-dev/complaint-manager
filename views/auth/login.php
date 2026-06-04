@@ -333,8 +333,8 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
             </div>
         </div>
 
-        <div class="forgot-wrap" style="display:none">
-            <a href="#">Mot de passe oublié ?</a>
+        <div class="forgot-wrap">
+            <a href="reset-password">Mot de passe oublié ?</a>
         </div>
 
         <button class="btn-submit" id="loginBtn" onclick="handleLogin()">
@@ -386,7 +386,8 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
                 return;
             }
             if (!password) {
-                showAlert('Veuillez entrer votre mot de passe.'); return;
+                showAlert('Veuillez entrer votre mot de passe.');
+                return;
             }
 
             setLoading(true);
@@ -422,7 +423,7 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
         }
 
         // Allow Enter key to submit
-        document.addEventListener('keydown', function (e) {
+        document.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') handleLogin();
         });
     </script>
