@@ -28,10 +28,7 @@ $validator = Validator::make($body)
     ->minLength('description', 10, 'Description')
 
     ->required('categorie_id', 'Catégorie')
-    ->numeric('categorie_id', 'Catégorie')
-
-    ->required('priorite_id', 'Priorité')
-    ->numeric('priorite_id', 'Priorité');
+    ->numeric('categorie_id', 'Catégorie');
 
 if ($validator->fails()) {
     http_response_code(422);
@@ -64,14 +61,13 @@ try {
         INSERT INTO reclamations 
         (numero_unique, client_id, categorie_id, priorite_id, statut_id, objet, description)
         VALUES
-        (:numero, :client, :categorie, :priorite, 1, :objet, :description)
+        (:numero, :client, :categorie, 2, 1, :objet, :description)
     ");
 
     $stmt->execute([
         ':numero' => $numero_unique,
         ':client' => $client_id,
         ':categorie' => $body['categorie_id'],
-        ':priorite' => $body['priorite_id'],
         ':objet' => $objet,
         ':description' => $description,
     ]);

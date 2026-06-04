@@ -34,10 +34,10 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
         <a class="nav-item active" href="index.php"><i class="fa-solid fa-house"></i>Tableau de bord</a>
         <a class="nav-item" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Mes
             réclamations</a>
-        <a class="nav-item" href="clients.php"><i class="fa-solid fa-user"></i>Clients</a>
+        <!-- <a class="nav-item" href="clients.php"><i class="fa-solid fa-user"></i>Clients</a> -->
         <div class="sidebar-section-label">Other</div>
         <a class="nav-item" href="../../actions/auth/logout.php"><i
-                class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
+                class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
     </aside>
     <div class="main">
         <header class="topbar">
@@ -54,7 +54,7 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
         <div class="content">
             <div class="page-header">
                 <div>
-                    <h1>Réclamations</h1>
+                    <h1>Mes Réclamations</h1>
                     <div class="sub" id="enrollCount"></div>
                 </div>
                 <button class="enroll-btn" onclick="openModal()">
@@ -75,9 +75,50 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
 
                     </select>
                     <select class="filter-select" id="statusFilter">
-                        <option value="">Tous</option>
-                        <option value="1">Actif</option>
-                        <option value="0">Inactif</option>
+                        <option value="">Tous les statuts</option>
+                        <option value="nouvelle">Nouvelle</option>
+                        <option value="attente_affectation">En attente d'affectation</option>
+                        <option value="affectee">Affectée</option>
+                        <option value="en_cours">En cours de traitement</option>
+                        <option value="attente_info">En attente d'informations</option>
+                        <option value="resolue">Résolue</option>
+                        <option value="cloturee">Clôturée</option>
+                        <option value="rejetee">Rejetée</option>
+                    </select>
+                    <select class="filter-select" id="priorityFilter">
+                        <option value="">Toutes les priorités</option>
+                        <option value="1">Faible</option>
+                        <option value="2">Normale</option>
+                        <option value="3">Haute</option>
+                        <option value="4">Critique</option>
+                    </select>
+                    <select class="filter-select" id="categoryFilter">
+                        <option value="">Toutes les catégories</option>
+                        <option value="1">Facturation</option>
+                        <option value="2">Livraison</option>
+                        <option value="3">Qualité produit</option>
+                        <option value="4">Service après-vente</option>
+                        <option value="5">Remboursement</option>
+                        <option value="6">Délai de livraison</option>
+                        <option value="7">Produit manquant</option>
+                        <option value="8">Produit endommagé</option>
+                        <option value="9">Erreur de commande</option>
+                        <option value="10">Annulation commande</option>
+                        <option value="11">Compte client</option>
+                        <option value="12">Paiement en ligne</option>
+                        <option value="13">Offre promotionnelle</option>
+                        <option value="14">Communication commerciale</option>
+                        <option value="15">Service client</option>
+                        <option value="16">Garantie produit</option>
+                        <option value="17">Retour marchandise</option>
+                        <option value="18">Transport / Transporteur</option>
+                        <option value="19">Conformité réglementaire</option>
+                        <option value="20">Confidentialité des données</option>
+                        <option value="21">Application mobile</option>
+                        <option value="22">Site web</option>
+                        <option value="23">Abonnement</option>
+                        <option value="24">Résiliation</option>
+                        <option value="25">Devis / Estimation</option>
                     </select>
                     <select class="filter-select" id="sortSelect">
                         <option value="">Par défaut</option>
@@ -92,12 +133,10 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
                         <thead>
                             <tr>
                                 <th>Numéro</th>
-                                <th>Client</th>
                                 <th>Objet</th>
                                 <th>Catégorie</th>
                                 <th>Priorité</th>
                                 <th>Statut</th>
-                                <th>Agent</th>
                                 <th>Créée le</th>
                                 <th>Actions</th>
                             </tr>
@@ -131,7 +170,7 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
                         <textarea id="f-description" placeholder="Décrivez votre problème ici..."
                             name="description"></textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group full">
                         <label>Catégorie</label>
                         <select name="categorie_id" id="f-category">
                             <option value="">Sélectionner une categorie</option>
@@ -142,16 +181,9 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Priorité</label>
-                        <select name="priorite_id" id="f-priority">
-                            <option value="">Sélectionner une priorité</option>
-                            <?php foreach ($priorites as $priority): ?>
-                                <option value="<?= $priority['id'] ?>">
-                                    <?= $priority['libelle'] ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
+                    <div class="form-group full">
+                        <label>Pièces jointes</label>
+                        <input type="file" name="pieces_jointes[]" id="" multiple>
                     </div>
                 </div>
                 <div class="modal-actions">
@@ -171,7 +203,7 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
             document.getElementById("formMethod").value = "POST";
             document.getElementById("submitBtn").textContent = "Insérer la réclamation";
 
-            ["f-objet", "f-description", "f-category", "f-priority"].forEach(
+            ["f-objet", "f-description", "f-category"].forEach(
                 (id) => (document.getElementById(id).value = "")
             );
 

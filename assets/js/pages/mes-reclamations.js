@@ -73,6 +73,9 @@ function renderMesReclamations() {
           <td><span class="date">${formatDate(r.created_at)}</span></td>
           <td>
             <div class="action-btns">
+              <button class="action-btn action-btn-view" title="Voir le dossier" onclick="openEditModal(${r.id})">
+                <i class="fa-regular fa-eye"></i>
+              </button>
               <button class="action-btn action-btn-edit" title="Modifier" onclick="openEditModal(${r.id})">
                 <i class="fa-regular fa-pen-to-square"></i>
               </button>
@@ -137,3 +140,51 @@ document
   .getElementById("categoryFilter")
   .addEventListener("change", applyFilters);
 document.getElementById("sortSelect").addEventListener("change", applyFilters);
+
+//! Handle Store.php (insertion using api)
+
+document
+  .getElementById("formModal")
+  .addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const body = {
+      objet: document.getElementById("f-objet").value,
+      description: document.getElementById("f-description").value,
+      categorie_id: document.getElementById("f-category").value,
+    };
+
+    const mode = this.dataset.mode;
+    const url =
+      mode === "edit"
+        ? `/complaint-manager/actions/reclamations/update.php?id=${this.dataset.editId}`
+        : `/complaint-manager/actions/reclamations/store.php`;
+
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        closeModal();
+        showToast(
+          mode === "edit"
+            ? "Réclamation mis à jour avec succès"
+            : "Réclamation ajouté avec succès",
+        );
+        getMesReclamations();
+      } else if (data.errors) {
+        Object.values(data.errors).forEach((msg) => showToast(msg));
+      } else {
+        console.error(data.message);
+        showToast("Échec de l'opération");
+      }
+    } catch (err) {
+      console.log(err);
+      showToast("Une erreur est survenue");
+    }
+  });

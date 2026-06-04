@@ -34,10 +34,9 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
         <a class="nav-item" href="index.php"><i class="fa-solid fa-house"></i>Tableau de bord</a>
         <a class="nav-item active" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Mes
             réclamations</a>
-        <a class="nav-item" href="clients.php"><i class="fa-solid fa-user"></i>Clients</a>
         <div class="sidebar-section-label">Other</div>
         <a class="nav-item" href="../../actions/auth/logout.php"><i
-                class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
+                class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
     </aside>
     <div class="main">
         <header class="topbar">
