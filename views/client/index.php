@@ -137,7 +137,6 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
                                 <th>Catégorie</th>
                                 <th>Priorité</th>
                                 <th>Statut</th>
-                                <th>Créée le</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -192,6 +191,22 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
                 </div>
             </form>
         </div>
+    </div>
+    <!-- DELETE MODAL -->
+    <div class="overlay" id="deleteOverlay" onclick="if(event.target===this)closeDeleteModal()">
+        <form class="modal" id="deleteForm" method="POST" style="max-width:380px">
+            <div class="modal-header">
+                <h2>Delete </h2>
+                <button type="button" class="close-btn" onclick="closeDeleteModal()">✕</button>
+            </div>
+            <p style="color:var(--text-label);font-size:14px;margin-bottom:22px;line-height:1.6">
+                Are you sure you want to delete <strong id="deleteRowName"></strong>? This action cannot be undone.
+            </p>
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" onclick="closeDeleteModal()">Cancel</button>
+                <button type="button" id="confirmDelete" class="btn-submit" style="background:#dc2626">Delete</button>
+            </div>
+        </form>
     </div>
     <div class="toast" id="toast"><span id="toastMsg"></span></div>
     <script type="module" src="../../assets/js/app.js"></script>

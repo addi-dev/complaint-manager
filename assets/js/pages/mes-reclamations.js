@@ -70,7 +70,6 @@ function renderMesReclamations() {
           <td><span class="category-badge">${r.categorie}</span></td>
           <td><span class="priority-badge ${r.priorite.toLowerCase()}">${r.priorite}</span></td>
           <td><span class="status-badge status-${r.statut.toLowerCase()}">${r.statut}</span></td>
-          <td><span class="date">${formatDate(r.created_at)}</span></td>
           <td>
             <div class="action-btns">
               <button class="action-btn action-btn-view" title="Voir le dossier" onclick="openEditModal(${r.id})">
@@ -140,6 +139,43 @@ document
   .getElementById("categoryFilter")
   .addEventListener("change", applyFilters);
 document.getElementById("sortSelect").addEventListener("change", applyFilters);
+
+window.mes_reclamations = mes_reclamations;
+window.closeDeleteModal = function () {
+  document.getElementById("deleteOverlay").classList.remove("open");
+};
+
+window.deleteRow = function (id) {
+  const reclamation = mes_reclamations.find((u) => u.id == id);
+  document.getElementById("deleteRowName").textContent =
+    (reclamation.objet) || "cette réclamation";
+  document.getElementById("deleteOverlay").classList.add("open");
+
+  document.getElementById("confirmDelete").onclick = async function () {
+    try {
+      const res = await fetch(
+        `/complaint-manager/actions/reclamations/delete.php?id=${id}`,
+        {
+          method: "POST",
+        },
+      );
+
+      const data = await res.json();
+
+      if (data.success) {
+        closeDeleteModal();
+        showToast("Utilisateur supprimé avec succès");
+        getMesReclamations();
+      } else {
+        console.error(data.error);
+        showToast("Échec de la suppression");
+      }
+    } catch (err) {
+      console.error(err);
+      showToast("Une erreur est survenue");
+    }
+  };
+};
 
 //! Handle Store.php (insertion using api)
 
