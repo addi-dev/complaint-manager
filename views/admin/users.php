@@ -4,7 +4,7 @@ session_start();
 require_once __DIR__ . '/../../core/Auth.php';
 require __DIR__ . '/../../config/app.php';
 
-Auth::requireRole('admin');
+Auth::requireRole('admin','superviseur');
 ?>
 <!doctype html>
 <html lang="fr">

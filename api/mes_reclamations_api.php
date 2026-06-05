@@ -5,8 +5,6 @@ header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
 require __DIR__ . '/../config/app.php';
-require __DIR__ . '/../core/Auth.php';
-Auth::requireRole('client');
 
 try {
     $userId = $_SESSION['user_id'];

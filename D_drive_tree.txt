@@ -1,0 +1,682 @@
+USB Drive File Tree — C:\laragon\www\complaint-manager
+Generated: 2026-06-05 16:31:19
+============================================================
+
+📁 C:\laragon\www\complaint-manager/
+├── .gitignore  [105 B]
+├── .htaccess  [168 B]
+├── audit.md  [40.6 KB]
+├── index.php  [550 B]
+├── plan.txt  [5.1 KB]
+├── test.html  [74.1 KB]
+├── test.php  [835 B]
+├── 📁 .git/
+│   ├── COMMIT_EDITMSG  [28 B]
+│   ├── FETCH_HEAD  [105 B]
+│   ├── HEAD  [21 B]
+│   ├── ORIG_HEAD  [41 B]
+│   ├── config  [295 B]
+│   ├── description  [73 B]
+│   ├── index  [5.5 KB]
+│   ├── 📁 gk/
+│   │   ├── config  [169 B]
+│   ├── 📁 hooks/
+│   │   ├── applypatch-msg.sample  [478 B]
+│   │   ├── commit-msg.sample  [896 B]
+│   │   ├── fsmonitor-watchman.sample  [4.6 KB]
+│   │   ├── post-update.sample  [189 B]
+│   │   ├── pre-applypatch.sample  [424 B]
+│   │   ├── pre-commit.sample  [1.6 KB]
+│   │   ├── pre-merge-commit.sample  [416 B]
+│   │   ├── pre-push.sample  [1.3 KB]
+│   │   ├── pre-rebase.sample  [4.8 KB]
+│   │   ├── pre-receive.sample  [544 B]
+│   │   ├── prepare-commit-msg.sample  [1.5 KB]
+│   │   ├── push-to-checkout.sample  [2.7 KB]
+│   │   ├── sendemail-validate.sample  [2.3 KB]
+│   │   ├── update.sample  [3.6 KB]
+│   ├── 📁 info/
+│   │   ├── exclude  [240 B]
+│   ├── 📁 logs/
+│   │   ├── HEAD  [3.9 KB]
+│   │   ├── 📁 refs/
+│   │   │   ├── 📁 heads/
+│   │   │   │   ├── main  [3.7 KB]
+│   │   │   ├── 📁 remotes/
+│   │   │   │   ├── 📁 origin/
+│   │   │   │   │   ├── HEAD  [152 B]
+│   │   │   │   │   ├── main  [2.6 KB]
+│   │   │   │   │   ├── master  [161 B]
+│   ├── 📁 objects/
+│   │   ├── 📁 00/
+│   │   │   ├── ff90200e3ab4b32052e1682388f1f56ad5ca5a  [686 B]
+│   │   ├── 📁 01/
+│   │   │   ├── e4a6cda9eb380973b23a40d562bca8a3a198b4  [37 B]
+│   │   ├── 📁 02/
+│   │   │   ├── 0a14afe8910815937df5ad18e32a5a9b6c004e  [201 B]
+│   │   │   ├── 4b9a965edab657d39339b45824f0f92ad5d750  [144 B]
+│   │   │   ├── bf694eaf3256af7de5ccf3f0e8c69e2a78e8f7  [198 B]
+│   │   │   ├── cca137a38e08b0192d4b9558bbde88f7bd650e  [695 B]
+│   │   ├── 📁 03/
+│   │   │   ├── 224815afac6ea91231015c1cf75bbdd0e6d1d4  [118 B]
+│   │   ├── 📁 05/
+│   │   │   ├── 6fd5c7c2c738fe13afdb6345e09a7eb6001230  [162 B]
+│   │   │   ├── c4471f2b53fc17d3cac9d3d252755a35479f7c  [95 B]
+│   │   │   ├── dd9efd48e9b02ae587ea8f59f9eb149c10fbcc  [71 B]
+│   │   │   ├── fb5d9ea95d1b527ba0e7074936553944b8d302  [503 B]
+│   │   ├── 📁 06/
+│   │   │   ├── 9134d49d441e1c99ad793fa23815a070bd6eb6  [1.5 KB]
+│   │   │   ├── dc7a5ee782ac3a0f3f1c471b03120d87f2e655  [349 B]
+│   │   │   ├── dce7df423f91564eb9bca2ebebc30ca7e08495  [72 B]
+│   │   ├── 📁 07/
+│   │   │   ├── 084434e3b0ac11cf5b4b07c81846b2d17a4728  [362 B]
+│   │   │   ├── dfc016b5e808ae5603eca90519f7f6aa722d22  [84 B]
+│   │   ├── 📁 08/
+│   │   │   ├── 4237d83fb2f4ca626f465023b76519fd0065e6  [52 B]
+│   │   ├── 📁 0a/
+│   │   │   ├── 44cddd61aa7b949f98ad13cb9134de2e6eab14  [1020 B]
+│   │   │   ├── 524735a6fe1644b19b54d861cc480f40f4e998  [185 B]
+│   │   ├── 📁 0c/
+│   │   │   ├── c664899b534f18c5df078c1e0467fe74758ef9  [102 B]
+│   │   ├── 📁 0d/
+│   │   │   ├── 4cff638b975a31f44c985ca8be81e5e34a2ac2  [114 B]
+│   │   │   ├── 61046210a8a0a79e8309623a23fdcbb37a7a40  [1.5 KB]
+│   │   ├── 📁 0e/
+│   │   │   ├── 022ee81c905600b4d1ab651426971b64b9504f  [106 B]
+│   │   │   ├── 52393547e1fe00017bee292bd80eb1b0439751  [162 B]
+│   │   ├── 📁 0f/
+│   │   │   ├── 50d5dcea8967a43df1656d89a5264e27ef55d4  [2.8 KB]
+│   │   │   ├── 8c02e889d0fcfbb9ef8db1977a95fe9fc9322f  [296 B]
+│   │   ├── 📁 10/
+│   │   │   ├── 024e7f9b6abe247229dbcbfdadddc2a8a197a7  [202 B]
+│   │   ├── 📁 11/
+│   │   │   ├── 21a9e7eb1177093b50ecec928b60836bae4485  [108 B]
+│   │   ├── 📁 13/
+│   │   │   ├── 4015962471e192a272750ff3f814f71664ebc2  [2.6 KB]
+│   │   │   ├── 4d85b8df785585b97815327c086fa1f48ad394  [83 B]
+│   │   ├── 📁 14/
+│   │   │   ├── 43f2efc6b5601612125aebd8127ca9e8a09c49  [87 B]
+│   │   ├── 📁 15/
+│   │   │   ├── a2044884fa6966b59b67feba25376b908c3138  [84 B]
+│   │   ├── 📁 16/
+│   │   │   ├── 3c78ee9674f319ba287c17acf99ef959d44afb  [55 B]
+│   │   │   ├── fcba92557465b7fc3d481a21b72b3635130318  [166 B]
+│   │   ├── 📁 17/
+│   │   │   ├── e0619d9da9b3cfd40c37991913d73a55f6643e  [113 B]
+│   │   ├── 📁 18/
+│   │   │   ├── 1bce64c7b7c53efe4434f7bade7ac4e93e5c14  [165 B]
+│   │   ├── 📁 1a/
+│   │   │   ├── 9992addd09e39f6aeb29af3def079065585661  [1.6 KB]
+│   │   ├── 📁 1b/
+│   │   │   ├── 29191b999b680b1335ea54ac4af314a16b2002  [63 B]
+│   │   ├── 📁 1e/
+│   │   │   ├── 28173d4b71074217bd8b3cad8613f96792a4b8  [74 B]
+│   │   │   ├── b952f8ecf77bc40af6feab865a0167f31b6ab6  [1.8 KB]
+│   │   ├── 📁 1f/
+│   │   │   ├── 7cd702ff6ce032f2f82edf82587f972a213718  [427 B]
+│   │   │   ├── ba9fe81977b261dfeed988c5dc94d5e9f2ec29  [326 B]
+│   │   │   ├── d66d538c217d36db94b62968257a7d9a558bbb  [311 B]
+│   │   ├── 📁 21/
+│   │   │   ├── 1e46c6f9e730360ac1d41e7076983d754ff192  [2.4 KB]
+│   │   │   ├── 26c9ce80a245a615961d5e875f4ee7c3152c3d  [99 B]
+│   │   │   ├── 8f9b5866667f3580b6940bc624f6ec1ff97584  [185 B]
+│   │   ├── 📁 22/
+│   │   │   ├── 57b3b323f34bdf71cc9c43977661c7d54b2e6c  [137 B]
+│   │   │   ├── 5b1ce30c9e3f37d634fe51d28fa3a1e4d3aeaf  [54 B]
+│   │   ├── 📁 23/
+│   │   │   ├── 02194358ad310428ae156356535f7f1b91daf9  [146 B]
+│   │   │   ├── 5f70d3a68843f2b8076dfa1bcb695f0460886e  [1.0 KB]
+│   │   │   ├── dd2014ed378924c088c415b72f0a8090961695  [144 B]
+│   │   ├── 📁 24/
+│   │   │   ├── 0800a3f28fde607624ddceab198b440bc152c5  [172 B]
+│   │   │   ├── 979d7543d74ef5ddde3482ac11be03d23c65f9  [101 B]
+│   │   │   ├── f334c747f699542ab78f6f4af75d5211eed1fa  [357 B]
+│   │   ├── 📁 26/
+│   │   │   ├── e294ab7e94805169f7366856834958fbbd8927  [17.4 KB]
+│   │   │   ├── e91d474083020b5ae78c50cb6695117ed46f06  [253 B]
+│   │   │   ├── ed9109862dd11a339d21322f489ec307c7599f  [185 B]
+│   │   ├── 📁 27/
+│   │   │   ├── 07ef961288519239c982d47f49d9a9b0836e2b  [835 B]
+│   │   ├── 📁 28/
+│   │   │   ├── bcbf383d4a6e5f2d124e27fb82576b8f603222  [2.5 KB]
+│   │   ├── 📁 2a/
+│   │   │   ├── 053cef9feb31a36f039a2c26db11990297e032  [165 B]
+│   │   │   ├── 34a3bde5202703f99683d6464cff4bd90ae528  [187 B]
+│   │   │   ├── 8f2aa5bedea7d2157ec67c93646be79551d528  [119 B]
+│   │   │   ├── ab7a1f328b613088aa11c353f0d54f10d07520  [327 B]
+│   │   │   ├── d39c443a23eda168124a8fa278a5150f6b121e  [399 B]
+│   │   ├── 📁 2b/
+│   │   │   ├── 3d49b8adcced3ab47ce6ed65622633c3bcdab3  [460 B]
+│   │   │   ├── 73edf97351fcb176310de633b9a0fb99d58ce7  [939 B]
+│   │   │   ├── cf7e1fd5ecb619cbc22b51e11c8a324057de4b  [199 B]
+│   │   ├── 📁 2d/
+│   │   │   ├── 398aad775d28267677e2800231822156fc1b83  [327 B]
+│   │   │   ├── bbc90dd6fab73fffd4e0c653bde9b4e4e64008  [364 B]
+│   │   │   ├── d348bb0fc1ac99fea893c4270d46841721db7a  [3.0 KB]
+│   │   ├── 📁 30/
+│   │   │   ├── a858455899c58327f184387d65af73f2c40247  [83 B]
+│   │   ├── 📁 32/
+│   │   │   ├── 1e48c1df62035499f78911bf5c6a3e8a21fee8  [148 B]
+│   │   │   ├── e46a3cd15b9aa54cccc46fc53990f382062325  [86 B]
+│   │   ├── 📁 33/
+│   │   │   ├── acc9afdaa078814fd7e55b4b26746f35937532  [53 B]
+│   │   ├── 📁 34/
+│   │   │   ├── 03b5601eaeab7ddc84abf81d8faa5588e902d8  [162 B]
+│   │   │   ├── 8d0462f1c8d94ebb8ff08964afa9726aa65278  [397 B]
+│   │   │   ├── b9a1dbb29f3c40fedcd5f4222a0d5529fa785a  [363 B]
+│   │   ├── 📁 35/
+│   │   │   ├── b90049ae1e889faaa35b24e162f951d774775f  [257 B]
+│   │   ├── 📁 37/
+│   │   │   ├── d8fca4f6f85da3a176a3668c537bc5e7fd29a7  [862 B]
+│   │   ├── 📁 38/
+│   │   │   ├── 11c9b0f2c7d008b59bd6580a52d8575ff291ae  [143 B]
+│   │   │   ├── 76d5913c03d79f7e601c48e0c137711b67432d  [3.0 KB]
+│   │   │   ├── 87d8522acd98ff4edcb72ca4d6401f52ecf924  [84 B]
+│   │   │   ├── 91266d7763476fe6ecf0d4330ceec735ddfe86  [296 B]
+│   │   ├── 📁 39/
+│   │   │   ├── eb12a7ad306ea15f6472b04b2e6f209ae1e4bc  [157 B]
+│   │   ├── 📁 3c/
+│   │   │   ├── 9adf1af8430da566d123514630bcc30c9c1345  [171 B]
+│   │   ├── 📁 3e/
+│   │   │   ├── 1cbb51670aeb298e9dcd0d6a3547850c315051  [45 B]
+│   │   │   ├── 6abeabab16c401d91916ccd25d64fec720160d  [245 B]
+│   │   │   ├── e09197405fc5d9733eeebd952a928277ff56cb  [166 B]
+│   │   ├── 📁 3f/
+│   │   │   ├── 0802012094b37630a13a44b987a4d518d1b584  [180 B]
+│   │   ├── 📁 42/
+│   │   │   ├── 3eed59f1d47b91b5fd08f3b794e8ad1c8126ff  [1.3 KB]
+│   │   ├── 📁 44/
+│   │   │   ├── 63c585be2380e2731e0e8a6a7f3db460685703  [74 B]
+│   │   │   ├── bd020de149157927728bc04651c783e54faae7  [110 B]
+│   │   ├── 📁 45/
+│   │   │   ├── 1371df95c660d5ef5e94861590b122b0fc25eb  [182 B]
+│   │   │   ├── 2e6b65b7a18aa7c3aaf886fd183a002d381e34  [189 B]
+│   │   ├── 📁 47/
+│   │   │   ├── 4d0db95c1a60625de2b238154b8b5d9287b69f  [327 B]
+│   │   ├── 📁 49/
+│   │   │   ├── 5a6af9983c5e0796fb78f275c4302bab631822  [42 B]
+│   │   │   ├── 63c6841f5c837f2452b6d684cd4a10933e4417  [156 B]
+│   │   │   ├── c869e3b94f8f1145aec9208c4fb634705b5ea0  [218 B]
+│   │   ├── 📁 4a/
+│   │   │   ├── 50142398d9b17b7464afff51695fbefea76c13  [54 B]
+│   │   ├── 📁 4b/
+│   │   │   ├── 455379c5ee5810aafe0d7177d1d86518e17fac  [120 B]
+│   │   │   ├── 825dc642cb6eb9a060e54bf8d69288fbee4904  [15 B]
+│   │   ├── 📁 4d/
+│   │   │   ├── cf748b25bdf2060a89bac46b7263d1ea03d5d3  [114 B]
+│   │   ├── 📁 4e/
+│   │   │   ├── 2540ef3bd7f468583f2596dc21c097b6255a31  [313 B]
+│   │   │   ├── 329b98463e424bcfb89542d0215a066e6f39d6  [87 B]
+│   │   │   ├── 99ba898ef072c573a01c9812ce390e62e5caa8  [53 B]
+│   │   │   ├── e4dce2737d10f753b8e38d66e7a24eeb87cbe1  [54 B]
+│   │   ├── 📁 50/
+│   │   │   ├── 822ddae4a2bd7a9a40ecf90bfd46e17e61f438  [102 B]
+│   │   ├── 📁 52/
+│   │   │   ├── f4fc20dd23d1552aad0fed5629d2fe43fb98f0  [106 B]
+│   │   ├── 📁 53/
+│   │   │   ├── 5e5a0b826ca2a1e94fcaa8aa6ff84a6804673b  [102 B]
+│   │   ├── 📁 54/
+│   │   │   ├── 521bc9cd3d303e8f14cdcdc2c5b340bf74132b  [209 B]
+│   │   ├── 📁 55/
+│   │   │   ├── 49a7711fdefcf0a7dd2c719fe083561b026949  [254 B]
+│   │   │   ├── 4a3dc37f4b09052f4c88068299427cfac215ab  [1.7 KB]
+│   │   │   ├── 600cd89319d352d495bf94cdb3082663aea6ba  [74 B]
+│   │   ├── 📁 57/
+│   │   │   ├── 73b0ceb771e176520d5a9c1efe5e918878318d  [188 B]
+│   │   │   ├── b2c1843c23247625ebbd4b0142a14af03b8b97  [53 B]
+│   │   │   ├── d696b23bb5a86f3882f05048025651353474b7  [108 B]
+│   │   ├── 📁 58/
+│   │   │   ├── 31bd34d7965a7af1139f9f1c65922eaa524212  [1.8 KB]
+│   │   ├── 📁 5a/
+│   │   │   ├── d13779e0df8fca8c419cc16548c14801893757  [1.6 KB]
+│   │   ├── 📁 5c/
+│   │   │   ├── 654e63f63207de8250ae2b7db03b9f45e62a9b  [178 B]
+│   │   ├── 📁 5e/
+│   │   │   ├── 4304f156a1901b17f38b5443b9e59b6309dfe5  [708 B]
+│   │   │   ├── cc686eac6c2db7d135d318336187850b7b6c26  [948 B]
+│   │   ├── 📁 5f/
+│   │   │   ├── 0df6aef6914f6573fff9ff8d1e6207b1ed49ea  [183 B]
+│   │   │   ├── 47e6bc141113f10a5e386a9dfd40df2b851065  [1.2 KB]
+│   │   │   ├── 8ed01a917db2e55f02c8c19fea50401308411b  [54 B]
+│   │   ├── 📁 60/
+│   │   │   ├── 1e65658af3b05516fe161c88b81039a04bb91a  [180 B]
+│   │   │   ├── 9e352a6c5903a84c0853ad01daea7512ae2deb  [176 B]
+│   │   ├── 📁 61/
+│   │   │   ├── 7c83d8147f73f5b5801db5bc4c9a0aed8aef4c  [1.8 KB]
+│   │   │   ├── 8eb9ee6fe6a282faabeeadbf9bce5a3c31d5cb  [296 B]
+│   │   │   ├── ea552ab976dc32f200c13ebb8b36c0c8ea63c3  [383 B]
+│   │   ├── 📁 62/
+│   │   │   ├── 01e238a1c8f2b0631882016c5d055754a7062f  [152 B]
+│   │   ├── 📁 63/
+│   │   │   ├── 04920f76c1f63850863fba6843b0d6f56dbd22  [279 B]
+│   │   ├── 📁 64/
+│   │   │   ├── 233a9e9589b022576fca2cc18396d3744173c4  [26 B]
+│   │   │   ├── 96dc3ff6d04b58d8f4f7b332c9adc804d61665  [538 B]
+│   │   ├── 📁 65/
+│   │   │   ├── f39177ac629a42a5ccb7c20144a836d71d0d5b  [989 B]
+│   │   ├── 📁 66/
+│   │   │   ├── 3c264191feae5cc1809e82fdb07d62d963816d  [172 B]
+│   │   │   ├── 9bfaf42d22f343db3af524d4f59846e87e7c19  [362 B]
+│   │   ├── 📁 67/
+│   │   │   ├── 3b04e7e9b15e23222e021b3f72222cba78a9cc  [3.0 KB]
+│   │   │   ├── b57a8ea0d6cb9814c98fa7825c6c8695e7dd37  [102 B]
+│   │   ├── 📁 68/
+│   │   │   ├── 2bf3168763f67e78e33a030a3bf6be34843ea2  [50 B]
+│   │   │   ├── c9bef3db064251f4767e248528a3bdc08d98f0  [142 B]
+│   │   ├── 📁 69/
+│   │   │   ├── 109fd96d2912116cafcdad9fa648f94f56a271  [54 B]
+│   │   │   ├── 8cd3ab881289e5266d64b50257f497fa79e242  [109 B]
+│   │   ├── 📁 6a/
+│   │   │   ├── 6a647dcd311c3d8ac8becf0330d2a82b974ee6  [35 B]
+│   │   │   ├── 90eb8305bb7ffdf10fb55fb10e06d3c4752043  [470 B]
+│   │   ├── 📁 6b/
+│   │   │   ├── 901f8bc07ef2d9e562c89819c2d396cbff1cbb  [283 B]
+│   │   ├── 📁 6c/
+│   │   │   ├── 40b341bc50b6b0a9458816f2f1c9c8b5caf7fa  [143 B]
+│   │   │   ├── 6f2d036abf5dd0d0837548c6e7ac14fa9023b3  [210 B]
+│   │   │   ├── c0c690b2b288d36c01ee42ba2b0529a6d409fd  [58 B]
+│   │   ├── 📁 6d/
+│   │   │   ├── f84280f0e26dbf225555fd840b2b4ea47df19f  [170 B]
+│   │   ├── 📁 6e/
+│   │   │   ├── d95d357c2e25478a9257f9c985696570d97e34  [803 B]
+│   │   ├── 📁 6f/
+│   │   │   ├── 0dfe3e107801eb152e10f7e1ce6257b3b79b11  [1.7 KB]
+│   │   ├── 📁 75/
+│   │   │   ├── 4b7dde072949cd17aa99af3f3d2f69951f0994  [165 B]
+│   │   ├── 📁 76/
+│   │   │   ├── d87f737074ac8973c135b2d242c6ad6bf609dd  [2.4 KB]
+│   │   ├── 📁 79/
+│   │   │   ├── 5cac93f1b35aed22458afde4e81c2a9c1ee1a2  [258 B]
+│   │   │   ├── 5feb4ead9d4d0c408e4b4c8514a53ec8928d1b  [111 B]
+│   │   │   ├── 72f1187624e707780a4685def0d02612f7e255  [1.5 KB]
+│   │   │   ├── c2c0a23cd06bcb6d22ea0a2b218e22a6d51198  [1.3 KB]
+│   │   ├── 📁 7b/
+│   │   │   ├── df3d8b759654dec0f900c38393844ce09ebeed  [204 B]
+│   │   │   ├── e55e2e8ade2e77ac992ee9e5c1bb66cfab2f5b  [219 B]
+│   │   ├── 📁 7d/
+│   │   │   ├── 3da041d1418e0ffea9b65bb3764ea63d44adc8  [1.8 KB]
+│   │   │   ├── e2f4bc55e62057be94907597d894790621a7e5  [10.3 KB]
+│   │   ├── 📁 7e/
+│   │   │   ├── 0c83995bf57ae717fd67270e13de12aaad0326  [108 B]
+│   │   │   ├── fb556d1d3bedbbd49a91ad8b79909aa788c5b4  [177 B]
+│   │   ├── 📁 82/
+│   │   │   ├── 308a1b8541ce1a8f096ebf2122dc65ec204d7b  [169 B]
+│   │   │   ├── b4dbed05f57d16215a82783aee94a9bfd401aa  [62 B]
+│   │   │   ├── f570bfc32701393166255a1acb5d14ec93dca0  [778 B]
+│   │   ├── 📁 83/
+│   │   │   ├── 37712ea57f00733b5709b27efb3de797e95575  [18 B]
+│   │   │   ├── 5ce84e2b96e39aac8b2d3724835459d2d1e438  [83 B]
+│   │   │   ├── 64a84e2b7eea9f007e99a5d3333273fe30bf8a  [256 B]
+│   │   ├── 📁 85/
+│   │   │   ├── a9651f1966a1e863f19570c630d430aa644127  [121 B]
+│   │   │   ├── d920408bd8f0b55cd1dc2254cc1917a191b835  [142 B]
+│   │   │   ├── f14ac3253bdf0eb1e1215b2f0fcffefdcdaa9e  [54 B]
+│   │   ├── 📁 86/
+│   │   │   ├── 77cd5cabb06901eac3d8f9a500094d2c1dab45  [83 B]
+│   │   │   ├── a06c53eb430eeef17e0fe90f7ba997952a96c6  [118 B]
+│   │   ├── 📁 87/
+│   │   │   ├── be4c5e94006aa69e962613fb3f88b92b9aae8e  [1.1 KB]
+│   │   ├── 📁 8a/
+│   │   │   ├── 76f95074d42da1af85fba5cc9af8c9e27aaf17  [71 B]
+│   │   │   ├── b3e53222c368972988ad8e9875449fe9956f61  [102 B]
+│   │   ├── 📁 8c/
+│   │   │   ├── 0e6e7fd7f78b071a7d917ea3b1a324a588ece3  [83 B]
+│   │   │   ├── 69fc42fab4a9302775867d4f9ff1be2e0c6531  [42.2 KB]
+│   │   │   ├── 8d80c982fed98d34bc4d961fad32d6c298ade7  [115 B]
+│   │   │   ├── a662b9fef0ca91194eaa644c337986831376a0  [119 B]
+│   │   ├── 📁 8d/
+│   │   │   ├── 4e9cf9a7e9d5a6c442db8fe0537d7882629fda  [1.1 KB]
+│   │   │   ├── d5466284791750a829510f1634bc2b2e6a548e  [3.33 MB]
+│   │   ├── 📁 8f/
+│   │   │   ├── 4b4d8323753fa4fc93e79e8ca6b2012c4212ef  [75 B]
+│   │   ├── 📁 91/
+│   │   │   ├── dc09ff08f0626deb6e55e68c6fd8f6f9ef3f67  [353 B]
+│   │   ├── 📁 94/
+│   │   │   ├── 2eb4b97d3672644781dd9b83809854eb28e037  [169 B]
+│   │   │   ├── ed60ec8094de6edca7e15fff086356dc1c4d9c  [204 B]
+│   │   ├── 📁 95/
+│   │   │   ├── 87081128a4e21e77aef0fc6a7203892ae5dd3d  [175 B]
+│   │   ├── 📁 96/
+│   │   │   ├── 233b34ccba706a9f89dca87a9282a3cd836e0a  [55 B]
+│   │   ├── 📁 97/
+│   │   │   ├── 5645d8f2c1b677d48bafc7d223ed80532440ab  [4.0 KB]
+│   │   ├── 📁 98/
+│   │   │   ├── 9b1e1e16f60def267b509c16f598cef59144b9  [53 B]
+│   │   ├── 📁 99/
+│   │   │   ├── 47d00da019f3172170d444f80369230bea4ddd  [1.5 KB]
+│   │   │   ├── ddd2147eb9e4e60ee2f2ebc14495868851af65  [132 B]
+│   │   ├── 📁 9a/
+│   │   │   ├── 3c11fb62bf2ab69c6b667bfba1658ce5db9957  [717 B]
+│   │   ├── 📁 9b/
+│   │   │   ├── 19b93c9f13d72749cc3bac760a28325116f3f1  [26 B]
+│   │   │   ├── 98fac5ad428dbe681c9ae7b6c036eddc940e5e  [11.8 KB]
+│   │   ├── 📁 9e/
+│   │   │   ├── 17352cb857f6b83b306369adbc801e4ab9630a  [171 B]
+│   │   │   ├── 60cdf2d676d95f5b96a797b7c7dda0e9242c7f  [116 B]
+│   │   │   ├── fccc4c094f1efd682b161227cb7258a72448a7  [202 B]
+│   │   ├── 📁 a0/
+│   │   │   ├── 4b95a225ee556d353c11e7f77711d542d25184  [252 B]
+│   │   │   ├── 80c19d138b7b9cd69ba40f93fd19c6bb65852c  [92 B]
+│   │   │   ├── eeca630297714516a507c3c0d3827628b4061d  [176 B]
+│   │   │   ├── f37b3dabd3bc2de9c1aa0305ed6f55d0f6da22  [995 B]
+│   │   ├── 📁 a2/
+│   │   │   ├── 3b111c719d991283f8cc130db0fd53e2a7dedd  [296 B]
+│   │   │   ├── 4ab1a21380139f3daf56eac3cc3b8f52ea9a8e  [1.5 KB]
+│   │   ├── 📁 a3/
+│   │   │   ├── 9983f8ad30d2cbc1a04d5598e9133a736410fa  [80 B]
+│   │   ├── 📁 a4/
+│   │   │   ├── 370918cf6f281c454761199ab38518c95f8cb3  [1.1 KB]
+│   │   │   ├── 6d94f0b180b20b2fba2ba66ff96f5c62861962  [109 B]
+│   │   │   ├── 939d39078da6749cf04f34189d0be58c7abc9a  [75 B]
+│   │   │   ├── c93fa2765019dbe273a4f484976da66866baeb  [295 B]
+│   │   ├── 📁 a5/
+│   │   │   ├── 0685eeb771d5e463c880e1e5092865c8d93f27  [74 B]
+│   │   │   ├── 2c0821fc249e26f1f930d93cf21de0258978ae  [52 B]
+│   │   │   ├── 705f7ff38f377d1b05fd535e621983963d3b88  [1.5 KB]
+│   │   │   ├── d1bb555e529821d89941aaa35078f674cb885d  [2.4 KB]
+│   │   ├── 📁 a6/
+│   │   │   ├── 4d17d76db06df1464f8a6933cdf60b6b8a572c  [178 B]
+│   │   ├── 📁 a7/
+│   │   │   ├── 041e8821b05a130bbcb04b86024f008a9e2404  [192 B]
+│   │   │   ├── a2c7cd23ae4d9242e5f206e64502e362dfd5aa  [52 B]
+│   │   │   ├── d31b101a39c15ab3400b90603697f5459ec214  [114 B]
+│   │   ├── 📁 a8/
+│   │   │   ├── 4b9a83d6a1c8b9c45377262a650e71df2a8fed  [394 B]
+│   │   │   ├── 4dd0d84b7a9f9678c9b99466ee09681ded2cd8  [661 B]
+│   │   │   ├── be3b47b83f7407b031052bad43f417059d6ad0  [173 B]
+│   │   │   ├── c6c72c4ea9d1f251d47faf9ca115953613a8d6  [83 B]
+│   │   ├── 📁 a9/
+│   │   │   ├── 00f8ab34a2a173eeafaca0f24635f7f0171515  [100 B]
+│   │   │   ├── e356477bb721024cc75e22bdfb6770e454dcf0  [54 B]
+│   │   │   ├── f96da16940c3ffb62e7419e1d3755af4436768  [2.4 KB]
+│   │   ├── 📁 aa/
+│   │   │   ├── fd8b37c319ccbc9db3e5aba37716d632ddd3cd  [106 B]
+│   │   ├── 📁 ab/
+│   │   │   ├── 85d8a902c35360552a603cb45e400df39f02c1  [199 B]
+│   │   │   ├── bb88e37246728f566c8a42fb86c554d50a92bc  [1.7 KB]
+│   │   ├── 📁 ac/
+│   │   │   ├── c90a066b126c5f79c3265a650e4463f45a19c2  [2.4 KB]
+│   │   ├── 📁 ad/
+│   │   │   ├── 1a9f0200a474590ffe5bf19a96c920c3a6878b  [54 B]
+│   │   │   ├── c1da9178ebf73ead61b803a1253ac83506a392  [1.2 KB]
+│   │   ├── 📁 b0/
+│   │   │   ├── 6d6e55051e44e5a52d40ab18cd2cb7141b27e8  [162 B]
+│   │   │   ├── 9cb25d95623e6d1a5d353913042de9a58cf1d9  [1.3 KB]
+│   │   ├── 📁 b1/
+│   │   │   ├── 24000858e1b43b7d4358c15e4a749fd1163fde  [3.0 KB]
+│   │   │   ├── 91bc9cc20fd4cdb26490562103858dc97e1b8b  [967 B]
+│   │   ├── 📁 b2/
+│   │   │   ├── 1c569c8d4a1ff903a69d8120003c754b5616f0  [3.0 KB]
+│   │   │   ├── d67648c103062e47b7d3972260678dfb070258  [91 B]
+│   │   ├── 📁 b3/
+│   │   │   ├── 54a2389b75760aa98e1bd6915c82149ce1c139  [84 B]
+│   │   │   ├── 8699bcd8bfe01012610a0721bf93ecf358154e  [720 B]
+│   │   │   ├── dba5ebb2c50c731174099520975c5b59cd5aaf  [102 B]
+│   │   │   ├── ee8d7f64fb42e963f17d6fe64c11a07fe9e053  [239 B]
+│   │   │   ├── fcb92fe91b2cf998d42f31a17c4ba82ea508a7  [52 B]
+│   │   ├── 📁 b4/
+│   │   │   ├── e46a49b46ac4f2f0234ab67b0c976bb91488c6  [166 B]
+│   │   ├── 📁 b5/
+│   │   │   ├── 74a597daf309b383dc2dc2bd1e5362630e2531  [358 B]
+│   │   ├── 📁 b6/
+│   │   │   ├── cb42451fbc77176d701ce19d4ac80587dcd5e2  [941 B]
+│   │   ├── 📁 b7/
+│   │   │   ├── b2d745f0c79f817500064002b14e6f25d38300  [394 B]
+│   │   ├── 📁 b8/
+│   │   │   ├── 9f6fb90a275952b0b1ba301882c2bf1344ef1d  [86 B]
+│   │   │   ├── c752604d49161b8550b80a4be52331d787fc05  [3.1 KB]
+│   │   │   ├── df5342658d6507d7b1920502c6a021f31f4f79  [4.0 KB]
+│   │   ├── 📁 b9/
+│   │   │   ├── 4bc948d57e202bac0b93d8e4f7aeaa70319604  [143 B]
+│   │   ├── 📁 ba/
+│   │   │   ├── f70f70a7bf03d3073c699f5dadb7121e9ced8b  [3.0 KB]
+│   │   ├── 📁 bc/
+│   │   │   ├── dd8c4ebfce28057ab3d9d19fefa39c08c34a75  [203 B]
+│   │   ├── 📁 bd/
+│   │   │   ├── b09f07559d72dc85346874eaa9b7152811efa6  [2.7 KB]
+│   │   ├── 📁 bf/
+│   │   │   ├── ae9acd486eeed0ecd9d8b775da571a0356835b  [113 B]
+│   │   ├── 📁 c0/
+│   │   │   ├── 660ea143a7a23e6a182cbe42dbd7fc6e242b45  [594 B]
+│   │   ├── 📁 c1/
+│   │   │   ├── 7b497ff599a7da80166be47a5a0d3338787141  [3.2 KB]
+│   │   │   ├── 832766e157f3381c0d65bd0484392367b87722  [262 B]
+│   │   │   ├── 8c624ee79fda161da5e6f9e98de894e535a25c  [2.5 KB]
+│   │   │   ├── b47d662dbeb822f61d2d6662d29bbcb55597b3  [332 B]
+│   │   ├── 📁 c2/
+│   │   │   ├── 228fdfdf7e854e87426ae0551a41f60842406d  [936 B]
+│   │   │   ├── 2fd3dcf699cce43057a2924ae0b6923ef41ef7  [101 B]
+│   │   │   ├── d54ea01c1a7a5a5729422913937520ab777317  [85 B]
+│   │   ├── 📁 c3/
+│   │   │   ├── 5e31d6a29f62921a8621944eb20ad162f5b2bb  [296 B]
+│   │   │   ├── b49c026786ef226b784027f4a453f96ff52f94  [150 B]
+│   │   ├── 📁 c4/
+│   │   │   ├── ceb0745b7dde10ee0fd29e7fd98af1303e360b  [507 B]
+│   │   │   ├── ef56445e57fb49637531e7f2e8f915d6e13f84  [59 B]
+│   │   ├── 📁 c5/
+│   │   │   ├── 2a7138da9112c3bda9c2c91df2a3ccac5fd57e  [114 B]
+│   │   │   ├── b44e0c437254665721053bcb40ff1aa2c52037  [54 B]
+│   │   ├── 📁 c6/
+│   │   │   ├── 38de52a7f114ea5403dd77e30d3bab189b83ba  [797 B]
+│   │   ├── 📁 c7/
+│   │   │   ├── 1c9683cc4cfdb5028d0deccf788cd92d8cfe3f  [2.4 KB]
+│   │   │   ├── c2ac3427afa77cb7d83aaa15fe17a7ee7a958b  [3.0 KB]
+│   │   ├── 📁 c8/
+│   │   │   ├── 3003acdb07e7f6f0daeaa68bf74a3a26e57355  [205 B]
+│   │   │   ├── 9d556447e98cd665974ede1bf05274e237c35b  [102 B]
+│   │   ├── 📁 c9/
+│   │   │   ├── e62ddfdfb8678b601e0f894deca246911c7268  [3.0 KB]
+│   │   │   ├── f303b93a98add20363e60a4b5f06fd63061944  [142 B]
+│   │   ├── 📁 ca/
+│   │   │   ├── 114f2a5318e940c5f4d7784eec6fe3c3d81be9  [326 B]
+│   │   ├── 📁 cb/
+│   │   │   ├── 82dc0532a743a25a7313ffcee4bf61f0201e9e  [326 B]
+│   │   ├── 📁 cc/
+│   │   │   ├── 4895f74527ea556c3f9093e769d34a3129252f  [60 B]
+│   │   │   ├── 5060ac27dd3dc9cadfaba2f1c6446d08a692b2  [185 B]
+│   │   │   ├── bc307280661f59ba0a97db896a458f37d0dfac  [182 B]
+│   │   ├── 📁 ce/
+│   │   │   ├── ba2fe660591a12f96d01bba2241cc82b00ff8a  [87 B]
+│   │   │   ├── c82033c52e8ec03a358257696f2962d8e9e75d  [76 B]
+│   │   │   ├── e1c1a961265b231f42999b7a8fe2e8ef2d694a  [92 B]
+│   │   ├── 📁 d0/
+│   │   │   ├── ec0545b025660d52ba21ab230f3cd836fe49e7  [352 B]
+│   │   ├── 📁 d1/
+│   │   │   ├── cdf5b58dca852e9b77910fb2a2b04c5087d4aa  [1.5 KB]
+│   │   ├── 📁 d2/
+│   │   │   ├── 7157fc3a74d46bfb81ff757617b05299ca3859  [54 B]
+│   │   ├── 📁 d3/
+│   │   │   ├── 62e7aa02afe65779e088c5f6b272cb18683dbd  [60 B]
+│   │   ├── 📁 d4/
+│   │   │   ├── 9cfe4bda9211b719185c52e91972414c708acf  [966 B]
+│   │   ├── 📁 d6/
+│   │   │   ├── 90f3be98f888f12067ea02de30a6856006d38b  [54 B]
+│   │   │   ├── b7ef32c8478a48c3994dcadc86837f4371184d  [30 B]
+│   │   ├── 📁 d7/
+│   │   │   ├── 568ff194267ec424aa84e2e9c0d2cbea42b8f8  [1.3 KB]
+│   │   │   ├── 7249fa6ec85d0450d7dd4df75a7c7a16a998b9  [2.5 KB]
+│   │   │   ├── eec61a39914c7b4794339e723da8503eea3d41  [1.4 KB]
+│   │   ├── 📁 d8/
+│   │   │   ├── 0ad75da28be1ffb0669b411e7fe6c9e81ac305  [2.6 KB]
+│   │   ├── 📁 d9/
+│   │   │   ├── f6a0321645cea810652eaed5cfc90990ca5600  [60 B]
+│   │   ├── 📁 da/
+│   │   │   ├── d3a832dae9603b7af9560870ec9f0cdf010b2d  [2.5 KB]
+│   │   ├── 📁 db/
+│   │   │   ├── 092886a978e57d33276cd234e9bb5cb5ec4e35  [82 B]
+│   │   │   ├── 58b6b835603c360dc71116cb631f2cf62e5203  [1.6 KB]
+│   │   │   ├── f4a4efcf5ac63dcde7ca60da3e4418c686860d  [968 B]
+│   │   ├── 📁 dc/
+│   │   │   ├── bd3a18f2aa48493bf5c7095e1df98b9792a4c6  [2.3 KB]
+│   │   ├── 📁 dd/
+│   │   │   ├── 9013a153309faffbeec56cdf2201bf6e43a889  [702 B]
+│   │   │   ├── 97be694491eaa4e4c1c410ff2cebcaa242f870  [602 B]
+│   │   ├── 📁 de/
+│   │   │   ├── b315b8b31e1aa98ed6596acf8689f7c8dc2510  [17.1 KB]
+│   │   ├── 📁 e1/
+│   │   │   ├── 62813bbc01954e559623b24b8fb5e3715c2f17  [76 B]
+│   │   ├── 📁 e2/
+│   │   │   ├── 144ea7f6d823e6d7af2a5a1547c52c3273bd3a  [3.8 KB]
+│   │   ├── 📁 e3/
+│   │   │   ├── 2e88da2cc82d4139c032c28b03005afc6008c6  [1.2 KB]
+│   │   │   ├── 5928dadc6af001a5c0e9fb41dfa483584d679f  [684 B]
+│   │   ├── 📁 e6/
+│   │   │   ├── 9de29bb2d1d6434b8b29ae775ad8c2e48c5391  [15 B]
+│   │   ├── 📁 e7/
+│   │   │   ├── c00d047a53fffc9aa78f86040cd747e053c046  [45 B]
+│   │   │   ├── f0a48df619422a48dd39ceac63c30f998fe389  [504 B]
+│   │   ├── 📁 e8/
+│   │   │   ├── 0ca0d82b4368abf18954747a484cee86d8f4af  [1.7 KB]
+│   │   │   ├── 653bdf2eb7cb74f75d7c7d4533a8ee18ee5900  [202 B]
+│   │   │   ├── 6b15631e041fb347e2f7e2830d1aea172842ee  [919 B]
+│   │   │   ├── 952f3a01860510aca85aa420e7772ef11cfdb7  [1.7 KB]
+│   │   ├── 📁 e9/
+│   │   │   ├── 15d9d86f6e0835bded215020c499657023f5f6  [61 B]
+│   │   │   ├── f7062f7c042ee6ee972faeae1574b9e3a62390  [120 B]
+│   │   ├── 📁 eb/
+│   │   │   ├── 0536286f3081c6c0646817037faf5446e3547d  [40 B]
+│   │   │   ├── d7758d0a401efcb09f368f948c10cfc3e1601a  [166 B]
+│   │   ├── 📁 ec/
+│   │   │   ├── ab7fe98bb89d7842d77c2721b258e75659b902  [2.1 KB]
+│   │   ├── 📁 ed/
+│   │   │   ├── ac6fee599f55c34fd7ade713079c7f007b2fe4  [582 B]
+│   │   ├── 📁 ee/
+│   │   │   ├── 8f07e993802c29e166435e55e302ebfff1c12b  [339 B]
+│   │   ├── 📁 ef/
+│   │   │   ├── 969925debcdccf3cc782237c2f34f85198b6f1  [506 B]
+│   │   ├── 📁 f0/
+│   │   │   ├── ad3eca13bbb96611a6431c3dd0a1777d313067  [454 B]
+│   │   │   ├── d3993745433bd16ce43610654b9cea5099c6ab  [10.7 KB]
+│   │   ├── 📁 f1/
+│   │   │   ├── 92ec1fa956322b08a9af1bfa13e1a381a11fa7  [17.5 KB]
+│   │   │   ├── fea3cb74ffddd186392deb1542e6928f706054  [198 B]
+│   │   ├── 📁 f2/
+│   │   │   ├── 8479b4f58d03f44ffcb0559abc88ad2e05fe83  [800 B]
+│   │   ├── 📁 f5/
+│   │   │   ├── 7231b098273771f9736d25b59454472befd5ac  [151 B]
+│   │   │   ├── 744827f901d05402fe81e2314290ff539c0fd9  [2.4 KB]
+│   │   │   ├── 8e2c9894b734d81d1a4c319ff274acd7bdbaa9  [966 B]
+│   │   │   ├── acf1ab297e4753971a1c6df2831b1f9d608e65  [109 B]
+│   │   ├── 📁 f6/
+│   │   │   ├── ba1d2e80a1e47eb8457b080bef00d8b5403dea  [415 B]
+│   │   ├── 📁 f7/
+│   │   │   ├── 68f088779b2e1aa1732c5237cfc6c7dd97c3b4  [161 B]
+│   │   │   ├── b1b53b535d5abb34cfaa132925e063cacbdc72  [108 B]
+│   │   ├── 📁 f8/
+│   │   │   ├── 8786f2bd536004349348c50bccbddc69995867  [195 B]
+│   │   ├── 📁 fa/
+│   │   │   ├── 6961841e1e9ca3c53f21ee77c6ee55350f1f86  [1.7 KB]
+│   │   ├── 📁 fc/
+│   │   │   ├── 4c1136b9e44e5edf01654bde671fb0beee2a72  [67 B]
+│   │   │   ├── 94ae6011d6ce1d1175d0f642412c2a27913f6c  [80 B]
+│   │   │   ├── b21d396d657f597ef8b6729f73d89b0a871c9b  [141 B]
+│   │   │   ├── da92bdf794987ed33a73fb8f15cca1fa398bab  [144 B]
+│   │   ├── 📁 fd/
+│   │   │   ├── fad59b4a2b596eeb8746efe0d0f27316250491  [109 B]
+│   │   ├── 📁 fe/
+│   │   │   ├── 1ffc2ff1abc1c23522418994879623c5647859  [124 B]
+│   │   │   ├── db287fece8049b6bd243804b133e3af7a43f4c  [46 B]
+│   │   ├── 📁 ff/
+│   │   │   ├── de3b711720c61d3afa7bdcf25208122dc0ea7a  [130 B]
+│   │   ├── 📁 info/
+│   │   ├── 📁 pack/
+│   │   │   ├── pack-c656c416f970c64519871486a592752bf4304628.idx  [5.1 KB]
+│   │   │   ├── pack-c656c416f970c64519871486a592752bf4304628.pack  [48.6 KB]
+│   │   │   ├── pack-c656c416f970c64519871486a592752bf4304628.rev  [640 B]
+│   ├── 📁 refs/
+│   │   ├── 📁 heads/
+│   │   │   ├── main  [41 B]
+│   │   ├── 📁 remotes/
+│   │   │   ├── 📁 origin/
+│   │   │   │   ├── HEAD  [30 B]
+│   │   │   │   ├── main  [41 B]
+│   │   │   │   ├── master  [41 B]
+│   │   ├── 📁 tags/
+├── 📁 actions/
+│   ├── 📁 auth/
+│   │   ├── login.php  [3.8 KB]
+│   │   ├── logout.php  [132 B]
+│   ├── 📁 clients/
+│   │   ├── delete.php  [941 B]
+│   │   ├── store.php  [1.7 KB]
+│   │   ├── update.php  [2.8 KB]
+│   ├── 📁 reclamations/
+│   │   ├── delete.php  [869 B]
+│   │   ├── store.php  [2.6 KB]
+│   ├── 📁 users/
+│   │   ├── delete.php  [862 B]
+│   │   ├── store.php  [2.7 KB]
+│   │   ├── update.php  [4.1 KB]
+├── 📁 api/
+│   ├── agent_reclamations_api.php  [2.7 KB]
+│   ├── auth_api.php  [675 B]
+│   ├── clients_api.php  [2.8 KB]
+│   ├── mes_reclamations_api.php  [1.5 KB]
+│   ├── notifications_api.php  [0 B]
+│   ├── reclamation_api.php  [0 B]
+│   ├── reclamations_api.php  [2.1 KB]
+│   ├── stats_api.php  [2.9 KB]
+│   ├── users_api.php  [768 B]
+├── 📁 assets/
+│   ├── 📁 css/
+│   │   ├── app.css  [2.3 KB]
+│   │   ├── modal.css  [2.8 KB]
+│   │   ├── sidebar.css  [1.8 KB]
+│   │   ├── table.css  [7.0 KB]
+│   │   ├── topbar.css  [2.1 KB]
+│   │   ├── 📁 pages/
+│   │   │   ├── auth.css  [0 B]
+│   ├── 📁 images/
+│   │   ├── loginbg.jpg  [3.35 MB]
+│   ├── 📁 js/
+│   │   ├── app.js  [958 B]
+│   │   ├── 📁 lib/
+│   │   │   ├── date.js  [367 B]
+│   │   │   ├── string.js  [518 B]
+│   │   │   ├── toast.js  [272 B]
+│   │   ├── 📁 pages/
+│   │   │   ├── clients.js  [7.3 KB]
+│   │   │   ├── dashboard.js  [0 B]
+│   │   │   ├── mes-reclamations.js  [7.6 KB]
+│   │   │   ├── reclamation-detail.js  [0 B]
+│   │   │   ├── reclamations.js  [5.1 KB]
+│   │   │   ├── users.js  [7.4 KB]
+├── 📁 config/
+│   ├── app.php  [380 B]
+│   ├── constants.php  [400 B]
+├── 📁 core/
+│   ├── Auth.php  [1002 B]
+│   ├── CSRF.php  [7.8 KB]
+│   ├── Response.php  [1.9 KB]
+│   ├── Validator.php  [3.1 KB]
+├── 📁 database/
+│   ├── schema_reclamations.sql  [9.8 KB]
+│   ├── scheme.sql  [10.0 KB]
+│   ├── seed.sql  [36.8 KB]
+│   ├── seed_reclamations.sql  [18.7 KB]
+├── 📁 storage/
+│   ├── 📁 pieces_jointes/
+│   ├── 📁 temp/
+├── 📁 views/
+│   ├── 📁 admin/
+│   │   ├── clients.php  [10.2 KB]
+│   │   ├── index.php  [18.8 KB]
+│   │   ├── reclamation-detail.php  [0 B]
+│   │   ├── reclamations.php  [6.2 KB]
+│   │   ├── users.php  [9.5 KB]
+│   ├── 📁 agent/
+│   │   ├── historiques.php  [0 B]
+│   │   ├── index.php  [0 B]
+│   │   ├── notifications.php  [0 B]
+│   │   ├── reclamations.php  [0 B]
+│   ├── 📁 auth/
+│   │   ├── login.php  [12.7 KB]
+│   ├── 📁 client/
+│   │   ├── index.php  [11.6 KB]
+│   │   ├── reclamations__.php  [11.3 KB]
+│   ├── 📁 errors/
+│   │   ├── 404.php  [1.0 KB]
+│   ├── 📁 layouts/
+
+============================================================
+Total folders: 230  |  Total files: 445

@@ -19,7 +19,7 @@ $statuts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reclamations | <?php echo APP_NAME ?></title>
+    <title>Réclamations | <?php echo APP_NAME ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
@@ -123,7 +123,6 @@ $statuts = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <th>Catégorie</th>
                                 <th>Priorité</th>
                                 <th>Statut</th>
-                                <th>Agent</th>
                                 <th>Créée le</th>
                                 <th>Actions</th>
                             </tr>
@@ -138,9 +137,67 @@ $statuts = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
     </div>
+    <!-- ENROLL MODAL -->
+    <div class="overlay" id="overlay" onclick="closeOnOverlay(event)">
+        <div class="modal">
+            <form id="formModal" action="" method="POST">
+                <input type="hidden" name="_method" id="formMethod" value="POST">
+                <div class="modal-header">
+                    <h2 id="modalTitle"></h2>
+                    <button type="button" class="close-btn" onclick="closeModal()">✕</button>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group full">
+                        <label>Objet</label>
+                        <input type="text" id="f-objet" placeholder="Ex: Problème de connexion" name="objet" />
+                    </div>
+                    <div class="form-group full">
+                        <label>Description</label>
+                        <textarea id="f-description" placeholder="Décrivez votre problème ici..."
+                            name="description"></textarea>
+                    </div>
+                    <div class="form-group full">
+                        <label>Catégorie</label>
+                        <select name="categorie_id" id="f-category">
+                            <option value="">Sélectionner une categorie</option>
+                            <?php foreach ($categories as $cat): ?>
+                                <option value="<?= $cat['id'] ?>">
+                                    <?= $cat['libelle'] ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="form-group full">
+                        <label>Pièces jointes</label>
+                        <input type="file" name="pieces_jointes[]" id="" multiple>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+                    <button id="submitBtn" class="btn-submit" type="submit"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- DELETE MODAL -->
+    <div class="overlay" id="deleteOverlay" onclick="if(event.target===this)closeDeleteModal()">
+        <form class="modal" id="deleteForm" method="POST" style="max-width:380px">
+            <div class="modal-header">
+                <h2>Delete </h2>
+                <button type="button" class="close-btn" onclick="closeDeleteModal()">✕</button>
+            </div>
+            <p style="color:var(--text-label);font-size:14px;margin-bottom:22px;line-height:1.6">
+                Are you sure you want to delete <strong id="deleteRowName"></strong>? This action cannot be undone.
+            </p>
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" onclick="closeDeleteModal()">Cancel</button>
+                <button type="button" id="confirmDelete" class="btn-submit" style="background:#dc2626">Delete</button>
+            </div>
+        </form>
+    </div>
     <div class="toast" id="toast"><span id="toastMsg"></span></div>
     <script type="module" src="../../assets/js/app.js"></script>
-    <script type="module" src="../../assets/js/pages/reclamations.js"></script>
+    <script type="module" src="../../assets/js/pages/agent/reclamations.js"></script>
 </body>
 
 </html>

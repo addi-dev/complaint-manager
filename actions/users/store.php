@@ -2,7 +2,6 @@
 header('Content-Type: application/json');
 require __DIR__ . '/../../config/app.php';
 require __DIR__ . '/../../core/Validator.php';
-
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['success' => false, 'error' => 'Wrong method']);
@@ -66,7 +65,6 @@ try {
 
     http_response_code(201);
     echo json_encode(['success' => true, 'id' => $pdo->lastInsertId()]);
-
 } catch (Exception $e) {
     error_log('[API Error] ' . $e->getMessage());
     http_response_code(500);

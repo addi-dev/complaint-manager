@@ -8,17 +8,24 @@ const PER = 10;
 
 function applyFilters() {
   const search = document.getElementById("searchInput").value.toLowerCase();
-  const roleFilter = document.getElementById("roleFilter").value;
   const statusFilter = document.getElementById("statusFilter").value;
+  const categoryFilter = document.getElementById("categoryFilter").value;
+  const priorityFilter = document.getElementById("priorityFilter").value;
   const sortBy = document.getElementById("sortSelect").value;
 
-  filtered = reclamations.filter((u) => {
-    const fullname = (u.nom + " " + u.prenom).toLowerCase();
+  filtered = reclamations.filter((r) => {
     const matchSearch =
-      fullname.includes(search) || u.email.toLowerCase().includes(search);
-    const matchRole = !roleFilter || u.role.toLowerCase() === roleFilter;
-    const matchStatus = statusFilter === "" ? true : u.actif == statusFilter;
-    return matchSearch && matchRole && matchStatus;
+      r.objet.toLowerCase().includes(search) ||
+      r.numero_unique.toLowerCase().includes(search) ||
+      r.description.toLowerCase().includes(search) ||
+      r.client.toLowerCase().includes(search);
+    const matchStatus =
+      !statusFilter || r.statut_code.toLowerCase() === statusFilter;
+    const matchPriority =
+      !priorityFilter || r.priorite_niveau == priorityFilter;
+    const matchCategory = !categoryFilter || r.categorie_id == categoryFilter;
+
+    return matchSearch && matchStatus && matchPriority && matchCategory;
   });
 
   filtered.sort((a, b) => {
@@ -59,12 +66,12 @@ function renderReclamations() {
       (data, i) => `
         <tr style="animation-delay:${i * 0.03}s" data-id='${data.id}'>
           <td>
-            <span>${data.numero_unique}</span>
+            <span class="ref-badge">${data.numero_unique}</span>
           </td>
           <td>${data.client}</td>
-          <td>${data.objet}</td>
-          <td>${data.categorie}</td>
-          <td>${data.priorite}</td>
+          <td class="table-objet">${data.objet}</td>
+          <td><span class="category-badge">${data.categorie}</span></td>
+          <td><span class="priority-badge ${data.priorite.toLowerCase()}">${data.priorite}</span></td>
           <td>${data.statut}</td>
           <td>${data.agent}</td>
           <td>${formatDate(data.created_at)}</td>
@@ -116,7 +123,21 @@ function renderReclamations() {
 
   //! Show Reclamations count
   document.getElementById("enrollCount").innerHTML =
-    `${reclamations.length} réclamation${reclamations.length > 1 ? 's' : ''}`
+    `${reclamations.length} réclamation${reclamations.length > 1 ? "s" : ""}`;
 }
 
 getReclamations();
+
+// Apply Filters
+
+document.getElementById("searchInput").addEventListener("input", applyFilters);
+document
+  .getElementById("priorityFilter")
+  .addEventListener("change", applyFilters);
+document
+  .getElementById("statusFilter")
+  .addEventListener("change", applyFilters);
+document
+  .getElementById("categoryFilter")
+  .addEventListener("change", applyFilters);
+document.getElementById("sortSelect").addEventListener("change", applyFilters);

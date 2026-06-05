@@ -25,6 +25,7 @@ try {
 
             -- Catégorie
             cat.libelle                      AS categorie,
+            cat.id                          AS categorie_id,
 
             -- Priorité
             p.libelle                        AS priorite,

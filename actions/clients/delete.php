@@ -2,6 +2,8 @@
 
 header('Content-Type: application/json');
 require __DIR__ . '/../../config/app.php';
+require __DIR__ . '/../core/Auth.php';
+Auth::requireRole('admin', 'superviseur');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'error' => 'Wrong method']);

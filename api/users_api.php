@@ -6,7 +6,7 @@ header('Access-Control-Allow-Origin: *');
 
 require __DIR__ . '/../config/app.php';
 require __DIR__ . '/../core/Auth.php';
-Auth::requireRole('admin');
+Auth::requireRole('admin', 'superviseur');
 try {
     $stmt = $pdo->query("SELECT u.id, u.nom, u.prenom, u.email, u.actif, u.created_at, u.role_id, r.nom AS role
 FROM utilisateurs u
