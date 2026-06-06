@@ -88,11 +88,14 @@ CREATE TABLE statuts (
 );
  
 INSERT INTO statuts (libelle, code, description) VALUES
-('Nouvelle',        'NOUVELLE',   'Réclamation soumise par le client'),
-('Affectée',        'AFFECTEE',   'Confiée à un agent'),
-('En cours',        'EN_COURS',   'Traitement en cours'),
-('Résolue',         'RESOLUE',    'Solution proposée au client'),
-('Clôturée',        'CLOTUREE',   'Dossier finalisé');
+  ('Nouvelle',                  'NOUVELLE',              'Réclamation soumise par le client'),
+  ('En attente d''affectation', 'ATTENTE_AFFECTATION',   'Enregistrée, non assignée'),
+  ('Affectée',                  'AFFECTEE',              'Confiée à un agent'),
+  ('En cours de traitement',    'EN_COURS',              'Analyse en cours'),
+  ('En attente d''informations','ATTENTE_INFO',          'Le client doit fournir des précisions'),
+  ('Résolue',                   'RESOLUE',               'Solution proposée'),
+  ('Clôturée',                  'CLOTUREE',              'Dossier finalisé et archivé'),
+  ('Rejetée',                   'REJETEE',               'Réclamation non recevable');
  
 -- ------------------------------------------------------------
 -- reclamations  (entité centrale)

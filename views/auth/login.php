@@ -333,7 +333,7 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
         </div>
 
         <div class="forgot-wrap">
-            <a href="reset-password">Mot de passe oublié ?</a>
+            <a href="reset-password.php">Mot de passe oublié ?</a>
         </div>
 
         <button class="btn-submit" id="loginBtn" onclick="handleLogin()">

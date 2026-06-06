@@ -6,10 +6,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   const roleEl = document.querySelector(".user-info .role");
 
   try {
-    const res = await fetch(
-      "http://localhost/complaint-manager/api/auth_api.php",
-      { credentials: "include" }
-    );
+    const res = await fetch("../../api/auth_api.php", {
+      credentials: "include",
+    });
 
     const data = await res.json();
 
@@ -27,7 +26,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     // text fields
     nameEl.textContent = fullName;
     roleEl.textContent = user.role;
-
   } catch (err) {
     console.error("Auth API error:", err);
   }
