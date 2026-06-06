@@ -1,7 +1,5 @@
 <?php
-require __DIR__. "/../../config/app.php";
-require __DIR__. "/../../core/CSRF.php";
-CSRF::verify();
+require __DIR__ . "/../../config/app.php";
 session_unset();
 session_destroy();
 

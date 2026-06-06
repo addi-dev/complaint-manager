@@ -1,10 +1,11 @@
 <?php
 session_start();
 
-require_once __DIR__ . '/../../core/Auth.php';
 require __DIR__ . '/../../config/app.php';
+require_once __DIR__ . '/../../core/Auth.php';
+require __DIR__ . '/../../core/CSRF.php';
 
-Auth::requireRole('admin','superviseur');
+Auth::requireRole('admin', 'superviseur');
 ?>
 <!doctype html>
 <html lang="fr">
@@ -12,6 +13,7 @@ Auth::requireRole('admin','superviseur');
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <?php echo CSRF::metaTag(); ?>
   <title>Utilisateurs | <?php echo APP_NAME ?></title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
@@ -184,7 +186,7 @@ Auth::requireRole('admin','superviseur');
   <script type="module" src="../../assets/js/app.js"></script>
   <script type="module" src="../../assets/js/pages/users.js"></script>
   <script>
-    function FilterTable() { }
+    function FilterTable() {}
 
     function openModal() {
       document.getElementById("modalTitle").textContent = "Inscrire un nouvel utilisateur";

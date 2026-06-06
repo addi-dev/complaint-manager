@@ -2,6 +2,8 @@ import { initials, colorFor } from "../lib/string.js";
 import { formatDate } from "../lib/date.js";
 import { showToast } from "../lib/toast.js";
 
+const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+
 const mes_reclamations = [];
 let filtered = [];
 let page = 1;
@@ -157,6 +159,7 @@ window.deleteRow = function (id) {
         `/complaint-manager/actions/reclamations/delete.php?id=${id}`,
         {
           method: "POST",
+          headers: { "X-CSRF-Token": csrfToken },
         },
       );
 
@@ -164,7 +167,7 @@ window.deleteRow = function (id) {
 
       if (data.success) {
         closeDeleteModal();
-        showToast("Utilisateur supprimé avec succès");
+        showToast("Réclamation supprimée avec succès");
         getMesReclamations();
       } else {
         console.error(data.error);
@@ -201,7 +204,8 @@ document
 
       const res = await fetch(url, {
         method: "POST",
-        body: formData, 
+        headers: { "X-CSRF-Token": csrfToken },
+        body: formData,
       });
 
       const data = await res.json();

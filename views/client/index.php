@@ -1,7 +1,8 @@
 <?php
-session_start();
 
 require __DIR__ . '/../../config/app.php';
+require __DIR__ . '/../../core/CSRF.php';
+
 $categories = $pdo->query("SELECT id, libelle FROM categories_reclamation")->fetchAll();
 $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
 ?>
@@ -11,6 +12,7 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <?php echo CSRF::metaTag(); ?>
     <title>Tableau de bord | <?php echo APP_NAME ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
@@ -32,8 +34,8 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
         </div>
         <div class="sidebar-section-label">Menu</div>
         <a class="nav-item active" href="index.php"><i class="fa-solid fa-house"></i>Tableau de bord</a>
-        <a class="nav-item" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Mes
-            réclamations</a>
+        <!-- <a class="nav-item" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Mes
+            réclamations</a> -->
         <!-- <a class="nav-item" href="clients.php"><i class="fa-solid fa-user"></i>Clients</a> -->
         <div class="sidebar-section-label">Other</div>
         <a class="nav-item" href="../../actions/auth/logout.php"><i

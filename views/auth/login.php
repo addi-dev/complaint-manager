@@ -292,7 +292,7 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
 
     <!-- Left photo panel -->
     <div class="photo-panel">
-        <img src="../../assets/images/loginbg.jpg" alt="" />
+        <img src="../../assets/images/loginbg.webp" alt="" />
     </div>
 
     <!-- Right form panel -->

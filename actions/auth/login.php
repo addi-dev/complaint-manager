@@ -62,6 +62,7 @@ $stmt->execute([$email]);
 $user = $stmt->fetch();
 
 if ($user && password_verify($password, $user['mot_de_passe'])) {
+    session_regenerate_id(true);
     $_SESSION['user_id']    = $user['id'];
     $_SESSION['user_nom']  = $user['nom'];
     $_SESSION['user_prenom']  = $user['prenom'];

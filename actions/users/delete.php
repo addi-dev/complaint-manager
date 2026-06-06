@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 require __DIR__ . '/../../config/app.php';
 require __DIR__ . '/../../core/Auth.php';
 require __DIR__ . "/../../core/CSRF.php";
-Auth::requireRole('admin', 'superviseur');
+Auth::requireRole('admin'); //! only user can delete users
 CSRF::verify();
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'error' => 'Wrong method']);

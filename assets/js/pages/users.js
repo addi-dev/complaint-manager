@@ -1,6 +1,8 @@
 import { initials, colorFor } from "../lib/string.js";
 import { formatDate } from "../lib/date.js";
 import { showToast } from "../lib/toast.js";
+const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+
 const users = [];
 let filtered = [];
 let page = 1;
@@ -154,6 +156,7 @@ window.deleteRow = function (id) {
         `/complaint-manager/actions/users/delete.php?id=${id}`,
         {
           method: "POST",
+          headers: { "X-CSRF-Token": csrfToken },
         },
       );
 
@@ -199,7 +202,10 @@ document
     try {
       const res = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": csrfToken, // just add this line
+        },
         body: JSON.stringify(body),
       });
 
@@ -220,7 +226,7 @@ document
         showToast("Échec de l'opération");
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
       showToast("Une erreur est survenue");
     }
   });
