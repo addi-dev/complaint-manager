@@ -1,8 +1,9 @@
 <?php
 session_start();
 
-require_once __DIR__ . '/../../core/Auth.php';
 require __DIR__ . '/../../config/app.php';
+require_once __DIR__ . '/../../core/Auth.php';
+require __DIR__ . '/../../core/CSRF.php';
 
 Auth::requireRole('admin');
 
@@ -16,6 +17,7 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <?php echo CSRF::metaTag(); ?>
     <title>Clients | <?php echo APP_NAME ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
@@ -134,20 +136,19 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                     <div class="form-group full">
                         <label>Email</label>
-                        <input type="email" id="f-email" placeholder="client@gmail.com" name="email"  />
+                        <input type="email" id="f-email" placeholder="client@gmail.com" name="email" />
                     </div>
                     <div class="form-group full">
                         <label>Mot de passe</label>
-                        <input type="password" id="f-mot_de_passe" placeholder="••••••••" name="mot_de_passe"
-                            required />
+                        <input type="password" id="f-mot_de_passe" placeholder="••••••••" name="mot_de_passe" />
                     </div>
                     <div class="form-group full">
                         <label>Téléphone</label>
-                        <input type="text" id="f-telephone" placeholder="ex: 0612345678" name="telephone"  />
+                        <input type="text" id="f-telephone" placeholder="ex: 0612345678" name="telephone" />
                     </div>
                     <div class="form-group full">
                         <label>Address</label>
-                        <input type="text" id="f-adresse" placeholder="ex: Tanger, Maroc" name="adresse"  />
+                        <input type="text" id="f-adresse" placeholder="ex: Tanger, Maroc" name="adresse" />
                     </div>
                 </div>
                 <div class="modal-actions">
@@ -187,9 +188,9 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 (id) => (document.getElementById(id).value = "")
             );
 
-            document.getElementById("f-mot_de_passe").required = true;
             document.getElementById("overlay").classList.add("open");
         }
+
         function openEditModal(id) {
             const user = clients.find(u => u.id == id);
             if (!user) return;
@@ -206,12 +207,13 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
             document.getElementById('f-mot_de_passe').value = ''; // leave empty
             document.getElementById('f-telephone').value = user.telephone || '';
             document.getElementById('f-adresse').value = user.adresse;
-            document.getElementById("f-mot_de_passe").required = false;
             document.getElementById('overlay').classList.add('open');
         }
+
         function closeModal() {
             document.getElementById('overlay').classList.remove('open');
         }
+
         function closeOnOverlay(e) {
             if (e.target === e.currentTarget) closeModal();
         }

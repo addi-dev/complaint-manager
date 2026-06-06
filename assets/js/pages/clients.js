@@ -1,6 +1,7 @@
 import { initials, colorFor } from "../lib/string.js";
 import { formatDate } from "../lib/date.js";
 import { showToast } from "../lib/toast.js";
+const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
 const clients = [];
 let filtered = [];
 let page = 1;
@@ -154,6 +155,7 @@ window.deleteRow = function (id) {
         `/complaint-manager/actions/clients/delete.php?id=${id}`,
         {
           method: "POST",
+          headers: { "X-CSRF-Token": csrfToken },
         },
       );
 
@@ -201,7 +203,10 @@ document
     try {
       const res = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": csrfToken,
+        },
         body: JSON.stringify(body),
       });
 
@@ -215,12 +220,12 @@ document
             : "Client ajouté avec succès",
         );
         getClients();
+      } else if (data.errors) {
+        Object.values(data.errors).forEach((msg) => showToast(msg));
       } else {
-        closeModal();
         showToast("Échec de l'opération");
       }
     } catch (err) {
-      closeModal();
       showToast("Une erreur est survenue");
     }
   });

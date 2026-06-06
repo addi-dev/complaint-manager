@@ -6,11 +6,21 @@ require __DIR__ . '/../../core/Validator.php';
 require __DIR__ . "/../../core/CSRF.php";
 CSRF::verify();
 
+// ── METHOD CHECK ─────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['success' => false, 'error' => 'Wrong method']);
     exit;
 }
+
+// ── SESSION ─────────────────────────────
+if (!isset($_SESSION['user_id'])) {
+    http_response_code(401);
+    echo json_encode(['success' => false, 'error' => 'Not logged in']);
+    exit;
+}
+
+$client_id = $_SESSION['user_id'];
 
 $body = $_POST;
 
@@ -28,6 +38,7 @@ $validator = Validator::make($body)
 
     ->fileTypes('pieces_jointes', ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'], 'JPEG, PNG, GIF, PDF')
     ->fileMaxSize('pieces_jointes', 5 * 1024 * 1024, '5');
+
 if ($validator->fails()) {
     http_response_code(422);
     echo json_encode([
@@ -37,22 +48,11 @@ if ($validator->fails()) {
     exit;
 }
 
-// ── SESSION ─────────────────────────────
-if (!isset($_SESSION['user_id'])) {
-    http_response_code(401);
-    echo json_encode(['success' => false, 'error' => 'Not logged in']);
-    exit;
-}
-
-$client_id = $_SESSION['user_id'];
-
 // ── SANITIZE ─────────────────────────────
-$objet = trim($body['objet']);
+$objet       = trim($body['objet']);
 $description = trim($body['description']);
 
-// ── AUTO DATA ─────────────────────────────
-$numero_unique = "REC-" . date("Y") . rand(1000, 9999);
-
+// ── FILE CONFIG ─────────────────────────────
 $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'];
 $max_size      = 5 * 1024 * 1024;
 $upload_dir    = __DIR__ . '/../../storage/pieces_jointes/';
@@ -63,6 +63,7 @@ if (!is_dir($upload_dir)) {
 // ── INSERT ─────────────────────────────
 try {
     $pdo->beginTransaction();
+
     $stmt = $pdo->prepare("
         INSERT INTO reclamations 
         (numero_unique, client_id, categorie_id, priorite_id, statut_id, objet, description)
@@ -71,15 +72,21 @@ try {
     ");
 
     $stmt->execute([
-        ':numero' => $numero_unique,
-        ':client' => $client_id,
+        ':numero'    => '',
+        ':client'    => $client_id,
         ':categorie' => $body['categorie_id'],
-        ':objet' => $objet,
+        ':objet'     => $objet,
         ':description' => $description,
     ]);
 
     $reclamation_id = $pdo->lastInsertId();
 
+    // ── BUILD & UPDATE numero_unique ─────────────────────────────
+    $numero_unique = "REC-" . date("Y") . str_pad($reclamation_id, 6, '0', STR_PAD_LEFT);
+    $pdo->prepare("UPDATE reclamations SET numero_unique = ? WHERE id = ?")
+        ->execute([$numero_unique, $reclamation_id]);
+
+    // ── FILE UPLOADS ─────────────────────────────
     if (!empty($_FILES['pieces_jointes']['name'][0])) {
         $files = $_FILES['pieces_jointes'];
         $count = count($files['name']);
@@ -113,7 +120,7 @@ try {
     $pdo->commit();
 
     http_response_code(201);
-    echo json_encode(['success' => true, 'id' => $reclamation_id]);
+    echo json_encode(['success' => true, 'id' => $reclamation_id, 'numero' => $numero_unique]);
 } catch (Exception $e) {
     $pdo->rollBack();
     error_log($e->getMessage());
