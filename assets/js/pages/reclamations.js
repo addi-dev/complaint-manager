@@ -92,7 +92,7 @@ function renderReclamations() {
   const end = Math.min(start + PER, total);
   document.getElementById("tfInfo").innerHTML =
     total === 0
-      ? "Aucun utilisateur trouvé"
+      ? "Aucune réclamation trouvée"
       : `${start + 1}–${end} sur ${total} clients inscrits`;
 
   const pg = document.getElementById("pagination");

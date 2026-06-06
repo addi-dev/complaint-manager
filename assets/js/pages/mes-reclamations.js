@@ -148,7 +148,7 @@ window.closeDeleteModal = function () {
 window.deleteRow = function (id) {
   const reclamation = mes_reclamations.find((u) => u.id == id);
   document.getElementById("deleteRowName").textContent =
-    (reclamation.objet) || "cette réclamation";
+    reclamation.objet || "cette réclamation";
   document.getElementById("deleteOverlay").classList.add("open");
 
   document.getElementById("confirmDelete").onclick = async function () {
@@ -197,10 +197,11 @@ document
         : `/complaint-manager/actions/reclamations/store.php`;
 
     try {
+      const formData = new FormData(this);
+
       const res = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
+        body: formData, 
       });
 
       const data = await res.json();

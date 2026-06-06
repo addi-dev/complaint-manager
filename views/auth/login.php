@@ -1,6 +1,5 @@
 <?php
 require __DIR__ . '/../../config/app.php';
-session_start();
 
 if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     $redirects = [

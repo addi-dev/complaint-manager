@@ -66,7 +66,42 @@ class Validator
         }
         return $this;
     }
+    public function fileTypes(string $field, array $allowed, string $label = ''): static
+    {
+        $label = $label ?: $field;
+        if (empty($_FILES[$field]['name'][0])) return $this;
 
+        $files = $_FILES[$field];
+        $count = count($files['name']);
+
+        for ($i = 0; $i < $count; $i++) {
+            if ($files['error'][$i] !== UPLOAD_ERR_OK) continue;
+            if (!in_array($files['type'][$i], $allowed)) {
+                $this->errors[$field] = "« {$files['name'][$i]} » : type non autorisé. ({$label} uniquement)";
+                break;
+            }
+        }
+        return $this;
+    }
+
+    public function fileMaxSize(string $field, int $maxBytes, string $label = ''): static
+    {
+        $label = $label ?: $field;
+        if (empty($_FILES[$field]['name'][0])) return $this;
+
+        $files = $_FILES[$field];
+        $count = count($files['name']);
+        $maxMb = round($maxBytes / 1024 / 1024);
+
+        for ($i = 0; $i < $count; $i++) {
+            if ($files['error'][$i] !== UPLOAD_ERR_OK) continue;
+            if ($files['size'][$i] > $maxBytes) {
+                $this->errors[$field] = "« {$files['name'][$i]} » dépasse la taille maximale de {$maxMb} Mo.";
+                break;
+            }
+        }
+        return $this;
+    }
     // ── Results ───────────────────────────────────────────────────────────────
 
     public function fails(): bool

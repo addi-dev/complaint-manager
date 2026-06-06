@@ -1,5 +1,8 @@
 <?php
 // config/app.php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require __DIR__ . '/constants.php';
 $host = 'localhost';
 $db   = 'reclamations';

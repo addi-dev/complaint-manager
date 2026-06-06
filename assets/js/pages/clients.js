@@ -92,7 +92,7 @@ function renderClients() {
   const end = Math.min(start + PER, total);
   document.getElementById("tfInfo").innerHTML =
     total === 0
-      ? "Aucun utilisateur trouvé"
+      ? "Aucun client trouvé"
       : `${start + 1}–${end} sur ${total} clients inscrits`;
 
   const pg = document.getElementById("pagination");

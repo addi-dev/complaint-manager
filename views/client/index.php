@@ -181,7 +181,7 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
                         </select>
                     </div>
                     <div class="form-group full">
-                        <label>Pièces jointes</label>
+                        <label>Pièces jointes (facultatif)</label>
                         <input type="file" name="pieces_jointes[]" id="" multiple>
                     </div>
                 </div>

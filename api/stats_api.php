@@ -6,7 +6,7 @@ header('Access-Control-Allow-Origin: *');
 
 require __DIR__ . '/../config/app.php';
 require __DIR__ . '/../core/Auth.php';
-Auth::requireRole('admin');
+Auth::requireRole('admin', 'superviseur');
 try {
     $totalClients = $pdo->query("SELECT COUNT(*) FROM clients")->fetchColumn();
 

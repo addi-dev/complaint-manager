@@ -2,7 +2,10 @@
 header('Content-Type: application/json');
 require __DIR__ . '/../../config/app.php';
 require __DIR__ . '/../../core/Validator.php';
-
+require __DIR__ . "/../../core/CSRF.php";
+require __DIR__ . "/../../core/Auth.php";
+CSRF::verify();
+Auth::requireRole('admin');
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['success' => false, 'error' => 'Wrong method']);
@@ -104,7 +107,6 @@ try {
     }
 
     echo json_encode(['success' => true, 'updated' => $stmt->rowCount()]);
-
 } catch (Exception $e) {
     error_log('[API Error] ' . $e->getMessage());
     http_response_code(500);

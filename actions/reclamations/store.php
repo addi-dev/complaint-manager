@@ -3,8 +3,8 @@ header('Content-Type: application/json');
 
 require __DIR__ . '/../../config/app.php';
 require __DIR__ . '/../../core/Validator.php';
-
-session_start();
+require __DIR__ . "/../../core/CSRF.php";
+CSRF::verify();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -12,11 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$body = json_decode(file_get_contents('php://input'), true) ?? [];
-
-if (empty($body)) {
-    $body = $_POST;
-}
+$body = $_POST;
 
 // ── Validation ─────────────────────────────
 $validator = Validator::make($body)
@@ -28,8 +24,10 @@ $validator = Validator::make($body)
     ->minLength('description', 10, 'Description')
 
     ->required('categorie_id', 'Catégorie')
-    ->numeric('categorie_id', 'Catégorie');
+    ->numeric('categorie_id', 'Catégorie')
 
+    ->fileTypes('pieces_jointes', ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'], 'JPEG, PNG, GIF, PDF')
+    ->fileMaxSize('pieces_jointes', 5 * 1024 * 1024, '5');
 if ($validator->fails()) {
     http_response_code(422);
     echo json_encode([
@@ -55,8 +53,16 @@ $description = trim($body['description']);
 // ── AUTO DATA ─────────────────────────────
 $numero_unique = "REC-" . date("Y") . rand(1000, 9999);
 
+$allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'];
+$max_size      = 5 * 1024 * 1024;
+$upload_dir    = __DIR__ . '/../../storage/pieces_jointes/';
+if (!is_dir($upload_dir)) {
+    mkdir($upload_dir, 0755, true);
+}
+
 // ── INSERT ─────────────────────────────
 try {
+    $pdo->beginTransaction();
     $stmt = $pdo->prepare("
         INSERT INTO reclamations 
         (numero_unique, client_id, categorie_id, priorite_id, statut_id, objet, description)
@@ -72,12 +78,44 @@ try {
         ':description' => $description,
     ]);
 
+    $reclamation_id = $pdo->lastInsertId();
+
+    if (!empty($_FILES['pieces_jointes']['name'][0])) {
+        $files = $_FILES['pieces_jointes'];
+        $count = count($files['name']);
+
+        $stmtFile = $pdo->prepare("
+            INSERT INTO pieces_jointes (reclamation_id, nom_fichier, chemin, type_mime, taille)
+            VALUES (:reclamation_id, :nom_fichier, :chemin, :type_mime, :taille)
+        ");
+
+        for ($i = 0; $i < $count; $i++) {
+            if ($files['error'][$i] !== UPLOAD_ERR_OK) continue;
+            if (!in_array($files['type'][$i], $allowed_types)) continue;
+            if ($files['size'][$i] > $max_size) continue;
+
+            $ext         = pathinfo($files['name'][$i], PATHINFO_EXTENSION);
+            $safe_name   = uniqid('pj_', true) . '.' . $ext;
+            $destination = $upload_dir . $safe_name;
+
+            if (!move_uploaded_file($files['tmp_name'][$i], $destination)) continue;
+
+            $stmtFile->execute([
+                ':reclamation_id' => $reclamation_id,
+                ':nom_fichier'    => $files['name'][$i],
+                ':chemin'         => 'storage/pieces_jointes/' . $safe_name,
+                ':type_mime'      => $files['type'][$i],
+                ':taille'         => $files['size'][$i],
+            ]);
+        }
+    }
+
+    $pdo->commit();
+
     http_response_code(201);
-    echo json_encode([
-        'success' => true,
-        'id' => $pdo->lastInsertId()
-    ]);
+    echo json_encode(['success' => true, 'id' => $reclamation_id]);
 } catch (Exception $e) {
+    $pdo->rollBack();
     error_log($e->getMessage());
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Server error']);
