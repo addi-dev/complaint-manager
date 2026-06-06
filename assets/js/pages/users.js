@@ -204,7 +204,7 @@ document
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-CSRF-Token": csrfToken, // just add this line
+          "X-CSRF-Token": csrfToken,
         },
         body: JSON.stringify(body),
       });

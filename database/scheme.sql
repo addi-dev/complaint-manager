@@ -30,6 +30,8 @@ CREATE TABLE utilisateurs (
   role_id        INT UNSIGNED NOT NULL,
   nom            VARCHAR(100) NOT NULL,
   prenom         VARCHAR(100) NOT NULL,
+  date_naissance DATE NOT NULL,
+  numero_cin     VARCHAR(20) NOT NULL,
   email          VARCHAR(150) NOT NULL UNIQUE,
   mot_de_passe   VARCHAR(255) NOT NULL,        -- hashed (bcrypt)
   actif          BOOLEAN      NOT NULL DEFAULT TRUE,
@@ -42,15 +44,17 @@ CREATE TABLE utilisateurs (
 -- clients
 -- ------------------------------------------------------------
 CREATE TABLE clients (
-  id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  nom         VARCHAR(100) NOT NULL,
-  prenom      VARCHAR(100) NOT NULL,
-  email       VARCHAR(150) NOT NULL UNIQUE,
-  mot_de_passe VARCHAR(255),
-  telephone   VARCHAR(20),
-  adresse     TEXT,
-  created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  id             INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  nom            VARCHAR(100) NOT NULL,
+  prenom         VARCHAR(100) NOT NULL,
+  date_naissance DATE NOT NULL,
+  numero_cin     VARCHAR(20) NOT NULL,
+  email          VARCHAR(150) NOT NULL UNIQUE,
+  mot_de_passe   VARCHAR(255),
+  telephone      VARCHAR(20),
+  adresse        TEXT,
+  created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 -- ------------------------------------------------------------
