@@ -2,7 +2,7 @@
 
 require __DIR__ . '/../../config/app.php';
 require __DIR__ . '/../../core/Auth.php';
-Auth::requireRole('client');
+Auth::requireRole('admin', 'superviseur');
 $categories = $pdo->query("SELECT id, libelle FROM categories_reclamation")->fetchAll();
 $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
 ?>
@@ -12,7 +12,6 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <?php echo CSRF::metaTag(); ?>
     <title>Tableau de bord | <?php echo APP_NAME ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"

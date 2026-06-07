@@ -13,6 +13,8 @@ try {
             c.id,
             c.nom,
             c.prenom,
+            c.date_naissance,
+            c.numero_cin,
             c.email,
             c.telephone,
             c.adresse,

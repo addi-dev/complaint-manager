@@ -102,6 +102,46 @@ class Validator
         }
         return $this;
     }
+    public function minAge(string $field, int $minAge, string $label = ''): static
+    {
+        $label = $label ?: $field;
+        if (empty($this->data[$field])) return $this;
+
+        $dob = new DateTime($this->data[$field]);
+        $age = (new DateTime())->diff($dob)->y;
+
+        if ($age < $minAge) {
+            $this->errors[$field] = "$label : vous devez avoir au moins $minAge ans.";
+        }
+        return $this;
+    }
+    public function dateBefore(string $field, string $before = 'today', string $label = ''): static
+    {
+        $label = $label ?: $field;
+        if (empty($this->data[$field])) return $this;
+
+        $input  = strtotime($this->data[$field]);
+        $limit  = $before === 'today' ? strtotime('today') : strtotime($before);
+
+        if ($input === false || $input >= $limit) {
+            $this->errors[$field] = "$label doit être une date dans le passé.";
+        }
+        return $this;
+    }
+
+    public function dateAfter(string $field, string $after = 'today', string $label = ''): static
+    {
+        $label = $label ?: $field;
+        if (empty($this->data[$field])) return $this;
+
+        $input = strtotime($this->data[$field]);
+        $limit = $after === 'today' ? strtotime('today') : strtotime($after);
+
+        if ($input === false || $input <= $limit) {
+            $this->errors[$field] = "$label doit être une date dans le futur.";
+        }
+        return $this;
+    }
     // ── Results ───────────────────────────────────────────────────────────────
 
     public function fails(): bool

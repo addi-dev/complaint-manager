@@ -99,6 +99,7 @@ Auth::requireRole('admin', 'superviseur');
             <thead>
               <tr>
                 <th>Nom Complét</th>
+                <th>CIN</th>
                 <th>Role</th>
                 <th>Status</th>
                 <th>Ajouter le</th>
@@ -128,19 +129,23 @@ Auth::requireRole('admin', 'superviseur');
         <div class="form-grid">
           <div class="form-group">
             <label>Nom</label>
-            <input type="text" id="f-nom" placeholder="ex: Fadil" name="nom" required />
+            <input type="text" id="f-nom" placeholder="ex: Fadil" name="nom" />
           </div>
           <div class="form-group">
             <label>Prénom</label>
             <input type="text" id="f-prenom" placeholder="ex: Ibtisam" name="prenom" />
           </div>
+          <div class="form-group">
+            <label>Date de naissance</label>
+            <input type="date" id="f-date_naissance" name="date_naissance" />
+          </div>
+          <div class="form-group">
+            <label>CIN</label>
+            <input type="text" id="f-numero_cin" placeholder="ex: A123456" name="numero_cin" />
+          </div>
           <div class="form-group full">
             <label>Email</label>
             <input type="email" id="f-email" placeholder="utilisateur@gmail.com" name="email" />
-          </div>
-          <div class="form-group full">
-            <label>Mot de passe</label>
-            <input type="password" id="f-mot_de_passe" placeholder="••••••••" name="mot_de_passe" />
           </div>
           <div class="form-group">
             <label>Rôle</label>
@@ -194,14 +199,12 @@ Auth::requireRole('admin', 'superviseur');
       document.getElementById("formMethod").value = "POST";
       document.getElementById("submitBtn").textContent = "Inscrire l'utilisateur";
 
-      ["f-nom", "f-prenom", "f-email", "f-mot_de_passe"].forEach(
+      ["f-nom", "f-prenom", "f-email", "f-date_naissance", "f-numero_cin"].forEach(
         (id) => (document.getElementById(id).value = "")
       );
 
       document.getElementById("f-role_id").value = "";
       document.getElementById("f-actif").value = "1";
-      document.getElementById("f-mot_de_passe").required = true;
-      document.getElementById("f-mot_de_passe").placeholder = "••••••••";
       document.getElementById("overlay").classList.add("open");
     }
 
@@ -217,12 +220,11 @@ Auth::requireRole('admin', 'superviseur');
       // fill fields
       document.getElementById('f-nom').value = user.nom || '';
       document.getElementById('f-prenom').value = user.prenom || '';
+      document.getElementById('f-date_naissance').value = user.date_naissance || '';
+      document.getElementById('f-numero_cin').value = user.numero_cin || '';
       document.getElementById('f-email').value = user.email || '';
-      document.getElementById('f-mot_de_passe').value = ''; // leave empty
       document.getElementById('f-role_id').value = user.role_id || '';
       document.getElementById('f-actif').value = user.actif ?? '1';
-      document.getElementById("f-mot_de_passe").required = false;
-      document.getElementById("f-mot_de_passe").placeholder = "Laisser vide pour ne pas modifier";
       document.getElementById('overlay').classList.add('open');
     }
 

@@ -13,6 +13,26 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+// Generate password
+
+function generer_mot_de_passe(): string
+{
+    $lettres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    $chiffres = '0123456789';
+
+    $partie_lettres = '';
+    for ($i = 0; $i < 4; $i++) {
+        $partie_lettres .= $lettres[random_int(0, strlen($lettres) - 1)];
+    }
+
+    $partie_chiffres = '';
+    for ($i = 0; $i < 4; $i++) {
+        $partie_chiffres .= $chiffres[random_int(0, 9)];
+    }
+
+    return $partie_lettres . $partie_chiffres;
+}
+
 // Read JSON body
 $body = json_decode(file_get_contents('php://input'), true) ?? [];
 
@@ -23,10 +43,10 @@ $validator = Validator::make($body)
     ->required('prenom', 'Prénom')
     ->minLength('prenom', 2, 'Prénom')
     ->maxLength('prenom', 100, 'Prénom')
+    ->required('date_naissance', 'Date de naissance')
+    ->required('numero_cin', 'CIN')
     ->required('email', 'Email')
     ->email('email', 'Email')
-    ->required('mot_de_passe', 'Mot de passe')
-    ->minLength('mot_de_passe', 8, 'Mot de passe')
     ->required('telephone', 'Téléphone')
     ->minLength('telephone', 8, 'Téléphone')
     ->maxLength('telephone', 20, 'Téléphone')
@@ -42,8 +62,11 @@ if ($validator->fails()) {
 try {
     $nom          = trim($body['nom']);
     $prenom       = trim($body['prenom']);
+    $date_naissance       = trim($body['date_naissance']);
+    $numero_cin      = trim($body['numero_cin']);
     $email        = trim($body['email']);
-    $mot_de_passe = password_hash($body['mot_de_passe'], PASSWORD_BCRYPT);
+    $mot_de_passe_brut = generer_mot_de_passe();           // e.g. "Aydh2810"
+    $mot_de_passe      = password_hash($mot_de_passe_brut, PASSWORD_BCRYPT);
     $telephone      = trim($body['telephone']);
     $adresse        = trim($body['adresse']);
 
@@ -56,14 +79,16 @@ try {
     }
 
     $stmt = $pdo->prepare("
-        INSERT INTO clients (nom, prenom, email, mot_de_passe, telephone, adresse)
-        VALUES (:nom, :prenom, :email, :mot_de_passe, :telephone, :adresse)
+        INSERT INTO clients (nom, prenom, date_naissance, numero_cin, email, mot_de_passe, telephone, adresse)
+        VALUES (:nom, :prenom, :date_naissance, :numero_cin,:email, :mot_de_passe, :telephone, :adresse)
     ");
 
     $stmt->execute([
         ':nom'          => $nom,
         ':prenom'       => $prenom,
         ':email'        => $email,
+        ':date_naissance'        => $date_naissance,
+        ':numero_cin'        => $numero_cin,
         ':mot_de_passe' => $mot_de_passe,
         ':telephone'      => $telephone,
         ':adresse'        => $adresse,

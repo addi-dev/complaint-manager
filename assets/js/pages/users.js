@@ -70,6 +70,7 @@ function renderUsers() {
               </div>
             </div>
           </td>
+          <td>${data.numero_cin}</td>
           <td><span class="role-badge role-${data.role.toLowerCase()}">${data.role}</span></td>
           <td>
             <span class="status-badge status-${data.actif == 1 ? "active" : "inactive"}">
@@ -187,8 +188,9 @@ document
     const body = {
       nom: document.getElementById("f-nom").value,
       prenom: document.getElementById("f-prenom").value,
+      date_naissance: document.getElementById("f-date_naissance").value,
+      numero_cin: document.getElementById("f-numero_cin").value,
       email: document.getElementById("f-email").value,
-      mot_de_passe: document.getElementById("f-mot_de_passe").value,
       role_id: document.getElementById("f-role_id").value,
       actif: document.getElementById("f-actif").value,
     };

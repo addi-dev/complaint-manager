@@ -134,13 +134,17 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <label>Prénom</label>
                         <input type="text" id="f-prenom" placeholder="ex: Ibtisam" name="prenom" />
                     </div>
+                    <div class="form-group">
+                        <label>Date de naissance</label>
+                        <input type="date" id="f-date_naissance" name="date_naissance" />
+                    </div>
+                    <div class="form-group">
+                        <label>CIN</label>
+                        <input type="text" id="f-numero_cin" placeholder="ex: A123456" name="numero_cin" />
+                    </div>
                     <div class="form-group full">
                         <label>Email</label>
                         <input type="email" id="f-email" placeholder="client@gmail.com" name="email" />
-                    </div>
-                    <div class="form-group full">
-                        <label>Mot de passe</label>
-                        <input type="password" id="f-mot_de_passe" placeholder="••••••••" name="mot_de_passe" />
                     </div>
                     <div class="form-group full">
                         <label>Téléphone</label>
@@ -184,7 +188,7 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
             document.getElementById("formMethod").value = "POST";
             document.getElementById("submitBtn").textContent = "Inscrire le client";
 
-            ["f-nom", "f-prenom", "f-email", "f-mot_de_passe", 'f-telephone', 'f-adresse'].forEach(
+            ["f-nom", "f-prenom", "f-email", "f-date_naissance", "f-numero_cin", 'f-telephone', 'f-adresse'].forEach(
                 (id) => (document.getElementById(id).value = "")
             );
 
@@ -204,7 +208,6 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
             document.getElementById('f-nom').value = user.nom || '';
             document.getElementById('f-prenom').value = user.prenom || '';
             document.getElementById('f-email').value = user.email || '';
-            document.getElementById('f-mot_de_passe').value = ''; // leave empty
             document.getElementById('f-telephone').value = user.telephone || '';
             document.getElementById('f-adresse').value = user.adresse;
             document.getElementById('overlay').classList.add('open');

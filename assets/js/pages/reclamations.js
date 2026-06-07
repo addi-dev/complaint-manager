@@ -77,6 +77,9 @@ function renderReclamations() {
           <td>${formatDate(data.created_at)}</td>
           <td>
             <div class="action-btns">
+              <button class="action-btn action-btn-view" title="Voir les détails" onclick="window.location.href='reclamation-details.php?id=${data.id}'">
+                <i class="fa-regular fa-eye"></i>
+              </button>
               <button class="action-btn action-btn-edit" title="Modifier" onclick="openEditModal(${data.id})">
                 <i class="fa-regular fa-pen-to-square"></i>
               </button>

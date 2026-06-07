@@ -188,8 +188,9 @@ document
     const body = {
       nom: document.getElementById("f-nom").value,
       prenom: document.getElementById("f-prenom").value,
+      date_naissance: document.getElementById("f-date_naissance").value,
+      numero_cin: document.getElementById("f-numero_cin").value,
       email: document.getElementById("f-email").value,
-      mot_de_passe: document.getElementById("f-mot_de_passe").value,
       telephone: document.getElementById("f-telephone").value,
       adresse: document.getElementById("f-adresse").value,
     };

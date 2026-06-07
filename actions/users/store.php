@@ -13,6 +13,26 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+// Generate password
+
+function generer_mot_de_passe(): string
+{
+    $lettres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    $chiffres = '0123456789';
+
+    $partie_lettres = '';
+    for ($i = 0; $i < 4; $i++) {
+        $partie_lettres .= $lettres[random_int(0, strlen($lettres) - 1)];
+    }
+
+    $partie_chiffres = '';
+    for ($i = 0; $i < 4; $i++) {
+        $partie_chiffres .= $chiffres[random_int(0, 9)];
+    }
+
+    return $partie_lettres . $partie_chiffres;
+}
+
 $body = json_decode(file_get_contents('php://input'), true) ?? [];
 
 // ── Validation ────────────────────────────────────────────────────────────────
@@ -23,10 +43,11 @@ $validator = Validator::make($body)
     ->required('prenom', 'Prénom')
     ->minLength('prenom', 2, 'Prénom')
     ->maxLength('prenom', 100, 'Prénom')
+    ->required('date_naissance', 'Date de naissance')
+    ->minAge('date_naissance', 18, "Date de naissance")
+    ->required('numero_cin', 'CIN')
     ->required('email', 'Email')
     ->email('email', 'Email')
-    ->required('mot_de_passe', 'Mot de passe')
-    ->minLength('mot_de_passe', 8, 'Mot de passe')
     ->required('role_id', 'Rôle')
     ->numeric('role_id', 'Rôle')
     ->required('actif', 'Actif')
@@ -42,8 +63,11 @@ if ($validator->fails()) {
 try {
     $nom = trim($body['nom']);
     $prenom = trim($body['prenom']);
+    $date_naissance = trim($body['date_naissance']);
+    $numero_cin = trim($body['numero_cin']);
     $email = trim($body['email']);
-    $mot_de_passe = password_hash($body['mot_de_passe'], PASSWORD_BCRYPT);
+    $mot_de_passe_brut = generer_mot_de_passe();           // e.g. "Aydh2810"
+    $mot_de_passe = password_hash($mot_de_passe_brut, PASSWORD_BCRYPT);
     $role_id = intval($body['role_id']);
     $actif = intval($body['actif']);
 
@@ -56,12 +80,14 @@ try {
     }
 
     $stmt = $pdo->prepare("
-        INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe, role_id, actif)
-        VALUES (:nom, :prenom, :email, :mot_de_passe, :role_id, :actif)
+        INSERT INTO utilisateurs (nom, prenom, date_naissance, numero_cin, email, mot_de_passe, role_id, actif)
+        VALUES (:nom, :prenom, :date_naissance, :numero_cin, :email, :mot_de_passe, :role_id, :actif)
     ");
     $stmt->execute([
         ':nom' => $nom,
         ':prenom' => $prenom,
+        ':date_naissance' => $date_naissance,
+        ':numero_cin' => $numero_cin,
         ':email' => $email,
         ':mot_de_passe' => $mot_de_passe,
         ':role_id' => $role_id,
