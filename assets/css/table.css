@@ -356,7 +356,55 @@ tbody td {
 .critique::before {
   background-color: #b91c1c;
 }
+.r-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 11px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.status-nouvelle {
+  background: #e0f2fe;  /* sky */
+  color: #0c4a6e;
+}
 
+.status-attente-affectation {
+  background: #fde68a;  /* amber */
+  color: #92400e;
+}
+
+.status-affectee {
+  background: #d1fae5;  /* emerald */
+  color: #065f46;
+}
+
+.status-en_cours {
+  background: #ede9fe;  /* violet */
+  color: #3b0764;
+}
+
+.status-attente_info {
+  background: #fed7aa;  /* orange */
+  color: #9a3412;
+}
+
+.status-resolue {
+  background: #bbf7d0;  /* green */
+  color: #14532d;
+}
+
+.status-cloturee {
+  background: #e2e8f0;  /* slate */
+  color: #1e293b;
+}
+
+.status-rejetee {
+  background: #fecaca;  /* red */
+  color: #7f1d1d;
+}
 /* TO BE DETERMINED */
 .table-objet {
   font-weight: 600;

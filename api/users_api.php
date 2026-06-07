@@ -1,6 +1,6 @@
 <?php
 // api/users_api.php
-session_start();
+// session_start();
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 

@@ -71,10 +71,10 @@ function renderMesReclamations() {
           <td class="table-objet">${r.objet}</td>
           <td><span class="category-badge">${r.categorie}</span></td>
           <td><span class="priority-badge ${r.priorite.toLowerCase()}">${r.priorite}</span></td>
-          <td><span class="status-badge status-${r.statut.toLowerCase()}">${r.statut}</span></td>
+          <td><span class="r-status-badge status-${r.statut_code.toLowerCase()}">${r.statut}</span></td>
           <td>
             <div class="action-btns">
-              <button class="action-btn action-btn-view" title="Voir le dossier" onclick="openEditModal(${r.id})">
+              <button class="action-btn action-btn-view" title="Voir les détails" onclick="window.location.href='reclamation-details.php?id=${r.id}'">
                 <i class="fa-regular fa-eye"></i>
               </button>
               <button class="action-btn action-btn-edit" title="Modifier" onclick="openEditModal(${r.id})">
