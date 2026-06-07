@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     Response::methodNotAllowed();
 }
 
-// CSRF::verify();
+CSRF::verify();
 
 $body = json_decode(file_get_contents('php://input'), true) ?? [];
 

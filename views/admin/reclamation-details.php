@@ -18,6 +18,7 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
         rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="../../assets/css/app.css" />
+    <link rel="stylesheet" href="../../assets/css/pages/reclamation-details.css" />
     <style>
     </style>
 </head>
@@ -53,101 +54,77 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
             </div>
         </header>
         <div class="content">
-            <div class="page-header">
-                <div>
-                    <h1>Mes Réclamations</h1>
-                    <div class="sub" id="enrollCount"></div>
-                </div>
-                <button class="enroll-btn" onclick="openModal()">
-                    <i class="fa-solid fa-plus"></i>
-                    Ajouter une réclamation
-                </button>
-            </div>
-            <div class="card">
-                <div class="table-toolbar">
-                    <div class="tb-search">
-                        <svg viewBox="0 0 24 24">
-                            <circle cx="11" cy="11" r="8" />
-                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                        </svg>
-                        <input type="text" id="searchInput" placeholder="Rechercher..." />
+            <!-- HEADER CARD -->
+            <div class="header-card">
+                <div class="header-top">
+                    <div class="header-left">
+                        <div class="rec-ref" id="rec-ref"></div>
+                        <div class="rec-objet" id="rec-objet"></div>
                     </div>
-                    <select class="filter-select" id="roleFilter">
-
-                    </select>
-                    <select class="filter-select" id="statusFilter">
-                        <option value="">Tous les statuts</option>
-                        <option value="nouvelle">Nouvelle</option>
-                        <option value="attente_affectation">En attente d'affectation</option>
-                        <option value="affectee">Affectée</option>
-                        <option value="en_cours">En cours de traitement</option>
-                        <option value="attente_info">En attente d'informations</option>
-                        <option value="resolue">Résolue</option>
-                        <option value="cloturee">Clôturée</option>
-                        <option value="rejetee">Rejetée</option>
-                    </select>
-                    <select class="filter-select" id="priorityFilter">
-                        <option value="">Toutes les priorités</option>
-                        <option value="1">Faible</option>
-                        <option value="2">Normale</option>
-                        <option value="3">Haute</option>
-                        <option value="4">Critique</option>
-                    </select>
-                    <select class="filter-select" id="categoryFilter">
-                        <option value="">Toutes les catégories</option>
-                        <option value="1">Facturation</option>
-                        <option value="2">Livraison</option>
-                        <option value="3">Qualité produit</option>
-                        <option value="4">Service après-vente</option>
-                        <option value="5">Remboursement</option>
-                        <option value="6">Délai de livraison</option>
-                        <option value="7">Produit manquant</option>
-                        <option value="8">Produit endommagé</option>
-                        <option value="9">Erreur de commande</option>
-                        <option value="10">Annulation commande</option>
-                        <option value="11">Compte client</option>
-                        <option value="12">Paiement en ligne</option>
-                        <option value="13">Offre promotionnelle</option>
-                        <option value="14">Communication commerciale</option>
-                        <option value="15">Service client</option>
-                        <option value="16">Garantie produit</option>
-                        <option value="17">Retour marchandise</option>
-                        <option value="18">Transport / Transporteur</option>
-                        <option value="19">Conformité réglementaire</option>
-                        <option value="20">Confidentialité des données</option>
-                        <option value="21">Application mobile</option>
-                        <option value="22">Site web</option>
-                        <option value="23">Abonnement</option>
-                        <option value="24">Résiliation</option>
-                        <option value="25">Devis / Estimation</option>
-                    </select>
-                    <select class="filter-select" id="sortSelect">
-                        <option value="">Par défaut</option>
-                        <option value="name">Nom A→Z</option>
-                        <option value="name_desc">Nom Z→A</option>
-                        <option value="date_desc">Plus récents</option>
-                        <option value="date_asc">Plus anciens</option>
-                    </select>
+                    <div class="header-badges">
+                        <span class="r-status-badge" id="rec-status"></span>
+                        <span class="priority-badge" id="rec-priority"></span>
+                    </div>
                 </div>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Numéro</th>
-                                <th>Objet</th>
-                                <th>Catégorie</th>
-                                <th>Priorité</th>
-                                <th>Statut</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody"></tbody>
-                    </table>
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">Catégorie</div>
+                        <div class="meta-val" id="rec-category"></div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Créée le</div>
+                        <div class="meta-val" id="rec-created"></div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Mise à jour</div>
+                        <div class="meta-val" id="rec-updated"></div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Clôturée le</div>
+                        <div class="meta-val muted" id="red-closed"></div>
+                    </div>
                 </div>
-                <div class="table-footer">
-                    <div class="tf-info" id="tfInfo"></div>
-                    <div class="pagination" id="pagination"></div>
+            </div>
+            <!-- DESCRIPTION -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-regular fa-file-lines"></i> Description
+                    </div>
                 </div>
+                <div class="card-body">
+                    <p class="desc-text" id="rec-description"></p>
+                </div>
+            </div>
+            <!-- COMMENTS -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-regular fa-comment"></i>
+                        Commentaires
+                    </div>
+                    <span style="font-size:12px;color:var(--text-muted);font-weight:600" id="nombre_commentaires"></span>
+                </div>
+                <div class="card-body">
+                    <div id="commentsList"></div>
+                    <div class="comment-input">
+                        <input id="newComment" placeholder="Ajouter un commentaire ou une précision…" />
+                        <button class="send-btn" onclick="addComment()">
+                            <i class="fa-regular fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- ATTACHMENTS -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-paperclip"></i>
+                        Pièces jointes
+                    </div>
+                    <span style="font-size:12px;color:var(--text-muted);font-weight:600" id="nombre_pieces"></span>
+                </div>
+                <div class="card-body" style="padding-top:12px;padding-bottom:12px" id="attachements-container"></div>
             </div>
         </div>
     </div>
@@ -211,7 +188,7 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
     </div>
     <div class="toast" id="toast"><span id="toastMsg"></span></div>
     <script type="module" src="../../assets/js/app.js"></script>
-    <script type="module" src="../../assets/js/pages/mes-reclamations.js"></script>
+    <script type="module" src="../../assets/js/pages/client/reclamations-details.js"></script>
     <script>
         function openModal() {
             document.getElementById("modalTitle").textContent = "Insérer une nouvelle réclamation";
