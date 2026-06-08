@@ -1,3 +1,4 @@
+// assets/js/reclamtions.js
 import { initials, colorFor } from "../lib/string.js";
 import { formatDate } from "../lib/date.js";
 import { showToast } from "../lib/toast.js";
@@ -72,7 +73,7 @@ function renderReclamations() {
           <td class="table-objet">${data.objet}</td>
           <td><span class="category-badge">${data.categorie}</span></td>
           <td><span class="priority-badge ${data.priorite.toLowerCase()}">${data.priorite}</span></td>
-          <td>${data.statut}</td>
+          <td><span class="r-status-badge status-${data.statut_code.toLowerCase()}">${data.statut}</span></td>
           <td>${data.agent}</td>
           <td>${formatDate(data.created_at)}</td>
           <td>

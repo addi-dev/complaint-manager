@@ -54,7 +54,8 @@ CREATE TABLE clients (
   telephone      VARCHAR(20),
   adresse        TEXT,
   created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  updated_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  deleted_at     TIMESTAMP     NULL
 );
 
 -- ------------------------------------------------------------
@@ -117,6 +118,7 @@ CREATE TABLE reclamations (
   created_at     TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at     TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   closed_at      TIMESTAMP     NULL,
+  deleted_at     TIMESTAMP     NULL,
   CONSTRAINT fk_rec_client    FOREIGN KEY (client_id)    REFERENCES clients(id),
   CONSTRAINT fk_rec_categorie FOREIGN KEY (categorie_id) REFERENCES categories_reclamation(id),
   CONSTRAINT fk_rec_priorite  FOREIGN KEY (priorite_id)  REFERENCES priorites(id),

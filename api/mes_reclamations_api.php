@@ -42,7 +42,7 @@ try {
     JOIN statuts s ON s.id = r.statut_id
     LEFT JOIN utilisateurs a ON a.id = r.agent_id
 
-    WHERE r.client_id = ?
+    WHERE r.client_id = ? AND r.deleted_at IS NULL
 
     ORDER BY p.niveau DESC, r.created_at ASC");
 
@@ -54,8 +54,9 @@ try {
     ]);
 } catch (PDOException $e) {
     http_response_code(500);
+    error_log('[MesReclamationsAPI] ' . $e->getMessage());
     echo json_encode([
         'success' => false,
-        'message' => $e->getMessage()
+        'message' => 'Erreur interne du serveur.',
     ]);
 }

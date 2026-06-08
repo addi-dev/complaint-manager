@@ -2,6 +2,8 @@
 session_start();
 
 require __DIR__ . '/../../config/app.php';
+require __DIR__ . '/../../core/Auth.php';
+Auth::requireRole('admin', 'superviseur');
 
 // fetch caregories for filter dropdown
 $stmt = $pdo->query("SELECT * FROM categories_reclamation ORDER BY libelle");

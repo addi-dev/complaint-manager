@@ -5,7 +5,7 @@ require __DIR__ . '/../../config/app.php';
 require __DIR__ . '/../../core/Validator.php';
 require __DIR__ . '/../../core/Auth.php';
 require __DIR__ . "/../../core/CSRF.php";
-Auth::requireRole('client');
+Auth::requireRole('client', 'agent');
 CSRF::verify();
 
 // ── METHOD CHECK ─────────────────────────────
@@ -24,7 +24,12 @@ if (!isset($_SESSION['user_id'])) {
 
 $client_id = $_SESSION['user_id'];
 
-$body = $_POST;
+$contentType = $_SERVER['CONTENT_TYPE'] ?? '';
+if (str_contains($contentType, 'application/json')) {
+    $body = json_decode(file_get_contents('php://input'), true) ?? [];
+} else {
+    $body = $_POST;
+}
 
 // ── Validation ─────────────────────────────
 $validator = Validator::make($body)

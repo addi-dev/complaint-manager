@@ -1,3 +1,4 @@
+// assets/js/pages/agent/reclamations.js
 import { initials, colorFor } from "../../lib/string.js";
 import { formatDate } from "../../lib/date.js";
 import { showToast } from "../../lib/toast.js";
@@ -71,7 +72,7 @@ function renderAgentReclamations() {
           <td class="table-objet">${r.objet}</td>
           <td><span class="category-badge">${r.categorie}</span></td>
           <td><span class="priority-badge ${r.priorite.toLowerCase()}">${r.priorite}</span></td>
-          <td><span class="status-badge status-${r.statut.toLowerCase()}">${r.statut}</span></td>
+          <td><span class="r-status-badge status-${r.statut.toLowerCase()}">${r.statut}</span></td>
           <td><span class="date">${formatDate(r.created_at)}</span></td>
           <td>
             <div class="action-btns">

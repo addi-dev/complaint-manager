@@ -285,9 +285,9 @@ Auth::requireRole('admin', 'superviseur', 'agent');
         </div>
         <div class="sidebar-section-label">Menu</div>
         <a class="nav-item active" href="index.php"><i class="fa-solid fa-house"></i>Tableau de bord</a>
-        <a class="nav-item" href="users.php"><i class="fa-solid fa-users"></i>Utilisateurs</a>
         <a class="nav-item" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Réclamations</a>
-        <a class="nav-item" href="clients.php"><i class="fa-solid fa-user"></i>Clients</a>
+        <a class="nav-item" href="notifications.php"><i class="fa-solid fa-users"></i>Notifications</a>
+        <a class="nav-item" href="historiques.php"><i class="fa-solid fa-user"></i>Historiques</a>
         <div class="sidebar-section-label">Other</div>
         <a class="nav-item" href="../../actions/auth/logout.php"><i
                 class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>

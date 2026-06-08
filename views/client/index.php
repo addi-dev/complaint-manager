@@ -4,8 +4,8 @@ require __DIR__ . '/../../config/app.php';
 require __DIR__ . '/../../core/Auth.php';
 require __DIR__ . '/../../core/CSRF.php';
 Auth::requireRole('client');
-$categories = $pdo->query("SELECT id, libelle FROM categories_reclamation ORDER BY id ASC")->fetchAll();
-$priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
+$categories = $pdo->query("SELECT id, libelle FROM categories_reclamation ORDER BY libelle ASC")->fetchAll();
+$priorites = $pdo->query("SELECT id, libelle FROM priorites ORDER BY libelle ASC")->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -95,33 +95,11 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
                         <option value="3">Haute</option>
                         <option value="4">Critique</option>
                     </select>
-                    <select class="filter-select" id="categoryFilter">
+                    <select class="filter-select" id="categorieFilter">
                         <option value="">Toutes les catégories</option>
-                        <option value="1">Facturation</option>
-                        <option value="2">Livraison</option>
-                        <option value="3">Qualité produit</option>
-                        <option value="4">Service après-vente</option>
-                        <option value="5">Remboursement</option>
-                        <option value="6">Délai de livraison</option>
-                        <option value="7">Produit manquant</option>
-                        <option value="8">Produit endommagé</option>
-                        <option value="9">Erreur de commande</option>
-                        <option value="10">Annulation commande</option>
-                        <option value="11">Compte client</option>
-                        <option value="12">Paiement en ligne</option>
-                        <option value="13">Offre promotionnelle</option>
-                        <option value="14">Communication commerciale</option>
-                        <option value="15">Service client</option>
-                        <option value="16">Garantie produit</option>
-                        <option value="17">Retour marchandise</option>
-                        <option value="18">Transport / Transporteur</option>
-                        <option value="19">Conformité réglementaire</option>
-                        <option value="20">Confidentialité des données</option>
-                        <option value="21">Application mobile</option>
-                        <option value="22">Site web</option>
-                        <option value="23">Abonnement</option>
-                        <option value="24">Résiliation</option>
-                        <option value="25">Devis / Estimation</option>
+                        <?php foreach ($categories as $categorie): ?>
+                            <option value="<?= $categorie['id'] ?>"><?= $categorie['libelle'] ?></option>
+                        <?php endforeach; ?>
                     </select>
                     <select class="filter-select" id="sortSelect">
                         <option value="">Par défaut</option>
@@ -174,7 +152,7 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
                     </div>
                     <div class="form-group full">
                         <label>Catégorie</label>
-                        <select name="categorie_id" id="f-category">
+                        <select name="categorie_id" id="f-categorie_id">
                             <option value="">Sélectionner une categorie</option>
                             <?php foreach ($categories as $cat): ?>
                                 <option value="<?= $cat['id'] ?>">
@@ -220,8 +198,10 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
             document.getElementById("formModal").action = "../../actions/reclamations/store.php";
             document.getElementById("formMethod").value = "POST";
             document.getElementById("submitBtn").textContent = "Insérer la réclamation";
+            document.getElementById("formModal").dataset.mode = "add"; // add this
+            document.getElementById("formModal").dataset.editId = "";
 
-            ["f-objet", "f-description", "f-category"].forEach(
+            ["f-objet", "f-description", "f-categorie_id"].forEach(
                 (id) => (document.getElementById(id).value = "")
             );
 
@@ -240,7 +220,7 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
             // fill fields
             document.getElementById('f-objet').value = reclamation.objet || '';
             document.getElementById('f-description').value = reclamation.description || '';
-            document.getElementById('f-category').value = reclamation.categorie_id || '';
+            document.getElementById('f-categorie_id').value = reclamation.categorie_id || '';
             document.getElementById('overlay').classList.add('open');
         }
 

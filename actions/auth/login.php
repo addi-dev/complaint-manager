@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../../core/CSRF.php';
+require_once __DIR__ . '/../../core/Auth.php';
 // Catch everything before any output
 ini_set('display_errors', 0);
 error_reporting(0);
@@ -44,6 +46,15 @@ require_once $responsePath; // gives Response::
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     Response::methodNotAllowed();
 }
+CSRF::verify();
+
+$_SESSION['login_attempts']    = $_SESSION['login_attempts']    ?? 0;
+$_SESSION['login_lockout_until'] = $_SESSION['login_lockout_until'] ?? 0;
+
+if (time() < $_SESSION['login_lockout_until']) {
+    $wait = ceil(($_SESSION['login_lockout_until'] - time()) / 60);
+    Response::error("Trop de tentatives. Réessayez dans $wait minute(s).");
+}
 
 $body     = json_decode(file_get_contents('php://input'), true);
 $email    = trim($body['email']    ?? '');
@@ -76,7 +87,8 @@ if ($user && password_verify($password, $user['mot_de_passe'])) {
         'superviseur' => '/complaint-manager/views/admin',
         'agent'      => '/complaint-manager/views/agent',
     ];
-
+    $_SESSION['login_attempts']     = 0;
+    $_SESSION['login_lockout_until'] = 0;
     Response::success('Login successful.', [
         'redirect' => $redirects[$user['role_nom']] ?? '/complaint-manager/views/auth/login.php'
     ]);
@@ -96,11 +108,18 @@ if ($client && password_verify($password, $client['mot_de_passe'])) {
     $_SESSION['user_role']  = 'client';
     $_SESSION['user_table'] = 'clients';
     $_SESSION['logged_in']  = true;
-
+    $_SESSION['login_attempts']     = 0;
+    $_SESSION['login_lockout_until'] = 0;
     Response::success('Login successful.', [
         'redirect' => '/complaint-manager/views/client'
     ]);
 }
 
 // ── 3. No match ───────────────────────────────────────────────────────────────
+$_SESSION['login_attempts']++;
+if ($_SESSION['login_attempts'] >= 5) {
+    $_SESSION['login_lockout_until'] = time() + (15 * 60);
+    $_SESSION['login_attempts']      = 0;
+    Response::error('Trop de tentatives. Compte bloqué pendant 15 minutes.');
+}
 Response::error('Adresse e-mail ou mot de passe invalide.');

@@ -1,8 +1,7 @@
 <?php
-session_start();
-
 require __DIR__ . '/../../config/app.php';
-$categories = $pdo->query("SELECT id, libelle FROM categories_reclamation")->fetchAll();
+require __DIR__ . '/../../core/Auth.php';  // add this line
+Auth::requireRole('client');               // add this line
 $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
 ?>
 <!DOCTYPE html>

@@ -43,7 +43,7 @@ try {
         JOIN priorites               p   ON p.id    = r.priorite_id
         JOIN statuts                 s   ON s.id    = r.statut_id
         LEFT JOIN utilisateurs       a   ON a.id    = r.agent_id
-
+        WHERE r.deleted_at IS NULL
         ORDER BY priorite_niveau DESC, created_at ASC
     ");
 
@@ -60,8 +60,9 @@ try {
     ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 } catch (PDOException $e) {
     http_response_code(500);
+    error_log('[ReclamationsAPI] ' . $e->getMessage());
     echo json_encode([
         'success' => false,
-        'message' => $e->getMessage(),
+        'message' =>  'Erreur interne du serveur.',
     ]);
 }

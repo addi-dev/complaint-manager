@@ -18,7 +18,14 @@ $step = (int)($body['step'] ?? 0);
 
 // ── Step 1: Verify identity ───────────────────────────────────────────────────
 if ($step === 1) {
+    $_SESSION['reset_attempts']      = $_SESSION['reset_attempts']      ?? 0;
+    $_SESSION['reset_lockout_until'] = $_SESSION['reset_lockout_until'] ?? 0;
 
+    if (time() < $_SESSION['reset_lockout_until']) {
+        $wait = ceil(($_SESSION['reset_lockout_until'] - time()) / 60);
+        Response::error("Trop de tentatives. Réessayez dans $wait minute(s).");
+    }
+    
     $v = Validator::make($body)
         ->required('email', 'Adresse e-mail')
         ->email('email', 'Adresse e-mail')
@@ -66,6 +73,12 @@ if ($step === 1) {
             ]);
         }
 
+        $_SESSION['reset_attempts']++;
+        if ($_SESSION['reset_attempts'] >= 3) {
+            $_SESSION['reset_lockout_until'] = time() + (15 * 60);
+            $_SESSION['reset_attempts']      = 0;
+            Response::error('Trop de tentatives. Réessayez dans 15 minutes.');
+        }
         Response::error('Aucun compte ne correspond à ces informations.');
     } catch (PDOException $e) {
         error_log('[reset-password] step1: ' . $e->getMessage());

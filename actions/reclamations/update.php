@@ -11,11 +11,16 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$body = json_decode(file_get_contents('php://input'), true);
+$contentType = $_SERVER['CONTENT_TYPE'] ?? '';
+if (str_contains($contentType, 'application/json')) {
+    $body = json_decode(file_get_contents('php://input'), true) ?? [];
+} else {
+    $body = $_POST;
+}
 
 try {
-    $id = intval($_GET['id'] ?? $body['id'] ?? 0);
-
+    $id = intval($_GET['id'] ?? 0);
+    
     if (!$id) {
         echo json_encode(['success' => false, 'error' => 'ID manquant']);
         exit;
@@ -34,7 +39,7 @@ try {
     $categorie_id = trim($body['categorie_id']);
     $stmt = $pdo->prepare("
             UPDATE reclamations
-            SET objet = :objet, description = :description, categorie_id = :categorie_id,
+            SET objet = :objet, description = :description, categorie_id = :categorie_id
             WHERE id = :id
         ");
     $stmt->execute([
@@ -48,6 +53,5 @@ try {
     error_log('[API Error] ' . $e->getMessage());
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => $e->getMessage()]);
-    
 }
 exit;

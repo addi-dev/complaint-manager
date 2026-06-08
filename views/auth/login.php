@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/../../config/app.php';
+require __DIR__ . '/../../core/CSRF.php';
 
 if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     $redirects = [
@@ -23,6 +24,7 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Connexion | <?php echo APP_NAME ?></title>
+    <?php echo CSRF::metaTag() ?>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
@@ -344,6 +346,8 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     </div>
 
     <script>
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+
         function togglePassword() {
             const input = document.getElementById('password');
             const icon = document.getElementById('eye-icon');
@@ -396,7 +400,9 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
                     method: 'POST',
                     credentials: 'include',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        "X-CSRF-Token": csrfToken
+
                     },
                     body: JSON.stringify({
                         email,

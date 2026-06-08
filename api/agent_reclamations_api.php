@@ -83,7 +83,7 @@ try {
         LEFT JOIN utilisateurs a
             ON a.id = r.agent_id
 
-        WHERE r.agent_id = ?
+        WHERE r.agent_id = ? AND r.deleted_at IS NULL
 
         ORDER BY
             p.niveau DESC,

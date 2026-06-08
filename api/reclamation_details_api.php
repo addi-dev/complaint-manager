@@ -57,7 +57,7 @@ try {
         JOIN statuts                s   ON s.id   = r.statut_id
         LEFT JOIN utilisateurs      u   ON u.id   = r.agent_id
         LEFT JOIN roles             ra  ON ra.id  = u.role_id
-        WHERE r.id = ?
+        WHERE r.id = ? AND r.deleted_at IS NULL
     ");
     $stmt->execute([$id]);
     $reclamation = $stmt->fetch(PDO::FETCH_ASSOC);

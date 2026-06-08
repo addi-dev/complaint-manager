@@ -14,7 +14,7 @@ function applyFilters() {
   const sortBy = document.getElementById("sortSelect").value;
   const statusFilter = document.getElementById("statusFilter").value;
   const priorityFilter = document.getElementById("priorityFilter").value;
-  const categoryFilter = document.getElementById("categoryFilter").value;
+  const categorieFilter = document.getElementById("categorieFilter").value;
 
   filtered = mes_reclamations.filter((r) => {
     const matchSearch =
@@ -25,9 +25,9 @@ function applyFilters() {
       !statusFilter || r.statut_code.toLowerCase() === statusFilter;
     const matchPriority =
       !priorityFilter || r.priorite_niveau == priorityFilter;
-    const matchCategory = !categoryFilter || r.categorie_id == categoryFilter;
+    const matchCategorie = !categorieFilter || r.categorie_id == categorieFilter;
 
-    return matchSearch && matchStatus && matchPriority && matchCategory;
+    return matchSearch && matchStatus && matchPriority && matchCategorie;
   });
 
   filtered.sort((a, b) => {
@@ -138,7 +138,7 @@ document
   .getElementById("statusFilter")
   .addEventListener("change", applyFilters);
 document
-  .getElementById("categoryFilter")
+  .getElementById("categorieFilter")
   .addEventListener("change", applyFilters);
 document.getElementById("sortSelect").addEventListener("change", applyFilters);
 
@@ -187,23 +187,35 @@ document
   .addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    const body = {
-      objet: document.getElementById("f-objet").value,
-      description: document.getElementById("f-description").value,
-      categorie_id: document.getElementById("f-category").value,
-    };
-
     const mode = this.dataset.mode;
     const url =
       mode === "edit"
         ? `/complaint-manager/actions/reclamations/update.php?id=${this.dataset.editId}`
         : `/complaint-manager/actions/reclamations/store.php`;
 
+    const formData = new FormData();
+    formData.append("objet", document.getElementById("f-objet").value);
+    formData.append(
+      "description",
+      document.getElementById("f-description").value,
+    );
+    formData.append(
+      "categorie_id",
+      document.getElementById("f-categorie_id").value,
+    );
+
+    const filesInput = document.querySelector('input[name="pieces_jointes[]"]');
+    if (filesInput) {
+      for (const file of filesInput.files) {
+        formData.append("pieces_jointes[]", file);
+      }
+    }
+
     try {
       const res = await fetch(url, {
         method: "POST",
         headers: { "X-CSRF-Token": csrfToken },
-        body: JSON.stringify(body),
+        body: formData,
       });
 
       const data = await res.json();

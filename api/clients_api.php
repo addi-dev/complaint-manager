@@ -32,7 +32,7 @@ try {
             SUM(CASE WHEN s.code = 'REJETEE'             THEN 1 END)    AS rec_rejetees
 
         FROM clients c
-        LEFT JOIN reclamations r ON r.client_id = c.id
+        LEFT JOIN reclamations r ON r.client_id = c.id AND r.deleted_at IS NULL
         LEFT JOIN statuts      s ON s.id         = r.statut_id
 
         GROUP BY
@@ -65,8 +65,9 @@ try {
     ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 } catch (PDOException $e) {
     http_response_code(500);
+    error_log('[ClientsAPI] ' . $e->getMessage());
     echo json_encode([
         'success' => false,
-        'message' => $e->getMessage(),
+        'message' => "Erreur interne du serveur.",
     ]);
 }

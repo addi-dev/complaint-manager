@@ -1,6 +1,5 @@
 <?php
 // api/users_api.php
-// session_start();
 header('Content-Type: application/json');
 
 require __DIR__ . '/../config/app.php';
@@ -18,8 +17,9 @@ JOIN roles r ON u.role_id = r.id ORDER BY u.created_at DESC;");
     ]);
 } catch (PDOException $e) {
     http_response_code(500);
+    error_log('[UsersAPI] ' . $e->getMessage());
     echo json_encode([
         'success' => false,
-        'message' => $e->getMessage()
+        'message' => 'Erreur interne du serveur.',
     ]);
 }
