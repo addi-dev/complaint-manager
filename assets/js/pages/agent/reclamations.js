@@ -78,12 +78,6 @@ function renderAgentReclamations() {
               <button class="action-btn action-btn-view" title="Voir le dossier" onclick="openEditModal(${r.id})">
                 <i class="fa-regular fa-eye"></i>
               </button>
-              <button class="action-btn action-btn-edit" title="Modifier" onclick="openEditModal(${r.id})">
-                <i class="fa-regular fa-pen-to-square"></i>
-              </button>
-              <button class="action-btn action-btn-delete" title="Supprimer" onclick="deleteRow('${r.id}')">
-                <i class="fa-regular fa-trash-can"></i>
-              </button>
             </div>
           </td>
         </tr>

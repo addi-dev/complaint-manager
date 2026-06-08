@@ -2,7 +2,6 @@
 // api/stats_api.php
 session_start();
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
 
 require __DIR__ . '/../config/app.php';
 require __DIR__ . '/../core/Auth.php';

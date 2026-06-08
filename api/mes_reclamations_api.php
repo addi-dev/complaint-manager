@@ -1,7 +1,6 @@
 <?php
 // api/mes_reclamations_api.php
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
 
 require __DIR__ . '/../config/app.php';
 require __DIR__ . '/../core/Response.php';

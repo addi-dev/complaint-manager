@@ -228,6 +228,22 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
             document.getElementById("overlay").classList.add("open");
         }
 
+        function openEditModal(id) {
+            const reclamation = mes_reclamations.find(r => r.id == id);
+            if (!reclamation) return;
+            document.getElementById('modalTitle').textContent = 'Modifier la réclamation';
+            document.getElementById('submitBtn').textContent = 'Enregistrer';
+            document.getElementById('formModal').action = `../../actions/reclamations/update.php`;
+            document.getElementById('formModal').dataset.mode = 'edit';
+            document.getElementById('formModal').dataset.editId = id;
+
+            // fill fields
+            document.getElementById('f-objet').value = reclamation.objet || '';
+            document.getElementById('f-description').value = reclamation.description || '';
+            document.getElementById('f-category').value = reclamation.categorie_id || '';
+            document.getElementById('overlay').classList.add('open');
+        }
+
         function closeModal() {
             document.getElementById('overlay').classList.remove('open');
         }

@@ -3,7 +3,9 @@ header('Content-Type: application/json');
 
 require __DIR__ . '/../../config/app.php';
 require __DIR__ . '/../../core/Validator.php';
+require __DIR__ . '/../../core/Auth.php';
 require __DIR__ . "/../../core/CSRF.php";
+Auth::requireRole('client');
 CSRF::verify();
 
 // ── METHOD CHECK ─────────────────────────────

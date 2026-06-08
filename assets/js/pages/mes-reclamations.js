@@ -200,12 +200,10 @@ document
         : `/complaint-manager/actions/reclamations/store.php`;
 
     try {
-      const formData = new FormData(this);
-
       const res = await fetch(url, {
         method: "POST",
         headers: { "X-CSRF-Token": csrfToken },
-        body: formData,
+        body: JSON.stringify(body),
       });
 
       const data = await res.json();

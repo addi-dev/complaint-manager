@@ -1,12 +1,11 @@
 <?php
 // api/reclamation_details_api.php
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
+
 require __DIR__ . '/../config/app.php';
 require __DIR__ . '/../core/Auth.php';
-// Auth::requireRole('admin', 'superviseur', 'agent', 'client');
+Auth::requireRole('admin', 'superviseur', 'agent', 'client');
 
-// Validate :id from query string  →  ?id=42
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 if ($id <= 0) {
     http_response_code(400);
@@ -14,8 +13,7 @@ if ($id <= 0) {
     exit;
 }
 
-// Client role can only see their own reclamation
-$role     = $_SESSION['role']      ?? '';
+$role     = $_SESSION['user_role'] ?? '';
 $user_id  = $_SESSION['user_id']   ?? null;
 
 try {
@@ -177,6 +175,7 @@ try {
         'historique'    => $historique,
     ]);
 } catch (PDOException $e) {
+    error_log('[API Error] ' . $e->getMessage());
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    echo json_encode(['success' => false, 'message' => 'Une erreur interne du serveur est survenue.']);
 }
