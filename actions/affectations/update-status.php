@@ -20,11 +20,11 @@ if (str_contains($contentType, 'application/json')) {
     $body = $_POST;
 }
 
-$reclamation_id  = intval($body['reclamation_id'] ?? 0);
+$reclamation_id      = intval($body['reclamation_id'] ?? 0);
 $nouveau_statut_code = strtoupper(trim($body['statut_code'] ?? ''));
-$details         = trim($body['details'] ?? '');
-$user_id         = $_SESSION['user_id'];
-$user_role       = $_SESSION['user_role'];
+$details             = trim($body['details'] ?? '');
+$user_id             = $_SESSION['user_id'];
+$user_role           = $_SESSION['user_role'];
 
 if (!$reclamation_id || !$nouveau_statut_code) {
     http_response_code(422);
@@ -32,7 +32,6 @@ if (!$reclamation_id || !$nouveau_statut_code) {
     exit;
 }
 
-// Transition rules per role
 $transitions = [
     'admin'       => ['NOUVELLE', 'ATTENTE_AFFECTATION', 'AFFECTEE', 'EN_COURS', 'ATTENTE_INFO', 'RESOLUE', 'CLOTUREE', 'REJETEE'],
     'superviseur' => ['NOUVELLE', 'ATTENTE_AFFECTATION', 'AFFECTEE', 'EN_COURS', 'ATTENTE_INFO', 'RESOLUE', 'CLOTUREE', 'REJETEE'],
@@ -46,7 +45,6 @@ if (!in_array($nouveau_statut_code, $transitions[$user_role] ?? [])) {
 }
 
 try {
-    // Get current reclamation
     $stmt = $pdo->prepare("SELECT id, statut_id, agent_id FROM reclamations WHERE id = ?");
     $stmt->execute([$reclamation_id]);
     $reclamation = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -56,14 +54,22 @@ try {
         exit;
     }
 
-    // Agent can only update their own assigned reclamations
     if ($user_role === 'agent' && (int)$reclamation['agent_id'] !== (int)$user_id) {
         http_response_code(403);
         echo json_encode(['success' => false, 'message' => 'Accès refusé.']);
         exit;
     }
 
-    // Get new statut id
+    // Block changes on finalized complaints
+    $stmt2 = $pdo->prepare("SELECT code FROM statuts WHERE id = ?");
+    $stmt2->execute([$reclamation['statut_id']]);
+    $ancien_code = $stmt2->fetchColumn();
+    if (in_array($ancien_code, ['CLOTUREE', 'REJETEE'])) {
+        http_response_code(403);
+        echo json_encode(['success' => false, 'message' => 'Cette réclamation est clôturée et ne peut plus être modifiée.']);
+        exit;
+    }
+
     $stmt = $pdo->prepare("SELECT id FROM statuts WHERE code = ?");
     $stmt->execute([$nouveau_statut_code]);
     $nouveau_statut_id = $stmt->fetchColumn();
@@ -77,14 +83,10 @@ try {
 
     $pdo->beginTransaction();
 
-    // Update statut, set closed_at if closing
     $closed_at = in_array($nouveau_statut_code, ['CLOTUREE', 'REJETEE']) ? date('Y-m-d H:i:s') : null;
-    $stmt = $pdo->prepare("
-        UPDATE reclamations SET statut_id = ?, closed_at = ? WHERE id = ?
-    ");
+    $stmt = $pdo->prepare("UPDATE reclamations SET statut_id = ?, closed_at = ? WHERE id = ?");
     $stmt->execute([$nouveau_statut_id, $closed_at, $reclamation_id]);
 
-    // Log to historique_actions
     $stmt = $pdo->prepare("
         INSERT INTO historique_actions (reclamation_id, utilisateur_id, ancien_statut_id, nouveau_statut_id, action, details)
         VALUES (?, ?, ?, ?, 'CHANGEMENT_STATUT', ?)
@@ -95,6 +97,32 @@ try {
         $ancien_statut_id,
         $nouveau_statut_id,
         $details ?: 'Statut mis à jour.'
+    ]);
+
+    if ($reclamation['agent_id']) {
+        $stmt = $pdo->prepare("
+            INSERT INTO notifications (utilisateur_id, reclamation_id, type, message)
+            VALUES (?, ?, 'STATUT', ?)
+        ");
+        $stmt->execute([
+            $reclamation['agent_id'],
+            $reclamation_id,
+            "Le statut de la réclamation #{$reclamation_id} a été mis à jour : {$nouveau_statut_code}"
+        ]);
+    }
+
+    $stmt = $pdo->prepare("SELECT client_id FROM reclamations WHERE id = ?");
+    $stmt->execute([$reclamation_id]);
+    $client_id = $stmt->fetchColumn();
+
+    $stmt = $pdo->prepare("
+        INSERT INTO notifications (client_id, reclamation_id, type, message)
+        VALUES (?, ?, 'STATUT', ?)
+    ");
+    $stmt->execute([
+        $client_id,
+        $reclamation_id,
+        "Le statut de votre réclamation a été mis à jour : {$nouveau_statut_code}"
     ]);
 
     $pdo->commit();

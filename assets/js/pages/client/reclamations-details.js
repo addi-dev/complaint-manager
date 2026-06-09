@@ -74,7 +74,7 @@ function renderCommentaires(commentaires) {
                                 <div><span class="cmt-author">${nom}</span><span class="cmt-role">${role}</span></div>
                                 <span class="cmt-time">${cmt.created_at}</span>
                             </div>
-                            <div class="cmt-text">Bonjour, nous avons bien reçu votre réclamation. Pourriez-vous nous transmettre le numéro de contrat associé à cette facture ?</div>
+                            <div class="cmt-text">${cmt.contenu}</div>
                         </div>
                     </div>
     `;

@@ -215,12 +215,15 @@ document
 
       if (data.success) {
         closeModal();
-        showToast(
-          mode === "edit"
-            ? "Client mis à jour avec succès"
-            : "Client ajouté avec succès",
-        );
-        getClients();
+        if (mode === "edit") {
+          showToast("Client mis à jour avec succès");
+        } else {
+          showToast(
+            `Client ajouté avec succès. Mot de passe : ${data.mot_de_passe}`,
+            8000,
+          );
+        }
+        getUsers();
       } else if (data.errors) {
         Object.values(data.errors).forEach((msg) => showToast(msg));
       } else {

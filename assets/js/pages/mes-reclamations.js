@@ -13,7 +13,7 @@ function applyFilters() {
   const search = document.getElementById("searchInput").value.toLowerCase();
   const sortBy = document.getElementById("sortSelect").value;
   const statusFilter = document.getElementById("statusFilter").value;
-  const priorityFilter = document.getElementById("priorityFilter").value;
+  const prioriteFilter = document.getElementById("prioriteFilter").value;
   const categorieFilter = document.getElementById("categorieFilter").value;
 
   filtered = mes_reclamations.filter((r) => {
@@ -23,11 +23,12 @@ function applyFilters() {
       r.description.toLowerCase().includes(search);
     const matchStatus =
       !statusFilter || r.statut_code.toLowerCase() === statusFilter;
-    const matchPriority =
-      !priorityFilter || r.priorite_niveau == priorityFilter;
-    const matchCategorie = !categorieFilter || r.categorie_id == categorieFilter;
+    const matchPriorite =
+      !prioriteFilter || r.priorite_niveau == prioriteFilter;
+    const matchCategorie =
+      !categorieFilter || r.categorie_id == categorieFilter;
 
-    return matchSearch && matchStatus && matchPriority && matchCategorie;
+    return matchSearch && matchStatus && matchPriorite && matchCategorie;
   });
 
   filtered.sort((a, b) => {
@@ -72,6 +73,7 @@ function renderMesReclamations() {
           <td><span class="category-badge">${r.categorie}</span></td>
           <td><span class="priority-badge ${r.priorite.toLowerCase()}">${r.priorite}</span></td>
           <td><span class="r-status-badge status-${r.statut_code.toLowerCase()}">${r.statut}</span></td>
+          <td>${formatDate(r.created_at)}</td>
           <td>
             <div class="action-btns">
               <button class="action-btn action-btn-view" title="Voir les détails" onclick="window.location.href='reclamation-details.php?id=${r.id}'">
@@ -79,9 +81,6 @@ function renderMesReclamations() {
               </button>
               <button class="action-btn action-btn-edit" title="Modifier" onclick="openEditModal(${r.id})">
                 <i class="fa-regular fa-pen-to-square"></i>
-              </button>
-              <button class="action-btn action-btn-delete" title="Supprimer" onclick="deleteRow('${r.id}')">
-                <i class="fa-regular fa-trash-can"></i>
               </button>
             </div>
           </td>
@@ -132,7 +131,7 @@ getMesReclamations();
 
 document.getElementById("searchInput").addEventListener("input", applyFilters);
 document
-  .getElementById("priorityFilter")
+  .getElementById("prioriteFilter")
   .addEventListener("change", applyFilters);
 document
   .getElementById("statusFilter")
@@ -203,7 +202,10 @@ document
       "categorie_id",
       document.getElementById("f-categorie_id").value,
     );
-
+    formData.append(
+      "priorite_id",
+      document.getElementById("f-priorite_id").value,
+    );
     const filesInput = document.querySelector('input[name="pieces_jointes[]"]');
     if (filesInput) {
       for (const file of filesInput.files) {
@@ -231,8 +233,7 @@ document
       } else if (data.errors) {
         Object.values(data.errors).forEach((msg) => showToast(msg));
       } else {
-        console.error(data.message);
-        showToast("Échec de l'opération");
+        showToast(data.message || "Échec de l'opération");
       }
     } catch (err) {
       console.log(err);

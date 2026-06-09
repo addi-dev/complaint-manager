@@ -2,7 +2,10 @@
 
 require __DIR__ . '/../../config/app.php';
 require __DIR__ . '/../../core/Auth.php';
+require __DIR__ . '/../../core/CSRF.php';
 Auth::requireRole('admin', 'superviseur');
+
+$statuts = $pdo->query("SELECT id, code, libelle FROM statuts ORDER BY id")->fetchAll();
 $categories = $pdo->query("SELECT id, libelle FROM categories_reclamation")->fetchAll();
 $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
 ?>
@@ -13,6 +16,7 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tableau de bord | <?php echo APP_NAME ?></title>
+    <?php echo CSRF::metaTag(); ?>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
@@ -95,6 +99,57 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
                 <div class="card-body">
                     <p class="desc-text" id="rec-description"></p>
                 </div>
+            </div>
+            <!-- AFFECTATION -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title"><i class="fa-solid fa-user-check"></i> Affectation</div>
+                </div>
+                <div class="card-body">
+                    <div id="current-agent" style="margin-bottom:16px;font-size:14px;color:var(--text-label)">Aucun agent assigné</div>
+                    <div style="display:flex;gap:10px;align-items:center">
+                        <select id="agent-select" class="filter-select" style="flex:1">
+                            <option value="">Sélectionner un agent...</option>
+                        </select>
+                        <input type="text" id="affectation-note" class="filter-select" placeholder="Note (facultatif)" style="flex:1" />
+                        <button class="enroll-btn" onclick="assignAgent()"><i class="fa-solid fa-user-plus"></i> Affecter</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATUS UPDATE -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title"><i class="fa-solid fa-rotate"></i> Changer le statut</div>
+                </div>
+                <div class="card-body">
+                    <div style="display:flex;gap:10px;align-items:center">
+                        <select id="statut-select" class="filter-select" style="flex:1">
+                            <option value="">Sélectionner un statut...</option>
+                            <?php foreach ($statuts as $s): ?>
+                                <option value="<?= $s['code'] ?>"><?= $s['libelle'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <input type="text" id="statut-details" class="filter-select" placeholder="Détails (facultatif)" style="flex:1" />
+                        <button class="enroll-btn" onclick="updateStatut()"><i class="fa-solid fa-check"></i> Mettre à jour</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AFFECTATION HISTORY -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title"><i class="fa-solid fa-clock-rotate-left"></i> Historique des affectations</div>
+                </div>
+                <div class="card-body" id="affectations-container"></div>
+            </div>
+
+            <!-- AUDIT TRAIL -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title"><i class="fa-solid fa-list-check"></i> Historique des actions</div>
+                </div>
+                <div class="card-body" id="historique-container"></div>
             </div>
             <!-- COMMENTS -->
             <div class="card">
@@ -188,7 +243,7 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
     </div>
     <div class="toast" id="toast"><span id="toastMsg"></span></div>
     <script type="module" src="../../assets/js/app.js"></script>
-    <script type="module" src="../../assets/js/pages/client/reclamations-details.js"></script>
+    <script type="module" src="../../assets/js/pages/reclamation-detail.js"></script>
     <script>
         function openModal() {
             document.getElementById("modalTitle").textContent = "Insérer une nouvelle réclamation";

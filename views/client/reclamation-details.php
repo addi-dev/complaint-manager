@@ -27,19 +27,14 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
     <!-- SIDEBAR -->
     <aside class="sidebar">
         <div class="sidebar-logo">
-            <div class="logo-icon">
-                LG
-            </div>
-            ReclamationOS
+            <div class="logo-icon">LG</div>ReclamationOS
         </div>
         <div class="sidebar-section-label">Menu</div>
         <a class="nav-item active" href="index.php"><i class="fa-solid fa-house"></i>Tableau de bord</a>
-        <!-- <a class="nav-item" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Mes
-            réclamations</a> -->
-        <!-- <a class="nav-item" href="clients.php"><i class="fa-solid fa-user"></i>Clients</a> -->
+        <a class="nav-item" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Mes réclamations</a>
         <div class="sidebar-section-label">Other</div>
-        <a class="nav-item" href="../../actions/auth/logout.php"><i
-                class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
+        <a class="nav-item active" href="profile.php"><i class="fa-solid fa-user"></i>Mon profil</a>
+        <a class="nav-item" href="../../actions/auth/logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
     </aside>
     <div class="main">
         <header class="topbar">

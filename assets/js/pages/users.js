@@ -215,11 +215,14 @@ document
 
       if (data.success) {
         closeModal();
-        showToast(
-          mode === "edit"
-            ? "Utilisateur mis à jour avec succès"
-            : "Utilisateur ajouté avec succès",
-        );
+        if (mode === "edit") {
+          showToast("Utilisateur mis à jour avec succès");
+        } else {
+          showToast(
+            `Utilisateur ajouté avec succès. Mot de passe : ${data.mot_de_passe}`,
+            8000,
+          );
+        }
         getUsers();
       } else if (data.errors) {
         Object.values(data.errors).forEach((msg) => showToast(msg));

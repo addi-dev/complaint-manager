@@ -97,6 +97,21 @@ try {
         'Une nouvelle réclamation vous a été affectée.'
     ]);
 
+    // Notify the client about assignment
+    $stmt = $pdo->prepare("SELECT client_id FROM reclamations WHERE id = ?");
+    $stmt->execute([$reclamation_id]);
+    $client_id = $stmt->fetchColumn();
+
+    $stmt = $pdo->prepare("
+    INSERT INTO notifications (client_id, reclamation_id, type, message)
+    VALUES (?, ?, 'AFFECTATION', ?)
+");
+    $stmt->execute([
+        $client_id,
+        $reclamation_id,
+        'Votre réclamation a été affectée à un agent.'
+    ]);
+
     $pdo->commit();
 
     echo json_encode(['success' => true]);

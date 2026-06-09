@@ -5,7 +5,7 @@ require __DIR__ . '/../../config/app.php';
 require_once __DIR__ . '/../../core/Auth.php';
 require __DIR__ . '/../../core/CSRF.php';
 
-Auth::requireRole('admin');
+Auth::requireRole('admin', 'superviseur');
 
 // fetch roles for dropdown
 $stmt = $pdo->query("SELECT id, nom FROM roles ORDER BY nom");

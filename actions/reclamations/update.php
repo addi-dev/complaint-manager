@@ -20,17 +20,27 @@ if (str_contains($contentType, 'application/json')) {
 
 try {
     $id = intval($_GET['id'] ?? 0);
-    
+
     if (!$id) {
         echo json_encode(['success' => false, 'error' => 'ID manquant']);
         exit;
     }
 
-    // Check user exists
-    $check = $pdo->prepare("SELECT id FROM reclamations WHERE id = ?");
+    $check = $pdo->prepare("
+    SELECT r.id, s.code AS statut_code 
+    FROM reclamations r 
+    JOIN statuts s ON s.id = r.statut_id 
+    WHERE r.id = ?
+    ");
     $check->execute([$id]);
-    if (!$check->fetch()) {
-        echo json_encode(['success' => false, 'error' => 'Reclamation introuvable']);
+    $reclamation = $check->fetch();
+    if (!$reclamation) {
+        echo json_encode(['success' => false, 'message' => 'Reclamation introuvable']);
+        exit;
+    }
+    if (in_array($reclamation['statut_code'], ['CLOTUREE', 'REJETEE'])) {
+        http_response_code(403);
+        echo json_encode(['success' => false, 'message' => 'Cette réclamation est clôturée et ne peut plus être modifiée.']);
         exit;
     }
 

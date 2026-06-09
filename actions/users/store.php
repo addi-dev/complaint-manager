@@ -76,7 +76,7 @@ try {
     ]);
 
     http_response_code(201);
-    echo json_encode(['success' => true, 'id' => $pdo->lastInsertId()]);
+    echo json_encode(['success' => true, 'id' => $pdo->lastInsertId(), 'mot_de_passe' => $mot_de_passe_brut]);
 } catch (Exception $e) {
     error_log('[API Error] ' . $e->getMessage());
     http_response_code(500);

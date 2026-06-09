@@ -43,6 +43,9 @@ $validator = Validator::make($body)
     ->required('categorie_id', 'Catégorie')
     ->numeric('categorie_id', 'Catégorie')
 
+    ->required('priorite_id', 'Priorité')
+    ->numeric('priorite_id', 'Priorité')
+
     ->fileTypes('pieces_jointes', ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'], 'JPEG, PNG, GIF, PDF')
     ->fileMaxSize('pieces_jointes', 5 * 1024 * 1024, '5');
 
@@ -75,13 +78,14 @@ try {
         INSERT INTO reclamations 
         (numero_unique, client_id, categorie_id, priorite_id, statut_id, objet, description)
         VALUES
-        (:numero, :client, :categorie, 2, 1, :objet, :description)
+        (:numero, :client, :categorie, :priorite, 1, :objet, :description)
     ");
 
     $stmt->execute([
         ':numero'    => '',
         ':client'    => $client_id,
         ':categorie' => $body['categorie_id'],
+        ':priorite' => $body['priorite_id'],
         ':objet'     => $objet,
         ':description' => $description,
     ]);
@@ -123,7 +127,16 @@ try {
             ]);
         }
     }
-
+    // Notify the client about complaint deposit
+    $stmt = $pdo->prepare("
+    INSERT INTO notifications (client_id, reclamation_id, type, message)
+    VALUES (?, ?, 'INFO', ?)
+    ");
+    $stmt->execute([
+        $client_id,
+        $reclamation_id,
+        "Votre réclamation {$numero_unique} a bien été enregistrée."
+    ]);
     $pdo->commit();
 
     http_response_code(201);

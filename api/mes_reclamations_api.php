@@ -29,6 +29,7 @@ try {
 
         p.libelle AS priorite,
         p.niveau AS priorite_niveau,
+        p.id AS priorite_id,
 
         s.libelle AS statut,
         s.code AS statut_code,

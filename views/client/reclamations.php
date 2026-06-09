@@ -1,8 +1,10 @@
 <?php
 require __DIR__ . '/../../config/app.php';
-require __DIR__ . '/../../core/Auth.php';  // add this line
-Auth::requireRole('client');               // add this line
+require __DIR__ . '/../../core/Auth.php';
+require __DIR__ . '/../../core/CSRF.php';
+Auth::requireRole('client');
 $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
+$categories = $pdo->query("SELECT id, libelle FROM categories_reclamation ORDER BY libelle ASC")->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -11,6 +13,7 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tableau de bord | <?php echo APP_NAME ?></title>
+    <?php echo CSRF::metaTag() ?>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
@@ -24,18 +27,14 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
     <!-- SIDEBAR -->
     <aside class="sidebar">
         <div class="sidebar-logo">
-            <div class="logo-icon">
-                LG
-            </div>
-            ReclamationOS
+            <div class="logo-icon">LG</div>ReclamationOS
         </div>
         <div class="sidebar-section-label">Menu</div>
         <a class="nav-item" href="index.php"><i class="fa-solid fa-house"></i>Tableau de bord</a>
-        <a class="nav-item active" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Mes
-            réclamations</a>
+        <a class="nav-item active" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Mes réclamations</a>
         <div class="sidebar-section-label">Other</div>
-        <a class="nav-item" href="../../actions/auth/logout.php"><i
-                class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
+        <a class="nav-item" href="profile.php"><i class="fa-solid fa-user"></i>Mon profil</a>
+        <a class="nav-item" href="../../actions/auth/logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
     </aside>
     <div class="main">
         <header class="topbar">
@@ -83,14 +82,14 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
                         <option value="cloturee">Clôturée</option>
                         <option value="rejetee">Rejetée</option>
                     </select>
-                    <select class="filter-select" id="priorityFilter">
+                    <select class="filter-select" id="prioriteFilter">
                         <option value="">Toutes les priorités</option>
                         <option value="1">Faible</option>
                         <option value="2">Normale</option>
                         <option value="3">Haute</option>
                         <option value="4">Critique</option>
                     </select>
-                    <select class="filter-select" id="categoryFilter">
+                    <select class="filter-select" id="categorieFilter">
                         <option value="">Toutes les catégories</option>
                         <option value="1">Facturation</option>
                         <option value="2">Livraison</option>
@@ -170,7 +169,7 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
                     </div>
                     <div class="form-group">
                         <label>Catégorie</label>
-                        <select name="categorie_id" id="f-category">
+                        <select name="categorie_id" id="f-categorie_id">
                             <option value="">Sélectionner une categorie</option>
                             <?php foreach ($categories as $cat): ?>
                                 <option value="<?= $cat['id'] ?>">
@@ -181,7 +180,7 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
                     </div>
                     <div class="form-group">
                         <label>Priorité</label>
-                        <select name="priorite_id" id="f-priority">
+                        <select name="priorite_id" id="f-priorite_id">
                             <option value="">Sélectionner une priorité</option>
                             <?php foreach ($priorites as $priority): ?>
                                 <option value="<?= $priority['id'] ?>">
@@ -211,12 +210,30 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
             document.getElementById("formModal").action = "../../actions/reclamations/store.php";
             document.getElementById("formMethod").value = "POST";
             document.getElementById("submitBtn").textContent = "Insérer la réclamation";
-
-            ["f-objet", "f-description", "f-category", "f-priority"].forEach(
+            document.getElementById("formModal").dataset.mode = "add";
+            document.getElementById("formModal").dataset.editId = "";
+            ["f-objet", "f-description", "f-categorie_id", "f-priorite_id"].forEach(
                 (id) => (document.getElementById(id).value = "")
             );
 
             document.getElementById("overlay").classList.add("open");
+        }
+
+        function openEditModal(id) {
+            const reclamation = mes_reclamations.find(r => r.id == id);
+            if (!reclamation) return;
+            document.getElementById('modalTitle').textContent = 'Modifier la réclamation';
+            document.getElementById('submitBtn').textContent = 'Enregistrer';
+            document.getElementById('formModal').action = `../../actions/reclamations/update.php`;
+            document.getElementById('formModal').dataset.mode = 'edit';
+            document.getElementById('formModal').dataset.editId = id;
+
+            // fill fields
+            document.getElementById('f-objet').value = reclamation.objet || '';
+            document.getElementById('f-description').value = reclamation.description || '';
+            document.getElementById('f-categorie_id').value = reclamation.categorie_id || '';
+            document.getElementById('f-priorite_id').value = reclamation.priorite_id || '';
+            document.getElementById('overlay').classList.add('open');
         }
 
         function closeModal() {

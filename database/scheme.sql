@@ -194,13 +194,15 @@ CREATE TABLE historique_actions (
 -- ------------------------------------------------------------
 CREATE TABLE notifications (
   id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  utilisateur_id  INT UNSIGNED NOT NULL,
+  utilisateur_id  INT UNSIGNED NULL,
+  client_id       INT UNSIGNED NULL,
   reclamation_id  INT UNSIGNED NULL,
-  type            VARCHAR(50)  NOT NULL,    -- AFFECTATION | STATUT | INFO | RESOLUTION
+  type            VARCHAR(50)  NOT NULL,
   message         TEXT         NOT NULL,
   lu              BOOLEAN      NOT NULL DEFAULT FALSE,
   created_at      TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT fk_notif_utilisateur  FOREIGN KEY (utilisateur_id)  REFERENCES utilisateurs(id),
+  CONSTRAINT fk_notif_client       FOREIGN KEY (client_id)       REFERENCES clients(id),
   CONSTRAINT fk_notif_reclamation  FOREIGN KEY (reclamation_id)  REFERENCES reclamations(id)
 );
 
