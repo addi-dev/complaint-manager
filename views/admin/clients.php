@@ -132,7 +132,7 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                     <div class="form-group">
                         <label>Prénom</label>
-                        <input type="text" id="f-prenom" placeholder="ex: Ibtisam" name="prenom" />
+                        <input type="text" id="f-prenom" placeholder="ex: Ibtissam" name="prenom" />
                     </div>
                     <div class="form-group">
                         <label>Date de naissance</label>

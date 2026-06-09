@@ -32,6 +32,7 @@ $categories = $pdo->query("SELECT id, libelle FROM categories_reclamation ORDER 
         <div class="sidebar-section-label">Menu</div>
         <a class="nav-item" href="index.php"><i class="fa-solid fa-house"></i>Tableau de bord</a>
         <a class="nav-item active" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Mes réclamations</a>
+        <a class="nav-item" href="notifications.php"><i class="fa-solid fa-bell"></i>Notifications</a>
         <div class="sidebar-section-label">Other</div>
         <a class="nav-item" href="profile.php"><i class="fa-solid fa-user"></i>Mon profil</a>
         <a class="nav-item" href="../../actions/auth/logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>

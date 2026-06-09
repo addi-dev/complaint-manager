@@ -2,6 +2,7 @@
 
 require __DIR__ . '/../../config/app.php';
 require __DIR__ . '/../../core/Auth.php';
+require __DIR__ . '/../../core/CSRF.php';
 Auth::requireRole('client');
 $categories = $pdo->query("SELECT id, libelle FROM categories_reclamation")->fetchAll();
 $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
@@ -13,6 +14,7 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tableau de bord | <?php echo APP_NAME ?></title>
+    <?php echo CSRF::metaTag() ?>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
@@ -32,8 +34,9 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
         <div class="sidebar-section-label">Menu</div>
         <a class="nav-item active" href="index.php"><i class="fa-solid fa-house"></i>Tableau de bord</a>
         <a class="nav-item" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Mes réclamations</a>
+        <a class="nav-item" href="notifications.php"><i class="fa-solid fa-bell"></i>Notifications</a>
         <div class="sidebar-section-label">Other</div>
-        <a class="nav-item active" href="profile.php"><i class="fa-solid fa-user"></i>Mon profil</a>
+        <a class="nav-item" href="profile.php"><i class="fa-solid fa-user"></i>Mon profil</a>
         <a class="nav-item" href="../../actions/auth/logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
     </aside>
     <div class="main">

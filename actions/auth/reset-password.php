@@ -25,7 +25,7 @@ if ($step === 1) {
         $wait = ceil(($_SESSION['reset_lockout_until'] - time()) / 60);
         Response::error("Trop de tentatives. Réessayez dans $wait minute(s).");
     }
-    
+
     $v = Validator::make($body)
         ->required('email', 'Adresse e-mail')
         ->email('email', 'Adresse e-mail')
@@ -50,11 +50,10 @@ if ($step === 1) {
         $row = $stmt->fetch();
 
         if ($row) {
-            Response::success('Identité vérifiée.', [
-                'verified' => true,
-                'id'       => $row['id'],
-                'table'    => 'utilisateurs',
-            ]);
+            $_SESSION['reset_verified_id']    = $row['id'];
+            $_SESSION['reset_verified_table'] = 'utilisateurs';
+            $_SESSION['reset_verified_at']    = time();
+            Response::success('Identité vérifiée.', ['verified' => true]);
         }
 
         $stmt = $pdo->prepare(
@@ -66,11 +65,10 @@ if ($step === 1) {
         $row = $stmt->fetch();
 
         if ($row) {
-            Response::success('Identité vérifiée.', [
-                'verified' => true,
-                'id'       => $row['id'],
-                'table'    => 'clients',
-            ]);
+            $_SESSION['reset_verified_id']    = $row['id'];
+            $_SESSION['reset_verified_table'] = 'clients';
+            $_SESSION['reset_verified_at']    = time();
+            Response::success('Identité vérifiée.', ['verified' => true]);
         }
 
         $_SESSION['reset_attempts']++;
@@ -89,12 +87,23 @@ if ($step === 1) {
 // ── Step 2: Update password ───────────────────────────────────────────────────
 if ($step === 2) {
 
+    // Verify session state from step 1
+    if (
+        empty($_SESSION['reset_verified_id']) ||
+        empty($_SESSION['reset_verified_table']) ||
+        empty($_SESSION['reset_verified_at']) ||
+        (time() - $_SESSION['reset_verified_at']) > 900
+    ) {
+        Response::error('Session de réinitialisation invalide ou expirée.', 403);
+    }
+
+    $id    = (int)$_SESSION['reset_verified_id'];
+    $table = $_SESSION['reset_verified_table'];
+
     $v = Validator::make($body)
         ->required('password', 'Mot de passe')
         ->minLength('password', 8, 'Mot de passe')
-        ->required('confirm_password', 'Confirmation du mot de passe')
-        ->required('id', 'Identifiant')
-        ->in('table', ['utilisateurs', 'clients'], 'Table');
+        ->required('confirm_password', 'Confirmation du mot de passe');
 
     if ($v->fails()) {
         Response::error($v->firstError());
@@ -102,20 +111,16 @@ if ($step === 2) {
 
     $password        = $body['password'];
     $confirmPassword = $body['confirm_password'];
-    $id              = (int)$body['id'];
-    $table           = $body['table']; // whitelisted by Validator::in()
 
     if ($password !== $confirmPassword) {
         Response::error('Les mots de passe ne correspondent pas.');
     }
 
-    if ($id <= 0) {
-        Response::error('Identifiant invalide.');
-    }
+    // Clear session state immediately
+    unset($_SESSION['reset_verified_id'], $_SESSION['reset_verified_table'], $_SESSION['reset_verified_at']);
 
     try {
         $hashed = password_hash($password, PASSWORD_BCRYPT);
-
         $stmt = $pdo->prepare("UPDATE {$table} SET mot_de_passe = ? WHERE id = ?");
         $stmt->execute([$hashed, $id]);
 

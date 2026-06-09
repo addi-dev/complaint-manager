@@ -453,8 +453,6 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     </div>
 
     <script>
-        let resetId = null;
-        let resetTable = null;
         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
 
         function togglePwd(inputId, iconId) {
@@ -526,8 +524,6 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
                 const data = await res.json();
 
                 if (data.success && data.verified) {
-                    resetId = data.id;
-                    resetTable = data.table;
                     document.getElementById('view-step1').style.display = 'none';
                     document.getElementById('view-step2').style.display = '';
                 } else {
@@ -575,8 +571,6 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
                         step: 2,
                         password,
                         confirm_password,
-                        id: resetId,
-                        table: resetTable
                     }),
                 });
                 const data = await res.json();
