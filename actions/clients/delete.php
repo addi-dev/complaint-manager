@@ -19,13 +19,14 @@ if (!$id) {
 }
 
 try {
-    $stmt = $pdo->prepare("DELETE FROM clients WHERE id = ?");
-    $stmt->execute([$id]);
-
-    if ($stmt->rowCount() === 0) {
-        echo json_encode(['success' => false, 'error' => 'User not found']);
+    $check = $pdo->prepare("SELECT id FROM clients WHERE id = ? AND deleted_at IS NULL");
+    $check->execute([$id]);
+    if (!$check->fetch()) {
+        echo json_encode(['success' => false, 'error' => 'Client not found']);
         exit;
     }
+    $stmt = $pdo->prepare("UPDATE clients SET deleted_at = NOW() WHERE id = ?");
+    $stmt->execute([$id]);
 
     echo json_encode(['success' => true]);
 } catch (Exception $e) {

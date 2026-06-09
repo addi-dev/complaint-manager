@@ -70,9 +70,11 @@ try {
         exit;
     }
 
-    $stmt = $pdo->prepare("SELECT id FROM statuts WHERE code = ?");
+    $stmt = $pdo->prepare("SELECT id, libelle FROM statuts WHERE code = ?");
     $stmt->execute([$nouveau_statut_code]);
-    $nouveau_statut_id = $stmt->fetchColumn();
+    $statut_row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $nouveau_statut_id = $statut_row['id'];
+    $nouveau_statut_libelle = $statut_row['libelle'];
     if (!$nouveau_statut_id) {
         http_response_code(422);
         echo json_encode(['success' => false, 'message' => 'Statut invalide.']);
@@ -107,7 +109,7 @@ try {
         $stmt->execute([
             $reclamation['agent_id'],
             $reclamation_id,
-            "Le statut de la réclamation #{$reclamation_id} a été mis à jour : {$nouveau_statut_code}"
+            "Le statut de la réclamation #{$reclamation_id} a été mis à jour : {$nouveau_statut_libelle}"
         ]);
     }
 
@@ -122,7 +124,7 @@ try {
     $stmt->execute([
         $client_id,
         $reclamation_id,
-        "Le statut de votre réclamation a été mis à jour : {$nouveau_statut_code}"
+        "Le statut de votre réclamation a été mis à jour : {$nouveau_statut_libelle}"
     ]);
 
     $pdo->commit();

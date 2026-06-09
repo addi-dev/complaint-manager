@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 
 require __DIR__ . '/../config/app.php';
 require __DIR__ . '/../core/Auth.php';
-Auth::requireRole('admin');
+Auth::requireRole('admin', 'superviseur');
 try {
     $stmt = $pdo->query("
         SELECT
@@ -34,6 +34,7 @@ try {
         FROM clients c
         LEFT JOIN reclamations r ON r.client_id = c.id AND r.deleted_at IS NULL
         LEFT JOIN statuts      s ON s.id         = r.statut_id
+        WHERE c.deleted_at IS NULL
 
         GROUP BY
             c.id, c.nom, c.prenom, c.email,

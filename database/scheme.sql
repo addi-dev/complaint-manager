@@ -16,11 +16,6 @@ CREATE TABLE roles (
   nom         VARCHAR(50)  NOT NULL UNIQUE,
   description TEXT
 );
- 
-INSERT INTO roles (nom, description) VALUES
-  ('admin',       'Administrateur système'),
-  ('superviseur', 'Responsable du service'),
-  ('agent',       'Agent de traitement');
 
 -- ------------------------------------------------------------
 -- utilisateurs  (agents, superviseurs, admins)
@@ -37,6 +32,7 @@ CREATE TABLE utilisateurs (
   actif          BOOLEAN      NOT NULL DEFAULT TRUE,
   created_at     TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at     TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  deleted_at     TIMESTAMP NULL DEFAULT NULL,
   CONSTRAINT fk_util_role FOREIGN KEY (role_id) REFERENCES roles(id)
 );
  
@@ -75,13 +71,7 @@ CREATE TABLE priorites (
   libelle VARCHAR(50)  NOT NULL UNIQUE,  -- ex: Faible, Normale, Haute, Critique
   niveau  TINYINT      NOT NULL UNIQUE   -- 1 (bas) → 4 (critique)
 );
- 
-INSERT INTO priorites (libelle, niveau) VALUES
-  ('Faible',    1),
-  ('Normale',   2),
-  ('Haute',     3),
-  ('Critique',  4);
- 
+
  -- ------------------------------------------------------------
 -- statuts
 -- ------------------------------------------------------------
@@ -90,17 +80,7 @@ CREATE TABLE statuts (
   libelle     VARCHAR(100) NOT NULL UNIQUE,
   code        VARCHAR(50)  NOT NULL UNIQUE,
   description TEXT
-);
- 
-INSERT INTO statuts (libelle, code, description) VALUES
-  ('Nouvelle',                  'NOUVELLE',              'Réclamation soumise par le client'),
-  ('En attente d''affectation', 'ATTENTE_AFFECTATION',   'Enregistrée, non assignée'),
-  ('Affectée',                  'AFFECTEE',              'Confiée à un agent'),
-  ('En cours de traitement',    'EN_COURS',              'Analyse en cours'),
-  ('En attente d''informations','ATTENTE_INFO',          'Le client doit fournir des précisions'),
-  ('Résolue',                   'RESOLUE',               'Solution proposée'),
-  ('Clôturée',                  'CLOTUREE',              'Dossier finalisé et archivé'),
-  ('Rejetée',                   'REJETEE',               'Réclamation non recevable');
+); 
  
 -- ------------------------------------------------------------
 -- reclamations  (entité centrale)

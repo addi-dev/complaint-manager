@@ -371,7 +371,7 @@ tbody td {
   color: #0c4a6e;
 }
 
-.status-attente-affectation {
+.status-attente_affectation {
   background: #fde68a;  /* amber */
   color: #92400e;
 }

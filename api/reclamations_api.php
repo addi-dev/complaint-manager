@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 
 require __DIR__ . '/../config/app.php';
 require __DIR__ . '/../core/Auth.php';
-Auth::requireRole('admin');
+Auth::requireRole('admin', 'superviseur');
 try {
     $stmt = $pdo->query("
         SELECT
