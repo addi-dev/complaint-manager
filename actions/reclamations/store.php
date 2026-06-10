@@ -72,13 +72,16 @@ if (!is_dir($upload_dir)) {
 
 // ── INSERT ─────────────────────────────
 try {
+    $stmtStatut = $pdo->prepare("SELECT id FROM statuts WHERE code = 'NOUVELLE' LIMIT 1");
+    $stmtStatut->execute();
+    $statut_nouvelle_id = $stmtStatut->fetchColumn();
     $pdo->beginTransaction();
 
     $stmt = $pdo->prepare("
         INSERT INTO reclamations 
         (numero_unique, client_id, categorie_id, priorite_id, statut_id, objet, description)
         VALUES
-        (:numero, :client, :categorie, :priorite, 1, :objet, :description)
+        (:numero, :client, :categorie, :priorite, :statut_id, :objet, :description)
     ");
 
     $stmt->execute([
@@ -86,6 +89,7 @@ try {
         ':client'    => $client_id,
         ':categorie' => $body['categorie_id'],
         ':priorite' => $body['priorite_id'],
+        ':statut_id'   => $statut_nouvelle_id,
         ':objet'     => $objet,
         ':description' => $description,
     ]);

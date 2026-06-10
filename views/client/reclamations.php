@@ -85,38 +85,15 @@ $categories = $pdo->query("SELECT id, libelle FROM categories_reclamation ORDER 
                     </select>
                     <select class="filter-select" id="prioriteFilter">
                         <option value="">Toutes les priorités</option>
-                        <option value="1">Faible</option>
-                        <option value="2">Normale</option>
-                        <option value="3">Haute</option>
-                        <option value="4">Critique</option>
+                        <?php foreach ($priorites as $p): ?>
+                            <option value="<?= $p['id'] ?>"><?= htmlspecialchars($p['libelle']) ?></option>
+                        <?php endforeach; ?>
                     </select>
                     <select class="filter-select" id="categorieFilter">
                         <option value="">Toutes les catégories</option>
-                        <option value="1">Facturation</option>
-                        <option value="2">Livraison</option>
-                        <option value="3">Qualité produit</option>
-                        <option value="4">Service après-vente</option>
-                        <option value="5">Remboursement</option>
-                        <option value="6">Délai de livraison</option>
-                        <option value="7">Produit manquant</option>
-                        <option value="8">Produit endommagé</option>
-                        <option value="9">Erreur de commande</option>
-                        <option value="10">Annulation commande</option>
-                        <option value="11">Compte client</option>
-                        <option value="12">Paiement en ligne</option>
-                        <option value="13">Offre promotionnelle</option>
-                        <option value="14">Communication commerciale</option>
-                        <option value="15">Service client</option>
-                        <option value="16">Garantie produit</option>
-                        <option value="17">Retour marchandise</option>
-                        <option value="18">Transport / Transporteur</option>
-                        <option value="19">Conformité réglementaire</option>
-                        <option value="20">Confidentialité des données</option>
-                        <option value="21">Application mobile</option>
-                        <option value="22">Site web</option>
-                        <option value="23">Abonnement</option>
-                        <option value="24">Résiliation</option>
-                        <option value="25">Devis / Estimation</option>
+                        <?php foreach ($categories as $cat): ?>
+                            <option value="<?= $cat['id'] ?>"><?= htmlspecialchars($cat['libelle']) ?></option>
+                        <?php endforeach; ?>
                     </select>
                     <select class="filter-select" id="sortSelect">
                         <option value="">Par défaut</option>

@@ -44,6 +44,19 @@ try {
         exit;
     }
 
+    $user_role = $_SESSION['user_role'];
+    $user_id   = $_SESSION['user_id'];
+
+    if ($user_role === 'client') {
+        $own = $pdo->prepare("SELECT id FROM reclamations WHERE id = ? AND client_id = ?");
+        $own->execute([$id, $user_id]);
+        if (!$own->fetch()) {
+            http_response_code(403);
+            echo json_encode(['success' => false, 'message' => 'Accès refusé.']);
+            exit;
+        }
+    }
+
     $objet = trim($body['objet']);
     $description = trim($body['description']);
     $categorie_id = trim($body['categorie_id']);

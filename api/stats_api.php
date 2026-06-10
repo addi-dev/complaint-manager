@@ -7,7 +7,7 @@ require __DIR__ . '/../config/app.php';
 require __DIR__ . '/../core/Auth.php';
 Auth::requireRole('admin', 'superviseur');
 try {
-    $totalClients = $pdo->query("SELECT COUNT(*) FROM clients")->fetchColumn();
+    $totalClients = $pdo->query("SELECT COUNT(*) FROM clients WHERE deleted_at IS NULL")->fetchColumn();
 
     $totalReclamations = $pdo->query("SELECT COUNT(*) FROM reclamations WHERE deleted_at IS NULL")->fetchColumn();
 
@@ -48,6 +48,38 @@ try {
         WHERE s.code NOT IN ('RESOLUE', 'CLOTUREE', 'REJETEE') AND r.deleted_at IS NULL
     ")->fetchColumn();
 
+    $resolved = $pdo->query("
+    SELECT COUNT(*) FROM reclamations r
+    JOIN statuts s ON r.statut_id = s.id
+    WHERE s.code IN ('RESOLUE', 'CLOTUREE') AND r.deleted_at IS NULL
+    ")->fetchColumn();
+
+    $tauxResolution = $totalReclamations > 0 ? round(($resolved / $totalReclamations) * 100, 1) : 0;
+
+    $delaiMoyen = $pdo->query("
+    SELECT AVG(TIMESTAMPDIFF(HOUR, created_at, closed_at))
+    FROM reclamations
+    WHERE closed_at IS NOT NULL AND deleted_at IS NULL
+    ")->fetchColumn();
+
+    $byCategorie = $pdo->query("
+    SELECT cat.libelle, COUNT(r.id) AS total
+    FROM categories_reclamation cat
+    LEFT JOIN reclamations r ON r.categorie_id = cat.id AND r.deleted_at IS NULL
+    GROUP BY cat.id, cat.libelle
+    ORDER BY total DESC
+    ")->fetchAll(PDO::FETCH_ASSOC);
+
+    $byAgent = $pdo->query("
+    SELECT CONCAT(u.prenom, ' ', u.nom) AS agent, COUNT(r.id) AS total
+    FROM utilisateurs u
+    JOIN roles ro ON ro.id = u.role_id AND ro.nom = 'agent'
+    LEFT JOIN reclamations r ON r.agent_id = u.id AND r.deleted_at IS NULL
+    WHERE u.actif = 1
+    GROUP BY u.id
+    ORDER BY total DESC
+    ")->fetchAll(PDO::FETCH_ASSOC);
+
     $recent = $pdo->query("
         SELECT
             r.id,
@@ -69,16 +101,20 @@ try {
     ")->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode([
-        'success' => true,
-        'total_clients' => (int) $totalClients,
-        'total_reclamations' => (int) $totalReclamations,
-        'this_month' => (int) $thisMonth,
-        'new_clients' => (int) $newClients,
-        'total_agents' => (int) $totalAgents,
-        'unresolved' => (int) $unresolved,
-        'by_statut' => $byStatut,
-        'by_priorite' => $byPriorite,
-        'recent' => $recent,
+        'success'             => true,
+        'total_clients'       => (int) $totalClients,
+        'total_reclamations'  => (int) $totalReclamations,
+        'this_month'          => (int) $thisMonth,
+        'new_clients'         => (int) $newClients,
+        'total_agents'        => (int) $totalAgents,
+        'unresolved'          => (int) $unresolved,
+        'taux_resolution'     => $tauxResolution,
+        'delai_moyen_heures'  => $delaiMoyen ? round((float)$delaiMoyen, 1) : null,
+        'by_statut'           => $byStatut,
+        'by_priorite'         => $byPriorite,
+        'by_categorie'        => $byCategorie,
+        'by_agent'            => $byAgent,
+        'recent'              => $recent,
     ]);
 } catch (PDOException $e) {
     error_log('[API Error] ' . $e->getMessage());

@@ -72,6 +72,42 @@ try {
     $stmt->execute([$reclamation_id, $auteur_id, $client_id, $contenu, $interne]);
     $comment_id = $pdo->lastInsertId();
 
+    // Notify the other party (skip internal notes)
+    if (!$interne) {
+        if ($user_role === 'client') {
+            // Client commented — notify the assigned agent if any
+            $stmtAgent = $pdo->prepare("SELECT agent_id FROM reclamations WHERE id = ?");
+            $stmtAgent->execute([$reclamation_id]);
+            $agent_id = $stmtAgent->fetchColumn();
+            if ($agent_id) {
+                $stmtNotif = $pdo->prepare("
+                INSERT INTO notifications (utilisateur_id, reclamation_id, type, message)
+                VALUES (?, ?, 'INFO', ?)
+            ");
+                $stmtNotif->execute([
+                    $agent_id,
+                    $reclamation_id,
+                    "Le client a ajouté un commentaire sur la réclamation #{$reclamation_id}."
+                ]);
+            }
+        } else {
+            $stmtClient = $pdo->prepare("SELECT client_id FROM reclamations WHERE id = ?");
+            $stmtClient->execute([$reclamation_id]);
+            $notif_client_id = $stmtClient->fetchColumn();
+            if ($notif_client_id) {
+                $stmtNotif = $pdo->prepare("
+                INSERT INTO notifications (client_id, reclamation_id, type, message)
+                VALUES (?, ?, 'INFO', ?)
+            ");
+                $stmtNotif->execute([
+                    $notif_client_id,
+                    $reclamation_id,
+                    "Un agent a répondu à votre réclamation #{$reclamation_id}."
+                ]);
+            }
+        }
+    }
+
     echo json_encode(['success' => true, 'id' => $comment_id]);
 } catch (Exception $e) {
     error_log('[Commentaire Error] ' . $e->getMessage());
