@@ -1,5 +1,5 @@
 import { formatDate } from "../lib/date.js";
-import { initials, colorFor } from "../lib/string.js";
+import { initials, colorFor, escapeHtml } from "../lib/string.js";
 import { showToast } from "../lib/toast.js";
 
 const params = new URLSearchParams(window.location.search);
@@ -190,15 +190,21 @@ window.assignAgent = async function () {
     return;
   }
 
-  const res = await fetch("/complaint-manager/actions/affectations/store.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": csrfToken },
-    body: JSON.stringify({
-      reclamation_id: parseInt(id),
-      agent_id: parseInt(agent_id),
-      note,
-    }),
-  });
+  const res = await fetch(
+    "/complaint-manager/actions/affectations/ajouter.php",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": csrfToken,
+      },
+      body: JSON.stringify({
+        reclamation_id: parseInt(id),
+        agent_id: parseInt(agent_id),
+        note,
+      }),
+    },
+  );
   const data = await res.json();
   if (data.success) {
     showToast("Agent affecté avec succès");
@@ -243,15 +249,21 @@ window.updateStatut = async function () {
 window.addComment = async function () {
   const contenu = document.getElementById("newComment").value.trim();
   if (!contenu) return;
-  const res = await fetch("/complaint-manager/actions/commentaires/store.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": csrfToken },
-    body: JSON.stringify({
-      reclamation_id: parseInt(id),
-      contenu,
-      interne: false,
-    }),
-  });
+  const res = await fetch(
+    "/complaint-manager/actions/commentaires/ajouter.php",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": csrfToken,
+      },
+      body: JSON.stringify({
+        reclamation_id: parseInt(id),
+        contenu,
+        interne: false,
+      }),
+    },
+  );
   const data = await res.json();
   if (data.success) {
     document.getElementById("newComment").value = "";

@@ -154,7 +154,7 @@ window.deleteRow = function (id) {
   document.getElementById("confirmDelete").onclick = async function () {
     try {
       const res = await fetch(
-        `/complaint-manager/actions/users/delete.php?id=${id}`,
+        `/complaint-manager/actions/users/supprimer.php?id=${id}`,
         {
           method: "POST",
           headers: { "X-CSRF-Token": csrfToken },
@@ -178,7 +178,7 @@ window.deleteRow = function (id) {
   };
 };
 
-//! Handle Store.php (insertion using api)
+//! Handle ajouter.php (insertion using api)
 
 document
   .getElementById("formModal")
@@ -198,8 +198,8 @@ document
     const mode = this.dataset.mode;
     const url =
       mode === "edit"
-        ? `/complaint-manager/actions/users/update.php?id=${this.dataset.editId}`
-        : `/complaint-manager/actions/users/store.php`;
+        ? `/complaint-manager/actions/users/modifier.php?id=${this.dataset.editId}`
+        : `/complaint-manager/actions/users/ajouter.php`;
 
     try {
       const res = await fetch(url, {

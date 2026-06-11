@@ -5,27 +5,22 @@ require __DIR__ . "/../../core/Auth.php";
 require __DIR__ . "/../../core/CSRF.php";
 Auth::requireRole('admin', 'client');
 CSRF::verify();
-
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'error' => 'Wrong method']);
     exit;
 }
-
 $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
 if (str_contains($contentType, 'application/json')) {
     $body = json_decode(file_get_contents('php://input'), true) ?? [];
 } else {
     $body = $_POST;
 }
-
 try {
     $id = intval($_GET['id'] ?? 0);
-
     if (!$id) {
         echo json_encode(['success' => false, 'error' => 'ID manquant']);
         exit;
     }
-
     $check = $pdo->prepare("
     SELECT r.id, s.code AS statut_code 
     FROM reclamations r 
@@ -43,10 +38,8 @@ try {
         echo json_encode(['success' => false, 'message' => 'Cette réclamation est clôturée et ne peut plus être modifiée.']);
         exit;
     }
-
     $user_role = $_SESSION['user_role'];
     $user_id   = $_SESSION['user_id'];
-
     if ($user_role === 'client') {
         $own = $pdo->prepare("SELECT id FROM reclamations WHERE id = ? AND client_id = ?");
         $own->execute([$id, $user_id]);
@@ -56,7 +49,6 @@ try {
             exit;
         }
     }
-
     $objet = trim($body['objet']);
     $description = trim($body['description']);
     $categorie_id = trim($body['categorie_id']);

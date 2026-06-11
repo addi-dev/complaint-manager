@@ -13,10 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'error' => 'Wrong method']);
     exit;
 }
-
 $body = json_decode(file_get_contents('php://input'), true) ?? [];
-
-// ── Validation ────────────────────────────────────────────────────────────────
 $validator = Validator::make($body)
     ->required('nom', 'Nom')
     ->minLength('nom', 2, 'Nom')
@@ -33,25 +30,21 @@ $validator = Validator::make($body)
     ->numeric('role_id', 'Rôle')
     ->required('actif', 'Actif')
     ->in('actif', ['0', '1', 0, 1], 'Actif');
-
 if ($validator->fails()) {
     http_response_code(422);
     echo json_encode(['success' => false, 'errors' => $validator->errors()]);
     exit;
 }
-
-// ── Sanitise (safe after validation) ─────────────────────────────────────────
 try {
     $nom = trim($body['nom']);
     $prenom = trim($body['prenom']);
     $date_naissance = trim($body['date_naissance']);
     $numero_cin = trim($body['numero_cin']);
     $email = trim($body['email']);
-    $mot_de_passe_brut = Helpers::generer_mot_de_passe();           // e.g. "Aydh2810"
+    $mot_de_passe_brut = Helpers::generer_mot_de_passe();
     $mot_de_passe = password_hash($mot_de_passe_brut, PASSWORD_BCRYPT);
     $role_id = intval($body['role_id']);
     $actif = intval($body['actif']);
-
     $check = $pdo->prepare("SELECT id FROM utilisateurs WHERE email = ?");
     $check->execute([$email]);
     if ($check->fetch()) {
@@ -59,7 +52,6 @@ try {
         echo json_encode(['success' => false, 'errors' => ['email' => 'Email déjà utilisé']]);
         exit;
     }
-
     $stmt = $pdo->prepare("
         INSERT INTO utilisateurs (nom, prenom, date_naissance, numero_cin, email, mot_de_passe, role_id, actif)
         VALUES (:nom, :prenom, :date_naissance, :numero_cin, :email, :mot_de_passe, :role_id, :actif)
@@ -74,7 +66,6 @@ try {
         ':role_id' => $role_id,
         ':actif' => $actif,
     ]);
-
     http_response_code(201);
     echo json_encode(['success' => true, 'id' => $pdo->lastInsertId(), 'mot_de_passe' => $mot_de_passe_brut]);
 } catch (Exception $e) {

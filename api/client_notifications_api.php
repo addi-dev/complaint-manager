@@ -3,10 +3,8 @@ header('Content-Type: application/json');
 require __DIR__ . '/../config/app.php';
 require __DIR__ . '/../core/Auth.php';
 Auth::requireRole('client');
-
 $client_id = $_SESSION['user_id'];
 $action    = $_GET['action'] ?? 'list';
-
 try {
     if ($action === 'list') {
         $stmt = $pdo->prepare("
@@ -21,11 +19,9 @@ try {
         ");
         $stmt->execute([$client_id]);
         $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
         $stmt = $pdo->prepare("SELECT COUNT(*) FROM notifications WHERE client_id = ? AND lu = FALSE");
         $stmt->execute([$client_id]);
         $unread = (int) $stmt->fetchColumn();
-
         echo json_encode([
             'success'       => true,
             'notifications' => $notifications,

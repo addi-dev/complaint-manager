@@ -1,25 +1,15 @@
--- ============================================================
--- Schema: Application de gestion des réclamations clients
--- ============================================================
- 
 CREATE DATABASE IF NOT EXISTS reclamations
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
  
 USE reclamations;
  
--- ------------------------------------------------------------
--- roles
--- ------------------------------------------------------------
 CREATE TABLE roles (
   id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   nom         VARCHAR(50)  NOT NULL UNIQUE,
   description TEXT
 );
 
--- ------------------------------------------------------------
--- utilisateurs  (agents, superviseurs, admins)
--- ------------------------------------------------------------
 CREATE TABLE utilisateurs (
   id             INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   role_id        INT UNSIGNED NOT NULL,
@@ -36,9 +26,6 @@ CREATE TABLE utilisateurs (
   CONSTRAINT fk_util_role FOREIGN KEY (role_id) REFERENCES roles(id)
 );
  
--- ------------------------------------------------------------
--- clients
--- ------------------------------------------------------------
 CREATE TABLE clients (
   id             INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   nom            VARCHAR(100) NOT NULL,
@@ -54,27 +41,18 @@ CREATE TABLE clients (
   deleted_at     TIMESTAMP     NULL
 );
 
--- ------------------------------------------------------------
--- categories_reclamation
--- ------------------------------------------------------------
 CREATE TABLE categories_reclamation (
   id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   libelle     VARCHAR(100) NOT NULL UNIQUE,
   description TEXT
 );
  
--- ------------------------------------------------------------
--- priorites
--- ------------------------------------------------------------
 CREATE TABLE priorites (
   id      INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   libelle VARCHAR(50)  NOT NULL UNIQUE,  -- ex: Faible, Normale, Haute, Critique
   niveau  TINYINT      NOT NULL UNIQUE   -- 1 (bas) → 4 (critique)
 );
 
- -- ------------------------------------------------------------
--- statuts
--- ------------------------------------------------------------
 CREATE TABLE statuts (
   id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   libelle     VARCHAR(100) NOT NULL UNIQUE,
@@ -82,9 +60,6 @@ CREATE TABLE statuts (
   description TEXT
 ); 
  
--- ------------------------------------------------------------
--- reclamations  (entité centrale)
--- ------------------------------------------------------------
 CREATE TABLE reclamations (
   id             INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   numero_unique  VARCHAR(20)   NOT NULL UNIQUE,  -- ex: REC-20240001
@@ -106,9 +81,6 @@ CREATE TABLE reclamations (
   CONSTRAINT fk_rec_agent     FOREIGN KEY (agent_id)     REFERENCES utilisateurs(id)
 );
  
--- ------------------------------------------------------------
--- affectations  (historique d'attribution)
--- ------------------------------------------------------------
 CREATE TABLE affectations (
   id               INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   reclamation_id   INT UNSIGNED NOT NULL,
@@ -121,9 +93,6 @@ CREATE TABLE affectations (
   CONSTRAINT fk_aff_par         FOREIGN KEY (affecte_par)    REFERENCES utilisateurs(id)
 );
 
--- ------------------------------------------------------------
--- commentaires  (échanges client ↔ agent + notes internes)
--- ------------------------------------------------------------
 CREATE TABLE commentaires (
   id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   reclamation_id  INT UNSIGNED NOT NULL,
@@ -137,9 +106,6 @@ CREATE TABLE commentaires (
   CONSTRAINT fk_com_client      FOREIGN KEY (client_id)      REFERENCES clients(id)
 );
 
--- ------------------------------------------------------------
--- pieces_jointes
--- ------------------------------------------------------------
 CREATE TABLE pieces_jointes (
   id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   reclamation_id  INT UNSIGNED  NOT NULL,
@@ -151,9 +117,6 @@ CREATE TABLE pieces_jointes (
   CONSTRAINT fk_pj_reclamation FOREIGN KEY (reclamation_id) REFERENCES reclamations(id) ON DELETE CASCADE
 );
 
--- ------------------------------------------------------------
--- historique_actions  (journal horodaté de chaque changement)
--- ------------------------------------------------------------
 CREATE TABLE historique_actions (
   id               INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   reclamation_id   INT UNSIGNED NOT NULL,
@@ -169,9 +132,6 @@ CREATE TABLE historique_actions (
   CONSTRAINT fk_hist_nouveau_statut FOREIGN KEY (nouveau_statut_id) REFERENCES statuts(id)
 );
 
--- ------------------------------------------------------------
--- notifications
--- ------------------------------------------------------------
 CREATE TABLE notifications (
   id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   utilisateur_id  INT UNSIGNED NULL,
@@ -186,9 +146,6 @@ CREATE TABLE notifications (
   CONSTRAINT fk_notif_reclamation  FOREIGN KEY (reclamation_id)  REFERENCES reclamations(id)
 );
 
--- ============================================================
--- Indexes utiles pour les recherches multicritères
--- ============================================================
 CREATE INDEX idx_rec_client    ON reclamations(client_id);
 CREATE INDEX idx_rec_statut    ON reclamations(statut_id);
 CREATE INDEX idx_rec_priorite  ON reclamations(priorite_id);

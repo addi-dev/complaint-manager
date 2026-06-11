@@ -28,3 +28,8 @@ export function colorFor(n) {
   for (let c of n) h = (h * 31 + c.charCodeAt(0)) & 0xffff;
   return COLORS[h % COLORS.length];
 }
+export function escapeHtml(s) {
+  const d = document.createElement("div");
+  d.textContent = s ?? "";
+  return d.innerHTML;
+}

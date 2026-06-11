@@ -35,7 +35,7 @@ $categories = $pdo->query("SELECT id, libelle FROM categories_reclamation ORDER 
         <a class="nav-item" href="notifications.php"><i class="fa-solid fa-bell"></i>Notifications</a>
         <div class="sidebar-section-label">Other</div>
         <a class="nav-item" href="profile.php"><i class="fa-solid fa-user"></i>Mon profil</a>
-        <a class="nav-item" href="../../actions/auth/logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
+        <a class="nav-item" href="../../actions/auth/deconnexion.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
     </aside>
     <div class="main">
         <header class="topbar">
@@ -185,7 +185,7 @@ $categories = $pdo->query("SELECT id, libelle FROM categories_reclamation ORDER 
     <script>
         function openModal() {
             document.getElementById("modalTitle").textContent = "Insérer une nouvelle réclamation";
-            document.getElementById("formModal").action = "../../actions/reclamations/store.php";
+            document.getElementById("formModal").action = "../../actions/reclamations/ajouter.php";
             document.getElementById("formMethod").value = "POST";
             document.getElementById("submitBtn").textContent = "Insérer la réclamation";
             document.getElementById("formModal").dataset.mode = "add";
@@ -196,17 +196,14 @@ $categories = $pdo->query("SELECT id, libelle FROM categories_reclamation ORDER 
 
             document.getElementById("overlay").classList.add("open");
         }
-
         function openEditModal(id) {
             const reclamation = mes_reclamations.find(r => r.id == id);
             if (!reclamation) return;
             document.getElementById('modalTitle').textContent = 'Modifier la réclamation';
             document.getElementById('submitBtn').textContent = 'Enregistrer';
-            document.getElementById('formModal').action = `../../actions/reclamations/update.php`;
+            document.getElementById('formModal').action = `../../actions/reclamations/modifier.php`;
             document.getElementById('formModal').dataset.mode = 'edit';
             document.getElementById('formModal').dataset.editId = id;
-
-            // fill fields
             document.getElementById('f-objet').value = reclamation.objet || '';
             document.getElementById('f-description').value = reclamation.description || '';
             document.getElementById('f-categorie_id').value = reclamation.categorie_id || '';

@@ -1,10 +1,8 @@
 <?php
 // api/auth_api.php
-session_start();
 require_once __DIR__ . '/../config/app.php';
 require_once __DIR__ . '/../core/Auth.php';
 header('Content-Type: application/json');
-
 if (!empty($_SESSION['logged_in'])) {
     echo json_encode([
         'logged_in' => true,

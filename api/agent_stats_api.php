@@ -1,14 +1,10 @@
 <?php
 header('Content-Type: application/json');
-
 require __DIR__ . '/../config/app.php';
 require __DIR__ . '/../core/Auth.php';
 Auth::requireRole('agent');
-
 $agent_id = $_SESSION['user_id'];
-
 try {
-    // Reclamations assigned to this agent by status
     $stmt = $pdo->prepare("
         SELECT
             COUNT(*)                                                        AS total,
@@ -24,8 +20,6 @@ try {
     ");
     $stmt->execute([$agent_id]);
     $counts = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    // Average resolution time in hours (for resolved/closed)
     $stmt = $pdo->prepare("
         SELECT ROUND(AVG(TIMESTAMPDIFF(HOUR, r.created_at, r.closed_at)), 1) AS avg_resolution_hours
         FROM reclamations r
@@ -34,8 +28,6 @@ try {
     ");
     $stmt->execute([$agent_id]);
     $avg = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    // Recent activity (last 5 actions by this agent)
     $stmt = $pdo->prepare("
         SELECT
             h.action, h.details, h.created_at,
@@ -50,12 +42,9 @@ try {
     ");
     $stmt->execute([$agent_id]);
     $recent = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // Unread notifications count
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM notifications WHERE utilisateur_id = ? AND lu = FALSE");
     $stmt->execute([$agent_id]);
     $unread_notifications = (int) $stmt->fetchColumn();
-
     echo json_encode([
         'success' => true,
         'stats'   => [
@@ -72,7 +61,6 @@ try {
         'recent_activity' => $recent,
     ]);
 } catch (PDOException $e) {
-    error_log('[AgentStats Error] ' . $e->getMessage());
-    http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Erreur interne du serveur.']);
+    error_log('message', $e->getMessage());
+    Response::error('Error serveur', 500);
 }

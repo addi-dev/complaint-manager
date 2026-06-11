@@ -11,18 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'error' => 'Wrong method']);
     exit;
 }
-
 $body = json_decode(file_get_contents('php://input'), true) ?? [];
-
-// ── Validate ID ───────────────────────────────────────────────────────────────
 $id = intval($_GET['id'] ?? $body['id'] ?? 0);
 if (!$id) {
     http_response_code(400);
     echo json_encode(['success' => false, 'error' => 'ID manquant']);
     exit;
 }
-
-// ── Validation ────────────────────────────────────────────────────────────────
 $validator = Validator::make($body)
     ->required('nom', 'Nom')
     ->minLength('nom', 2, 'Nom')
@@ -36,19 +31,14 @@ $validator = Validator::make($body)
     ->numeric('role_id', 'Rôle')
     ->required('actif', 'Actif')
     ->in('actif', ['0', '1', 0, 1], 'Actif');
-
-// Password only validated if provided (optional on update)
 if (!empty($body['mot_de_passe'])) {
     $validator->minLength('mot_de_passe', 8, 'Mot de passe');
 }
-
 if ($validator->fails()) {
     http_response_code(422);
     echo json_encode(['success' => false, 'errors' => $validator->errors()]);
     exit;
 }
-
-// ── DB ────────────────────────────────────────────────────────────────────────
 try {
     $check = $pdo->prepare("SELECT id FROM utilisateurs WHERE id = ?");
     $check->execute([$id]);
@@ -57,7 +47,6 @@ try {
         echo json_encode(['success' => false, 'error' => 'Utilisateur introuvable']);
         exit;
     }
-
     $email = trim($body['email']);
     $emailCheck = $pdo->prepare("SELECT id FROM utilisateurs WHERE email = ? AND id != ?");
     $emailCheck->execute([$email, $id]);
@@ -66,12 +55,10 @@ try {
         echo json_encode(['success' => false, 'errors' => ['email' => 'Email déjà utilisé']]);
         exit;
     }
-
     $nom = trim($body['nom']);
     $prenom = trim($body['prenom']);
     $role_id = intval($body['role_id']);
     $actif = intval($body['actif']);
-
     if (!empty($body['mot_de_passe'])) {
         $mot_de_passe = password_hash($body['mot_de_passe'], PASSWORD_BCRYPT);
         $stmt = $pdo->prepare("
@@ -105,7 +92,6 @@ try {
             ':id' => $id,
         ]);
     }
-
     echo json_encode(['success' => true, 'updated' => $stmt->rowCount()]);
 } catch (Exception $e) {
     error_log('[API Error] ' . $e->getMessage());

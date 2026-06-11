@@ -10,7 +10,7 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
         'client'      => '/complaint-manager/views/client',
     ];
     $role = $_SESSION['user_role'] ?? '';
-    header('Location: ' . ($redirects[$role] ?? '/complaint-manager/views/auth/login.php'));
+    header('Location: ' . ($redirects[$role] ?? '/complaint-manager/views/auth/connexion.php'));
     exit;
 }
 ?>
@@ -380,7 +380,7 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
             </button>
 
             <div class="back-link">
-                <a href="login.php">← Retour à la connexion</a>
+                <a href="connexion.php">← Retour à la connexion</a>
             </div>
 
         </div>
@@ -445,7 +445,7 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
             </button>
 
             <div class="back-link">
-                <a href="login.php">← Retour à la connexion</a>
+                <a href="connexion.php">← Retour à la connexion</a>
             </div>
 
         </div>
@@ -507,7 +507,7 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
             setLoading(1, true, 'Vérifier mon identité');
 
             try {
-                const res = await fetch('../../actions/auth/reset-password.php', {
+                const res = await fetch('../../actions/auth/reinitialiser_mot_de_passe.php', {
                     method: 'POST',
                     credentials: 'include',
                     headers: {
@@ -560,7 +560,7 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
             setLoading(2, true, 'Réinitialiser le mot de passe');
 
             try {
-                const res = await fetch('../../actions/auth/reset-password.php', {
+                const res = await fetch('../../actions/auth/reinitialiser_mot_de_passe.php', {
                     method: 'POST',
                     credentials: 'include',
                     headers: {
@@ -577,7 +577,7 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
 
                 if (data.success) {
                     showAlert(2, 'Mot de passe réinitialisé ! Redirection…', 'success');
-                    setTimeout(() => window.location.href = 'login.php', 1500);
+                    setTimeout(() => window.location.href = 'connexion.php', 1500);
                 } else {
                     showAlert(2, data.message || 'Une erreur est survenue.');
                 }

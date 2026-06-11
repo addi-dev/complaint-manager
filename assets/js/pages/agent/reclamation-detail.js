@@ -171,15 +171,21 @@ window.updateStatut = async function () {
 window.addComment = async function () {
   const contenu = document.getElementById("newComment").value.trim();
   if (!contenu) return;
-  const res = await fetch("/complaint-manager/actions/commentaires/store.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "X-CSRF-Token": csrfToken },
-    body: JSON.stringify({
-      reclamation_id: parseInt(id),
-      contenu,
-      interne: false,
-    }),
-  });
+  const res = await fetch(
+    "/complaint-manager/actions/commentaires/ajouter.php",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": csrfToken,
+      },
+      body: JSON.stringify({
+        reclamation_id: parseInt(id),
+        contenu,
+        interne: false,
+      }),
+    },
+  );
   const data = await res.json();
   if (data.success) {
     document.getElementById("newComment").value = "";

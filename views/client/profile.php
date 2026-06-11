@@ -58,7 +58,7 @@ $client = $stmt->fetch(PDO::FETCH_ASSOC);
         <a class="nav-item" href="notifications.php"><i class="fa-solid fa-bell"></i>Notifications</a>
         <div class="sidebar-section-label">Other</div>
         <a class="nav-item active" href="profile.php"><i class="fa-solid fa-user"></i>Mon profil</a>
-        <a class="nav-item" href="../../actions/auth/logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
+        <a class="nav-item" href="../../actions/auth/deconnexion.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
     </aside>
     <div class="main">
         <header class="topbar">
@@ -123,7 +123,7 @@ $client = $stmt->fetch(PDO::FETCH_ASSOC);
 
         document.getElementById('profileForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const res = await fetch('../../actions/clients/update-profile.php', {
+            const res = await fetch('../../actions/clients/mise_a_jour_profile.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

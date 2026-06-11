@@ -107,7 +107,7 @@ Auth::requireRole('client');
         <a class="nav-item active" href="notifications.php"><i class="fa-solid fa-bell"></i>Notifications</a>
         <div class="sidebar-section-label">Other</div>
         <a class="nav-item" href="profile.php"><i class="fa-solid fa-user"></i>Mon profil</a>
-        <a class="nav-item" href="../../actions/auth/logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
+        <a class="nav-item" href="../../actions/auth/deconnexion.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
     </aside>
     <div class="main">
         <header class="topbar">

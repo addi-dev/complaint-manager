@@ -5,31 +5,23 @@ require __DIR__ . "/../../core/Auth.php";
 require __DIR__ . "/../../core/CSRF.php";
 Auth::requireRole('admin');
 CSRF::verify();
-
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'error' => 'Wrong method']);
     exit;
 }
-
 $body = json_decode(file_get_contents('php://input'), true);
-
 try {
     $id = intval($_GET['id'] ?? $body['id'] ?? 0);
-
     if (!$id) {
         echo json_encode(['success' => false, 'error' => 'ID manquant']);
         exit;
     }
-
-    // Check user exists
     $check = $pdo->prepare("SELECT id FROM clients WHERE id = ?");
     $check->execute([$id]);
     if (!$check->fetch()) {
         echo json_encode(['success' => false, 'error' => 'Client introuvable']);
         exit;
     }
-
-    // Check email not taken by another user
     $email = trim($body['email']);
     $emailCheck = $pdo->prepare("SELECT id FROM clients WHERE email = ? AND id != ?");
     $emailCheck->execute([$email, $id]);
@@ -37,13 +29,10 @@ try {
         echo json_encode(['success' => false, 'error' => 'Email déjà utilisé']);
         exit;
     }
-
     $nom = trim($body['nom']);
     $prenom = trim($body['prenom']);
     $telephone = trim($body['telephone']);
     $adresse = trim($body['adresse']);
-
-    // Build query — only update password if provided
     if (!empty($body['mot_de_passe'])) {
         $mot_de_passe = password_hash($body['mot_de_passe'], PASSWORD_BCRYPT);
         $stmt = $pdo->prepare("
@@ -77,7 +66,6 @@ try {
             ':id' => $id,
         ]);
     }
-
     echo json_encode(['success' => true, 'updated' => $stmt->rowCount()]);
 } catch (Exception $e) {
     error_log('[API Error] ' . $e->getMessage());

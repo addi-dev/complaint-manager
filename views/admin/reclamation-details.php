@@ -40,8 +40,8 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
         <a class="nav-item" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Réclamations</a>
         <a class="nav-item" href="clients.php"><i class="fa-solid fa-user"></i>Clients</a>
         <div class="sidebar-section-label">Other</div>
-        <a class="nav-item" href="../../actions/auth/logout.php"><i
-                class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
+        <a class="nav-item" href="../../actions/auth/deconnexion.php"><i
+                class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
     </aside>
     <div class="main">
         <header class="topbar">
@@ -245,7 +245,7 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
     <script>
         function openModal() {
             document.getElementById("modalTitle").textContent = "Insérer une nouvelle réclamation";
-            document.getElementById("formModal").action = "../../actions/reclamations/store.php";
+            document.getElementById("formModal").action = "../../actions/reclamations/ajouter.php";
             document.getElementById("formMethod").value = "POST";
             document.getElementById("submitBtn").textContent = "Insérer la réclamation";
 

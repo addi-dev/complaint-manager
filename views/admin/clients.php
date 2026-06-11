@@ -1,13 +1,8 @@
 <?php
-session_start();
-
 require __DIR__ . '/../../config/app.php';
 require_once __DIR__ . '/../../core/Auth.php';
 require __DIR__ . '/../../core/CSRF.php';
-
 Auth::requireRole('admin', 'superviseur');
-
-// fetch roles for dropdown
 $stmt = $pdo->query("SELECT id, nom FROM roles ORDER BY nom");
 $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -43,8 +38,8 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <a class="nav-item" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Réclamations</a>
         <a class="nav-item active" href="clients.php"><i class="fa-solid fa-user"></i>Clients</a>
         <div class="sidebar-section-label">Other</div>
-        <a class="nav-item" href="../../actions/auth/logout.php"><i
-                class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
+        <a class="nav-item" href="../../actions/auth/deconnexion.php"><i
+                class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
     </aside>
     <div class="main">
         <header class="topbar">
@@ -151,7 +146,7 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <input type="text" id="f-telephone" placeholder="ex: 0612345678" name="telephone" />
                     </div>
                     <div class="form-group full">
-                        <label>Address</label>
+                        <label>Adresse</label>
                         <input type="text" id="f-adresse" placeholder="ex: Tanger, Maroc" name="adresse" />
                     </div>
                 </div>
@@ -184,7 +179,7 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script>
         function openModal() {
             document.getElementById("modalTitle").textContent = "Inscrire un nouvel client";
-            document.getElementById("formModal").action = "../../actions/clients/store.php";
+            document.getElementById("formModal").action = "../../actions/clients/ajouter.php";
             document.getElementById("formMethod").value = "POST";
             document.getElementById("submitBtn").textContent = "Inscrire le client";
 
@@ -200,7 +195,7 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (!user) return;
             document.getElementById('modalTitle').textContent = 'Modifier le client';
             document.getElementById('submitBtn').textContent = 'Enregistrer';
-            document.getElementById('formModal').action = `../../actions/clients/update.php`;
+            document.getElementById('formModal').action = `../../actions/clients/modifier.php`;
             document.getElementById('formModal').dataset.mode = 'edit';
             document.getElementById('formModal').dataset.editId = id;
 

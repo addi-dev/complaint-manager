@@ -39,8 +39,8 @@ Auth::requireRole('admin', 'superviseur');
     <a class="nav-item" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Réclamations</a>
     <a class="nav-item" href="clients.php"><i class="fa-solid fa-user"></i>Clients</a>
     <div class="sidebar-section-label">Other</div>
-    <a class="nav-item" href="../../actions/auth/logout.php"><i
-        class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
+    <a class="nav-item" href="../../actions/auth/deconnexion.php"><i
+        class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
   </aside>
 
   <div class="main">
@@ -195,7 +195,7 @@ Auth::requireRole('admin', 'superviseur');
 
     function openModal() {
       document.getElementById("modalTitle").textContent = "Inscrire un nouvel utilisateur";
-      document.getElementById("formModal").action = "../../actions/users/store.php";
+      document.getElementById("formModal").action = "../../actions/users/ajouter.php";
       document.getElementById("formMethod").value = "POST";
       document.getElementById("submitBtn").textContent = "Inscrire l'utilisateur";
 
@@ -213,7 +213,7 @@ Auth::requireRole('admin', 'superviseur');
       if (!user) return;
       document.getElementById('modalTitle').textContent = 'Modifier l\'utilisateur';
       document.getElementById('submitBtn').textContent = 'Enregistrer';
-      document.getElementById('formModal').action = `../../actions/users/update.php`;
+      document.getElementById('formModal').action = `../../actions/users/modifier.php`;
       document.getElementById('formModal').dataset.mode = 'edit';
       document.getElementById('formModal').dataset.editId = id;
 

@@ -1,13 +1,10 @@
 <?php
 header('Content-Type: application/json');
-
 require __DIR__ . '/../config/app.php';
 require __DIR__ . '/../core/Auth.php';
 Auth::requireRole('admin', 'superviseur', 'agent');
-
 $user_id   = $_SESSION['user_id'];
 $action    = $_GET['action'] ?? 'list';
-
 try {
     if ($action === 'list') {
         $stmt = $pdo->prepare("
@@ -22,12 +19,9 @@ try {
         ");
         $stmt->execute([$user_id]);
         $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // Unread count
         $stmt = $pdo->prepare("SELECT COUNT(*) FROM notifications WHERE utilisateur_id = ? AND lu = FALSE");
         $stmt->execute([$user_id]);
         $unread = (int) $stmt->fetchColumn();
-
         echo json_encode([
             'success'       => true,
             'notifications' => $notifications,
@@ -39,7 +33,6 @@ try {
             $stmt = $pdo->prepare("UPDATE notifications SET lu = TRUE WHERE id = ? AND utilisateur_id = ?");
             $stmt->execute([$id, $user_id]);
         } else {
-            // Mark all as read
             $stmt = $pdo->prepare("UPDATE notifications SET lu = TRUE WHERE utilisateur_id = ?");
             $stmt->execute([$user_id]);
         }
@@ -49,7 +42,6 @@ try {
         echo json_encode(['success' => false, 'message' => 'Action invalide.']);
     }
 } catch (PDOException $e) {
-    error_log('[Notifications Error] ' . $e->getMessage());
-    http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Erreur interne du serveur.']);
+    error_log('message', $e->getMessage());
+    Response::error('Error serveur', 500);
 }

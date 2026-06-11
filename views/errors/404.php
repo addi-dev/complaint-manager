@@ -43,7 +43,7 @@
 <body>
     <h1>404</h1>
     <p>La page que vous recherchez n'existe pas.</p>
-    <a href="/complaint-manager/views/auth/login.php">← Retour à la connexion</a>
+    <a href="/complaint-manager/views/auth/connexion.php">← Retour à la connexion</a>
 </body>
 
 </html>

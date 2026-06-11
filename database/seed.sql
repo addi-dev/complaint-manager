@@ -1,30 +1,17 @@
--- ============================================================
--- SEED.SQL — Complaint Manager Test Data
--- Password for all accounts: password
--- Hash: $2y$10$niNvwZVXEDJLAf4suoBdneEvPmK1XPvLYWvZH/.7Av13OaM9kiGdW
--- ============================================================
+-- Tous les donnees sone FAKE et Generer par AI; mot de pass pour tout est 'password'
 
--- ============================================================
--- ROLES (if not already seeded by scheme.sql)
--- ============================================================
 INSERT IGNORE INTO roles (id, nom) VALUES
 (1, 'admin'),
 (2, 'superviseur'),
 (3, 'agent'),
 (4, 'client');
 
--- ============================================================
--- PRIORITES
--- ============================================================
 INSERT IGNORE INTO priorites (id, libelle, niveau) VALUES
 (1, 'Faible',   1),
 (2, 'Normale',  2),
 (3, 'Haute',    3),
 (4, 'Critique', 4);
 
--- ============================================================
--- STATUTS
--- ============================================================
 INSERT IGNORE INTO statuts (id, code, libelle) VALUES
 (1, 'NOUVELLE',            'Nouvelle'),
 (2, 'AFFECTEE',            'Affectée'),
@@ -35,9 +22,6 @@ INSERT IGNORE INTO statuts (id, code, libelle) VALUES
 (7, 'REJETEE',             'Rejetée'),
 (8, 'ATTENTE_AFFECTATION', 'En attente d\'affectation');
 
--- ============================================================
--- CATEGORIES
--- ============================================================
 INSERT IGNORE INTO categories_reclamation (id, libelle) VALUES
 (1,  'Facturation'),
 (2,  'Livraison'),
@@ -55,9 +39,6 @@ INSERT IGNORE INTO categories_reclamation (id, libelle) VALUES
 (14, 'Transport / Transporteur'),
 (15, 'Garantie produit');
 
--- ============================================================
--- UTILISATEURS (admin, superviseur, agents)
--- ============================================================
 INSERT INTO utilisateurs (id, nom, prenom, email, mot_de_passe, numero_cin, date_naissance, role_id, actif) VALUES
 (1, 'Alami',    'Karim',   'admin@test.com',       '$2y$10$niNvwZVXEDJLAf4suoBdneEvPmK1XPvLYWvZH/.7Av13OaM9kiGdW', 'A100001', '1985-03-15', 1, 1),
 (2, 'Bennani',  'Salma',   'admin2@test.com',      '$2y$10$niNvwZVXEDJLAf4suoBdneEvPmK1XPvLYWvZH/.7Av13OaM9kiGdW', 'A100002', '1988-07-22', 1, 1),
@@ -68,9 +49,6 @@ INSERT INTO utilisateurs (id, nom, prenom, email, mot_de_passe, numero_cin, date
 (7, 'Guessous', 'Mehdi',   'agent3@test.com',      '$2y$10$niNvwZVXEDJLAf4suoBdneEvPmK1XPvLYWvZH/.7Av13OaM9kiGdW', 'A100007', '1994-04-14', 3, 1),
 (8, 'Hajji',    'Fatima',  'agent.inactif@test.com','$2y$10$niNvwZVXEDJLAf4suoBdneEvPmK1XPvLYWvZH/.7Av13OaM9kiGdW', 'A100008', '1991-08-30', 3, 0);
 
--- ============================================================
--- CLIENTS
--- ============================================================
 INSERT INTO clients (id, nom, prenom, email, mot_de_passe, numero_cin, date_naissance, telephone, adresse) VALUES
 (1, 'Idrissi',   'Hassan',  'client1@test.com', '$2y$10$niNvwZVXEDJLAf4suoBdneEvPmK1XPvLYWvZH/.7Av13OaM9kiGdW', 'B200001', '1987-06-12', '0661234567', '12 Rue Mohammed V, Casablanca'),
 (2, 'Jabri',     'Zineb',   'client2@test.com', '$2y$10$niNvwZVXEDJLAf4suoBdneEvPmK1XPvLYWvZH/.7Av13OaM9kiGdW', 'B200002', '1992-02-28', '0662345678', '45 Avenue Hassan II, Rabat'),
@@ -81,12 +59,8 @@ INSERT INTO clients (id, nom, prenom, email, mot_de_passe, numero_cin, date_nais
 (7, 'Ouhammou',  'Driss',   'client7@test.com', '$2y$10$niNvwZVXEDJLAf4suoBdneEvPmK1XPvLYWvZH/.7Av13OaM9kiGdW', 'B200007', '1990-03-22', '0667890123', '15 Rue Patrice Lumumba, Oujda'),
 (8, 'Qacemi',    'Latifa',  'client.deleted@test.com', '$2y$10$niNvwZVXEDJLAf4suoBdneEvPmK1XPvLYWvZH/.7Av13OaM9kiGdW', 'B200008', '1986-11-09', '0668901234', '5 Rue de Fès, Meknès');
 
--- Soft-delete client 8 to test deleted_at filter
 UPDATE clients SET deleted_at = NOW() WHERE id = 8;
 
--- ============================================================
--- RECLAMATIONS — all statuses covered
--- ============================================================
 INSERT INTO reclamations (id, numero_unique, client_id, categorie_id, priorite_id, statut_id, agent_id, objet, description, created_at) VALUES
 (1,  'REC-2026000001', 1, 1,  2, 1, NULL, 'Facture incorrecte',              'Le montant facturé ne correspond pas à ma commande. J\'ai été prélevé deux fois pour le même article.',                         '2026-05-01 09:00:00'),
 (2,  'REC-2026000002', 2, 2,  3, 8, NULL, 'Colis non livré',                 'Ma commande est marquée comme livrée mais je n\'ai rien reçu. Le livreur n\'a pas sonné.',                                      '2026-05-02 10:30:00'),
@@ -109,13 +83,9 @@ INSERT INTO reclamations (id, numero_unique, client_id, categorie_id, priorite_i
 (19, 'REC-2026000019', 7, 4,  3, 5, NULL, 'Photo produit trompeuse',        'Le produit reçu ne ressemble pas du tout aux photos sur le site. Les couleurs et les dimensions sont complètement différentes.',  '2026-05-24 11:15:00'),
 (20, 'REC-2026000020', 1, 5,  4, 6, 5,   'Remboursement partiel incorrect', 'Le remboursement reçu est de 45€ alors que j\'avais payé 89€. Aucune explication fournie sur la différence.',                  '2026-05-25 16:00:00');
 
--- Update closed_at for closed/rejected complaints
 UPDATE reclamations SET closed_at = '2026-05-28 10:00:00' WHERE statut_id = 6;
 UPDATE reclamations SET closed_at = '2026-05-27 14:00:00' WHERE statut_id = 7;
 
--- ============================================================
--- AFFECTATIONS
--- ============================================================
 INSERT INTO affectations (reclamation_id, utilisateur_id, affecte_par, note, created_at) VALUES
 (3,  5, 1, 'Produit défectueux — priorité haute, traiter rapidement.',        '2026-05-03 12:00:00'),
 (4,  6, 3, 'SAV — suivre de près, client très mécontent.',                    '2026-05-05 15:00:00'),
@@ -131,9 +101,6 @@ INSERT INTO affectations (reclamation_id, utilisateur_id, affecte_par, note, cre
 (18, 7, 3, 'Article manquant — vérifier le stock et réexpédier.',             '2026-05-23 10:00:00'),
 (20, 5, 1, 'Remboursement partiel — vérifier le calcul et corriger.',         '2026-05-25 17:00:00');
 
--- ============================================================
--- COMMENTAIRES
--- ============================================================
 INSERT INTO commentaires (reclamation_id, auteur_id, client_id, contenu, interne, created_at) VALUES
 (3, 5,    NULL, 'Bonjour, j\'ai bien pris en charge votre réclamation. Pouvez-vous nous envoyer des photos du produit endommagé ?',  FALSE, '2026-05-04 09:00:00'),
 (3, NULL, 3,    'Bonjour, voici les photos en pièce jointe. Le produit est clairement cassé à l\'intérieur.',                        FALSE, '2026-05-04 11:30:00'),
@@ -152,9 +119,6 @@ INSERT INTO commentaires (reclamation_id, auteur_id, client_id, contenu, interne
 (15, NULL, 3,   'Merci beaucoup ! Je suis soulagé.',                                                                               FALSE, '2026-05-21 10:00:00'),
 (15, 5,   NULL, 'Votre réclamation est maintenant clôturée. N\'hésitez pas à nous contacter si nécessaire.',                       FALSE, '2026-05-22 09:00:00');
 
--- ============================================================
--- HISTORIQUE ACTIONS
--- ============================================================
 INSERT INTO historique_actions (reclamation_id, utilisateur_id, ancien_statut_id, nouveau_statut_id, action, details, created_at) VALUES
 (3,  1, 1, 2, 'AFFECTATION',     'Réclamation affectée à El Fassi Youssef.',           '2026-05-03 12:00:00'),
 (3,  5, 2, 3, 'CHANGEMENT_STATUT','Prise en charge — en attente des photos client.',   '2026-05-04 09:00:00'),
@@ -177,9 +141,6 @@ INSERT INTO historique_actions (reclamation_id, utilisateur_id, ancien_statut_id
 (15, 5, 3, 5, 'CHANGEMENT_STATUT','Garantie acceptée — prise en charge validée.',      '2026-05-22 09:00:00'),
 (15, 5, 5, 6, 'CHANGEMENT_STATUT','Dossier clôturé après résolution.',                '2026-05-23 09:00:00');
 
--- ============================================================
--- NOTIFICATIONS — agents
--- ============================================================
 INSERT INTO notifications (utilisateur_id, client_id, reclamation_id, type, message, lu, created_at) VALUES
 (5, NULL, 3,  'AFFECTATION', 'Une nouvelle réclamation vous a été affectée.',                          FALSE, '2026-05-03 12:00:00'),
 (6, NULL, 4,  'AFFECTATION', 'Une nouvelle réclamation vous a été affectée.',                          FALSE, '2026-05-05 15:00:00'),
@@ -195,9 +156,6 @@ INSERT INTO notifications (utilisateur_id, client_id, reclamation_id, type, mess
 (7, NULL, 18, 'AFFECTATION', 'Une nouvelle réclamation vous a été affectée.',                          FALSE, '2026-05-23 10:00:00'),
 (5, NULL, 20, 'AFFECTATION', 'Une nouvelle réclamation vous a été affectée.',                          FALSE, '2026-05-25 17:00:00');
 
--- ============================================================
--- NOTIFICATIONS — clients
--- ============================================================
 INSERT INTO notifications (utilisateur_id, client_id, reclamation_id, type, message, lu, created_at) VALUES
 (NULL, 1, 1,  'INFO',   'Votre réclamation REC-2026000001 a bien été enregistrée.',                    FALSE, '2026-05-01 09:00:00'),
 (NULL, 2, 2,  'INFO',   'Votre réclamation REC-2026000002 a bien été enregistrée.',                    FALSE, '2026-05-02 10:30:00'),

@@ -47,8 +47,8 @@ $statuts = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 class="fa-solid fa-file-circle-exclamation"></i>Réclamations</a>
         <a class="nav-item" href="clients.php"><i class="fa-solid fa-user"></i>Clients</a>
         <div class="sidebar-section-label">Other</div>
-        <a class="nav-item" href="../../actions/auth/logout.php"><i
-                class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
+        <a class="nav-item" href="../../actions/auth/deconnexion.php"><i
+                class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
     </aside>
     <div class="main">
         <header class="topbar">

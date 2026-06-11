@@ -21,7 +21,7 @@ Auth::requireRole('admin', 'superviseur', 'agent');
     <style>
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 16px;
             margin-bottom: 24px;
         }
@@ -289,8 +289,8 @@ Auth::requireRole('admin', 'superviseur', 'agent');
         <a class="nav-item" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Réclamations</a>
         <a class="nav-item" href="clients.php"><i class="fa-solid fa-user"></i>Clients</a>
         <div class="sidebar-section-label">Other</div>
-        <a class="nav-item" href="../../actions/auth/logout.php"><i
-                class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
+        <a class="nav-item" href="../../actions/auth/deconnexion.php"><i
+                class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
     </aside>
 
     <div class="main">
@@ -348,6 +348,22 @@ Auth::requireRole('admin', 'superviseur', 'agent');
                         <div class="stat-sub">En service</div>
                     </div>
                 </div>
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="fa-solid fa-circle-check"></i></div>
+                    <div>
+                        <div class="stat-label">Taux de résolution</div>
+                        <div class="stat-value" id="statTaux">—</div>
+                        <div class="stat-sub">Résolues + Clôturées</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon purple"><i class="fa-solid fa-clock"></i></div>
+                    <div>
+                        <div class="stat-label">Délai moyen</div>
+                        <div class="stat-value" id="statDelai">—</div>
+                        <div class="stat-sub">Heures de traitement</div>
+                    </div>
+                </div>
             </div>
 
             <!-- CHARTS -->
@@ -367,6 +383,26 @@ Auth::requireRole('admin', 'superviseur', 'agent');
                     <div class="chart-title">Réclamations par priorité</div>
                     <div class="bars" id="prioriteBars">
                         <div class="skeleton" style="height:14px"></div>
+                        <div class="skeleton" style="height:14px"></div>
+                        <div class="skeleton" style="height:14px"></div>
+                        <div class="skeleton" style="height:14px"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHARTS ROW 2 -->
+            <div class="charts-row">
+                <div class="chart-card">
+                    <div class="chart-title">Réclamations par catégorie</div>
+                    <div class="bars" id="categorieBars">
+                        <div class="skeleton" style="height:14px"></div>
+                        <div class="skeleton" style="height:14px"></div>
+                        <div class="skeleton" style="height:14px"></div>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-title">Réclamations par agent</div>
+                    <div class="bars" id="agentBars">
                         <div class="skeleton" style="height:14px"></div>
                         <div class="skeleton" style="height:14px"></div>
                         <div class="skeleton" style="height:14px"></div>

@@ -1,7 +1,6 @@
 <?php
 // api/users_api.php
 header('Content-Type: application/json');
-
 require __DIR__ . '/../config/app.php';
 require __DIR__ . '/../core/Auth.php';
 Auth::requireRole('admin', 'superviseur');
@@ -12,16 +11,11 @@ try {
     WHERE u.deleted_at IS NULL
     ORDER BY u.created_at DESC");
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
     echo json_encode([
         'success' => true,
         'users' => $users
     ]);
 } catch (PDOException $e) {
-    http_response_code(500);
-    error_log('[UsersAPI] ' . $e->getMessage());
-    echo json_encode([
-        'success' => false,
-        'message' => 'Erreur interne du serveur.',
-    ]);
+    error_log('message', $e->getMessage());
+    Response::error('Error serveur', 500);
 }

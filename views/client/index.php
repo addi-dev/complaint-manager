@@ -36,7 +36,7 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites ORDER BY libelle ASC
         <a class="nav-item" href="notifications.php"><i class="fa-solid fa-bell"></i>Notifications</a>
         <div class="sidebar-section-label">Other</div>
         <a class="nav-item" href="profile.php"><i class="fa-solid fa-user"></i>Mon profil</a>
-        <a class="nav-item" href="../../actions/auth/logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
+        <a class="nav-item" href="../../actions/auth/deconnexion.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
     </aside>
     <div class="main">
         <header class="topbar">
@@ -191,7 +191,7 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites ORDER BY libelle ASC
     <script>
         function openModal() {
             document.getElementById("modalTitle").textContent = "Insérer une nouvelle réclamation";
-            document.getElementById("formModal").action = "../../actions/reclamations/store.php";
+            document.getElementById("formModal").action = "../../actions/reclamations/ajouter.php";
             document.getElementById("formMethod").value = "POST";
             document.getElementById("submitBtn").textContent = "Insérer la réclamation";
             document.getElementById("formModal").dataset.mode = "add"; // add this
@@ -209,7 +209,7 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites ORDER BY libelle ASC
             if (!reclamation) return;
             document.getElementById('modalTitle').textContent = 'Modifier la réclamation';
             document.getElementById('submitBtn').textContent = 'Enregistrer';
-            document.getElementById('formModal').action = `../../actions/reclamations/update.php`;
+            document.getElementById('formModal').action = `../../actions/reclamations/modifier.php`;
             document.getElementById('formModal').dataset.mode = 'edit';
             document.getElementById('formModal').dataset.editId = id;
 

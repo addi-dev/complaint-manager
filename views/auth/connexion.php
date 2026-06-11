@@ -11,7 +11,7 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     ];
 
     $role = $_SESSION['user_role'] ?? '';
-    $url = $redirects[$role] ?? '/complaint-manager/views/auth/login.php';
+    $url = $redirects[$role] ?? '/complaint-manager/views/auth/connexion.php';
 
     header('Location: ' . $url);
     exit;
@@ -335,7 +335,7 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
         </div>
 
         <div class="forgot-wrap">
-            <a href="reset-password.php">Mot de passe oublié ?</a>
+            <a href="reinitialiser_mot_de_passe.php">Mot de passe oublié ?</a>
         </div>
 
         <button class="btn-submit" id="loginBtn" onclick="handleLogin()">
@@ -396,7 +396,7 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
             setLoading(true);
 
             try {
-                const res = await fetch('../../actions/auth/login.php', {
+                const res = await fetch('../../actions/auth/connexion.php', {
                     method: 'POST',
                     credentials: 'include',
                     headers: {

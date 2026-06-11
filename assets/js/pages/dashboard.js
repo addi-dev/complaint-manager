@@ -67,6 +67,13 @@ async function loadStats() {
     drawDonut(data.by_statut);
     drawBars(data.by_priorite);
     drawRecent(data.recent);
+    document.getElementById("statTaux").textContent =
+      data.taux_resolution + "%";
+    document.getElementById("statDelai").textContent =
+      data.delai_moyen_heures ?? "—";
+
+    drawCategorieBars(data.by_categorie);
+    drawAgentBars(data.by_agent);
   } catch (err) {
     console.error(err);
   }
@@ -147,6 +154,40 @@ function drawRecent(rows) {
           <tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-muted)">Aucune réclamation</td></tr>
         `;
     return;
+  }
+  function drawCategorieBars(byCategorie) {
+    const max = Math.max(...byCategorie.map((r) => parseInt(r.total)), 1);
+    document.getElementById("categorieBars").innerHTML = byCategorie
+      .filter((r) => r.total > 0)
+      .map(
+        (row) => `
+            <div class="bar-row">
+                <div class="bar-label" style="width:120px;font-size:11px">${row.libelle}</div>
+                <div class="bar-track">
+                    <div class="bar-fill" style="width:${Math.round((row.total / max) * 100)}%;background:#6c4ef8"></div>
+                </div>
+                <div class="bar-val">${row.total}</div>
+            </div>
+        `,
+      )
+      .join("");
+  }
+
+  function drawAgentBars(byAgent) {
+    const max = Math.max(...byAgent.map((r) => parseInt(r.total)), 1);
+    document.getElementById("agentBars").innerHTML = byAgent
+      .map(
+        (row) => `
+            <div class="bar-row">
+                <div class="bar-label" style="width:120px;font-size:11px">${row.agent}</div>
+                <div class="bar-track">
+                    <div class="bar-fill" style="width:${Math.round((row.total / max) * 100)}%;background:#10b981"></div>
+                </div>
+                <div class="bar-val">${row.total}</div>
+            </div>
+        `,
+      )
+      .join("");
   }
   document.getElementById("recentBody").innerHTML = rows
     .map(

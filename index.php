@@ -4,7 +4,7 @@ session_start();
 require_once __DIR__ . '/core/Auth.php';
 
 if (!Auth::check()) {
-    header('Location: /complaint-manager/views/auth/login.php');
+    header('Location: /complaint-manager/views/auth/connextion.php');
     exit;
 }
 
@@ -17,5 +17,5 @@ $redirects = [
 
 $role = $_SESSION['user_role'];
 
-header('Location: ' . ($redirects[$role] ?? '/complaint-manager/views/auth/login.php'));
+header('Location: ' . ($redirects[$role] ?? '/complaint-manager/views/auth/connexion.php'));
 exit;

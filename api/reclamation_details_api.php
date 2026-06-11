@@ -1,55 +1,41 @@
 <?php
 // api/reclamation_details_api.php
 header('Content-Type: application/json');
-
 require __DIR__ . '/../config/app.php';
 require __DIR__ . '/../core/Auth.php';
 Auth::requireRole('admin', 'superviseur', 'agent', 'client');
-
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 if ($id <= 0) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'ID invalide.']);
     exit;
 }
-
 $role     = $_SESSION['user_role'] ?? '';
 $user_id  = $_SESSION['user_id']   ?? null;
-
 try {
-
-    // ----------------------------------------------------------
-    // 1. CORE
-    // ----------------------------------------------------------
     $stmt = $pdo->prepare("
         SELECT
             r.id, r.numero_unique, r.objet, r.description,
             r.created_at, r.updated_at, r.closed_at,
-
             c.id        AS client_id,
             c.nom       AS client_nom,
             c.prenom    AS client_prenom,
             c.email     AS client_email,
             c.telephone AS client_telephone,
             c.adresse   AS client_adresse,
-
             cat.id      AS categorie_id,
             cat.libelle AS categorie_libelle,
-
             p.id        AS priorite_id,
             p.libelle   AS priorite_libelle,
             p.niveau    AS priorite_niveau,
-
             s.id        AS statut_id,
             s.libelle   AS statut_libelle,
             s.code      AS statut_code,
-
             u.id        AS agent_id,
             u.nom       AS agent_nom,
             u.prenom    AS agent_prenom,
             u.email     AS agent_email,
             ra.nom      AS agent_role
-
         FROM reclamations r
         JOIN clients                c   ON c.id   = r.client_id
         JOIN categories_reclamation cat ON cat.id = r.categorie_id
@@ -61,23 +47,16 @@ try {
     ");
     $stmt->execute([$id]);
     $reclamation = $stmt->fetch(PDO::FETCH_ASSOC);
-
     if (!$reclamation) {
         http_response_code(404);
         echo json_encode(['success' => false, 'message' => 'Réclamation introuvable.']);
         exit;
     }
-
-    // Clients can only view their own reclamations
     if ($role === 'client' && (int)$reclamation['client_id'] !== (int)$user_id) {
         http_response_code(403);
         echo json_encode(['success' => false, 'message' => 'Accès refusé.']);
         exit;
     }
-
-    // ----------------------------------------------------------
-    // 2. COMMENTS  (hide internal notes from clients)
-    // ----------------------------------------------------------
     $interne_filter = ($role === 'client') ? 'AND co.interne = FALSE' : '';
     $stmt = $pdo->prepare("
         SELECT
@@ -98,10 +77,6 @@ try {
     ");
     $stmt->execute([$id]);
     $commentaires = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // ----------------------------------------------------------
-    // 3. ATTACHMENTS
-    // ----------------------------------------------------------
     $stmt = $pdo->prepare("
         SELECT id, nom_fichier, chemin, type_mime, taille, created_at
         FROM pieces_jointes
@@ -110,10 +85,6 @@ try {
     ");
     $stmt->execute([$id]);
     $pieces_jointes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // ----------------------------------------------------------
-    // 4. ASSIGNMENT HISTORY  (staff only)
-    // ----------------------------------------------------------
     $affectations = [];
     if ($role !== 'client') {
         $stmt = $pdo->prepare("
@@ -136,10 +107,6 @@ try {
         $stmt->execute([$id]);
         $affectations = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    // ----------------------------------------------------------
-    // 5. AUDIT TRAIL  (staff only)
-    // ----------------------------------------------------------
     $historique = [];
     if ($role !== 'client') {
         $stmt = $pdo->prepare("
@@ -162,10 +129,6 @@ try {
         $stmt->execute([$id]);
         $historique = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    // ----------------------------------------------------------
-    // Response
-    // ----------------------------------------------------------
     echo json_encode([
         'success'       => true,
         'reclamation'   => $reclamation,
@@ -175,7 +138,6 @@ try {
         'historique'    => $historique,
     ]);
 } catch (PDOException $e) {
-    error_log('[API Error] ' . $e->getMessage());
-    http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Une erreur interne du serveur est survenue.']);
+    error_log('message', $e->getMessage());
+    Response::error('Error serveur', 500);
 }

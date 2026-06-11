@@ -1,6 +1,5 @@
 <?php
 // core/Validator.php
-
 class Validator
 {
     private array $errors = [];
@@ -10,9 +9,6 @@ class Validator
     {
         $this->data = $data;
     }
-
-    // ── Rules ────────────────────────────────────────────────────────────────
-
     public function required(string $field, string $label = ''): static
     {
         $label = $label ?: $field;
@@ -21,7 +17,6 @@ class Validator
         }
         return $this;
     }
-
     public function email(string $field, string $label = ''): static
     {
         $label = $label ?: $field;
@@ -30,7 +25,6 @@ class Validator
         }
         return $this;
     }
-
     public function minLength(string $field, int $min, string $label = ''): static
     {
         $label = $label ?: $field;
@@ -39,7 +33,6 @@ class Validator
         }
         return $this;
     }
-
     public function maxLength(string $field, int $max, string $label = ''): static
     {
         $label = $label ?: $field;
@@ -48,7 +41,6 @@ class Validator
         }
         return $this;
     }
-
     public function numeric(string $field, string $label = ''): static
     {
         $label = $label ?: $field;
@@ -57,7 +49,6 @@ class Validator
         }
         return $this;
     }
-
     public function in(string $field, array $allowed, string $label = ''): static
     {
         $label = $label ?: $field;
@@ -70,10 +61,8 @@ class Validator
     {
         $label = $label ?: $field;
         if (empty($_FILES[$field]['name'][0])) return $this;
-
         $files = $_FILES[$field];
         $count = count($files['name']);
-
         for ($i = 0; $i < $count; $i++) {
             if ($files['error'][$i] !== UPLOAD_ERR_OK) continue;
             if (!in_array($files['type'][$i], $allowed)) {
@@ -83,16 +72,13 @@ class Validator
         }
         return $this;
     }
-
     public function fileMaxSize(string $field, int $maxBytes, string $label = ''): static
     {
         $label = $label ?: $field;
         if (empty($_FILES[$field]['name'][0])) return $this;
-
         $files = $_FILES[$field];
         $count = count($files['name']);
         $maxMb = round($maxBytes / 1024 / 1024);
-
         for ($i = 0; $i < $count; $i++) {
             if ($files['error'][$i] !== UPLOAD_ERR_OK) continue;
             if ($files['size'][$i] > $maxBytes) {
@@ -106,10 +92,8 @@ class Validator
     {
         $label = $label ?: $field;
         if (empty($this->data[$field])) return $this;
-
         $dob = new DateTime($this->data[$field]);
         $age = (new DateTime())->diff($dob)->y;
-
         if ($age < $minAge) {
             $this->errors[$field] = "$label : vous devez avoir au moins $minAge ans.";
         }
@@ -119,48 +103,36 @@ class Validator
     {
         $label = $label ?: $field;
         if (empty($this->data[$field])) return $this;
-
         $input  = strtotime($this->data[$field]);
         $limit  = $before === 'today' ? strtotime('today') : strtotime($before);
-
         if ($input === false || $input >= $limit) {
             $this->errors[$field] = "$label doit être une date dans le passé.";
         }
         return $this;
     }
-
     public function dateAfter(string $field, string $after = 'today', string $label = ''): static
     {
         $label = $label ?: $field;
         if (empty($this->data[$field])) return $this;
-
         $input = strtotime($this->data[$field]);
         $limit = $after === 'today' ? strtotime('today') : strtotime($after);
-
         if ($input === false || $input <= $limit) {
             $this->errors[$field] = "$label doit être une date dans le futur.";
         }
         return $this;
     }
-    // ── Results ───────────────────────────────────────────────────────────────
-
     public function fails(): bool
     {
         return !empty($this->errors);
     }
-
     public function errors(): array
     {
         return $this->errors;
     }
-
     public function firstError(): string
     {
         return array_values($this->errors)[0] ?? '';
     }
-
-    // ── Static shortcut ───────────────────────────────────────────────────────
-
     public static function make(array $data): static
     {
         return new static($data);
