@@ -153,7 +153,7 @@ Auth::requireRole('client');
             RESOLUTION: 'fa-solid fa-circle-check',
         };
 
-        async function loadNotifications() {
+        async function chargerLesNotifications() {
             const res = await fetch('../../api/client_notifications_api.php?action=list');
             const data = await res.json();
             if (!data.success) return;
@@ -182,16 +182,16 @@ Auth::requireRole('client');
 
         window.markRead = async function(id) {
             await fetch(`../../api/client_notifications_api.php?action=mark_read&id=${id}`);
-            loadNotifications();
+            chargerLesNotifications();
         };
 
         window.markAllRead = async function() {
             await fetch('../../api/client_notifications_api.php?action=mark_read');
-            loadNotifications();
+            chargerLesNotifications();
             showToast('Toutes les notifications marquées comme lues');
         };
 
-        loadNotifications();
+        chargerLesNotifications();
     </script>
 </body>
 

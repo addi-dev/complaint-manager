@@ -42,7 +42,6 @@ try {
         echo json_encode(['success' => false, 'message' => 'Action invalide.']);
     }
 } catch (PDOException $e) {
-    error_log('[Client Notifications Error] ' . $e->getMessage());
-    http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Erreur interne du serveur.']);
+    error_log('message', $e->getMessage());
+    Response::error('Error serveur', 500);
 }

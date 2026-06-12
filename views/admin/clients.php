@@ -24,7 +24,6 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body>
-    <!-- SIDEBAR -->
     <aside class="sidebar">
         <div class="sidebar-logo">
             <div class="logo-icon">
@@ -111,7 +110,6 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
     </div>
-    <!-- ENROLL MODAL -->
     <div class="overlay" id="overlay" onclick="closeOnOverlay(event)">
         <div class="modal">
             <form id="formModal" action="" method="POST">
@@ -157,7 +155,6 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </form>
         </div>
     </div>
-    <!-- DELETE MODAL -->
     <div class="overlay" id="deleteOverlay" onclick="if(event.target===this)closeDeleteModal()">
         <form class="modal" id="deleteForm" method="POST" style="max-width:380px">
             <div class="modal-header">
@@ -189,7 +186,6 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             document.getElementById("overlay").classList.add("open");
         }
-
         function openEditModal(id) {
             const user = clients.find(u => u.id == id);
             if (!user) return;
@@ -198,8 +194,6 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
             document.getElementById('formModal').action = `../../actions/clients/modifier.php`;
             document.getElementById('formModal').dataset.mode = 'edit';
             document.getElementById('formModal').dataset.editId = id;
-
-            // fill fields
             document.getElementById('f-nom').value = user.nom || '';
             document.getElementById('f-prenom').value = user.prenom || '';
             document.getElementById('f-email').value = user.email || '';
@@ -207,15 +201,12 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
             document.getElementById('f-adresse').value = user.adresse;
             document.getElementById('overlay').classList.add('open');
         }
-
         function closeModal() {
             document.getElementById('overlay').classList.remove('open');
         }
-
         function closeOnOverlay(e) {
             if (e.target === e.currentTarget) closeModal();
         }
     </script>
 </body>
-
 </html>

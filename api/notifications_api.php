@@ -1,4 +1,5 @@
 <?php
+//aoi/notifications_api.php
 header('Content-Type: application/json');
 require __DIR__ . '/../config/app.php';
 require __DIR__ . '/../core/Auth.php';

@@ -14,7 +14,6 @@ function applyFilters() {
   const statusFilter = document.getElementById("statusFilter").value;
   const priorityFilter = document.getElementById("priorityFilter").value;
   const categoryFilter = document.getElementById("categoryFilter").value;
-
   filtered = agent_reclamations.filter((r) => {
     const matchSearch =
       r.objet.toLowerCase().includes(search) ||
@@ -43,7 +42,6 @@ function applyFilters() {
   page = 1;
   renderAgentReclamations();
 }
-
 function getAgentReclamations() {
   fetch("../../api/agent_reclamations_api.php")
     .then((res) => res.json())
@@ -55,14 +53,12 @@ function getAgentReclamations() {
     })
     .catch((err) => console.error(err));
 }
-
 function renderAgentReclamations() {
   const total = filtered.length;
   const pages = Math.max(1, Math.ceil(total / PER));
   if (page > pages) page = pages;
   const start = (page - 1) * PER;
   const slice = filtered.slice(start, start + PER);
-
   document.getElementById("tableBody").innerHTML = slice
     .map(
       (r, i) => `
@@ -72,7 +68,7 @@ function renderAgentReclamations() {
           <td class="table-objet">${r.objet}</td>
           <td><span class="category-badge">${r.categorie}</span></td>
           <td><span class="priority-badge ${r.priorite.toLowerCase()}">${r.priorite}</span></td>
-          <td><span class="r-status-badge status-${r.statut.toLowerCase()}">${r.statut}</span></td>
+          <td><span class="r-status-badge status-${r.statut_code.toLowerCase()}">${r.statut}</span></td>
           <td><span class="date">${formatDate(r.created_at)}</span></td>
           <td>
             <div class="action-btns">
@@ -85,13 +81,11 @@ function renderAgentReclamations() {
       `,
     )
     .join("");
-
   const end = Math.min(start + PER, total);
   document.getElementById("tfInfo").innerHTML =
     total === 0
       ? "Aucune réclamation trouvée"
       : `${start + 1}–${end} sur ${total} réclamations`;
-
   const pg = document.getElementById("pagination");
   pg.innerHTML = "";
   const btn = (label, p, active = false) => {
@@ -117,15 +111,10 @@ function renderAgentReclamations() {
     }
   }
   if (page < pages) pg.appendChild(btn("›", page + 1));
-  //! Show reclamations count
   document.getElementById("enrollCount").innerHTML =
     `${agent_reclamations.length} réclamation${agent_reclamations.length > 1 ? "s" : ""}`;
 }
-
 getAgentReclamations();
-
-// Apply Filters
-
 document.getElementById("searchInput").addEventListener("input", applyFilters);
 document
   .getElementById("priorityFilter")
@@ -137,18 +126,15 @@ document
   .getElementById("categoryFilter")
   .addEventListener("change", applyFilters);
 document.getElementById("sortSelect").addEventListener("change", applyFilters);
-
 window.agent_reclamations = agent_reclamations;
 window.closeDeleteModal = function () {
   document.getElementById("deleteOverlay").classList.remove("open");
 };
-
 window.deleteRow = function (id) {
   const reclamation = agent_reclamations.find((r) => r.id == id);
   document.getElementById("deleteRowName").textContent =
     reclamation.objet || "cette réclamation";
   document.getElementById("deleteOverlay").classList.add("open");
-
   document.getElementById("confirmDelete").onclick = async function () {
     try {
       const res = await fetch(
@@ -157,9 +143,7 @@ window.deleteRow = function (id) {
           method: "POST",
         },
       );
-
       const data = await res.json();
-
       if (data.success) {
         closeDeleteModal();
         showToast("Réclamation supprimé avec succès");
@@ -174,35 +158,27 @@ window.deleteRow = function (id) {
     }
   };
 };
-
-//! Handle ajouter.php (insertion using api)
-
 document
   .getElementById("formModal")
   .addEventListener("submit", async function (e) {
     e.preventDefault();
-
     const body = {
       objet: document.getElementById("f-objet").value,
       description: document.getElementById("f-description").value,
       categorie_id: document.getElementById("f-category").value,
     };
-
     const mode = this.dataset.mode;
     const url =
       mode === "edit"
         ? `/complaint-manager/actions/reclamations/modifier.php?id=${this.dataset.editId}`
         : `/complaint-manager/actions/reclamations/ajouter.php`;
-
     try {
       const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-
       const data = await res.json();
-
       if (data.success) {
         closeModal();
         showToast(

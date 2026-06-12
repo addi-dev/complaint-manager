@@ -25,7 +25,6 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites ORDER BY libelle ASC
 </head>
 
 <body>
-    <!-- SIDEBAR -->
     <aside class="sidebar">
         <div class="sidebar-logo">
             <div class="logo-icon">LG</div>ReclamationOS
@@ -127,7 +126,6 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites ORDER BY libelle ASC
             </div>
         </div>
     </div>
-    <!-- ENROLL MODAL -->
     <div class="overlay" id="overlay" onclick="closeOnOverlay(event)">
         <div class="modal">
             <form id="formModal" action="" method="POST">
@@ -169,7 +167,6 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites ORDER BY libelle ASC
             </form>
         </div>
     </div>
-    <!-- DELETE MODAL -->
     <div class="overlay" id="deleteOverlay" onclick="if(event.target===this)closeDeleteModal()">
         <form class="modal" id="deleteForm" method="POST" style="max-width:380px">
             <div class="modal-header">
@@ -194,7 +191,7 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites ORDER BY libelle ASC
             document.getElementById("formModal").action = "../../actions/reclamations/ajouter.php";
             document.getElementById("formMethod").value = "POST";
             document.getElementById("submitBtn").textContent = "Insérer la réclamation";
-            document.getElementById("formModal").dataset.mode = "add"; // add this
+            document.getElementById("formModal").dataset.mode = "add";
             document.getElementById("formModal").dataset.editId = "";
 
             ["f-objet", "f-description", "f-categorie_id"].forEach(
@@ -212,8 +209,6 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites ORDER BY libelle ASC
             document.getElementById('formModal').action = `../../actions/reclamations/modifier.php`;
             document.getElementById('formModal').dataset.mode = 'edit';
             document.getElementById('formModal').dataset.editId = id;
-
-            // fill fields
             document.getElementById('f-objet').value = reclamation.objet || '';
             document.getElementById('f-description').value = reclamation.description || '';
             document.getElementById('f-categorie_id').value = reclamation.categorie_id || '';

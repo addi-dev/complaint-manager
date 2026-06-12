@@ -277,7 +277,6 @@ Auth::requireRole('admin', 'superviseur', 'agent');
 </head>
 
 <body>
-    <!-- SIDEBAR -->
     <aside class="sidebar">
         <div class="sidebar-logo">
             <div class="logo-icon">LG</div>
@@ -292,7 +291,6 @@ Auth::requireRole('admin', 'superviseur', 'agent');
         <a class="nav-item" href="../../actions/auth/deconnexion.php"><i
                 class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
     </aside>
-
     <div class="main">
         <header class="topbar">
             <div class="topbar-actions">
@@ -305,7 +303,6 @@ Auth::requireRole('admin', 'superviseur', 'agent');
                 </div>
             </div>
         </header>
-
         <div class="content">
             <div class="page-header">
                 <div>
@@ -313,8 +310,6 @@ Auth::requireRole('admin', 'superviseur', 'agent');
                     <div class="sub" id="dashDate"></div>
                 </div>
             </div>
-
-            <!-- STAT CARDS -->
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon purple"><i class="fa-solid fa-file-circle-exclamation"></i></div>
@@ -365,8 +360,6 @@ Auth::requireRole('admin', 'superviseur', 'agent');
                     </div>
                 </div>
             </div>
-
-            <!-- CHARTS -->
             <div class="charts-row">
                 <div class="chart-card">
                     <div class="chart-title">Réclamations par statut</div>
@@ -389,8 +382,6 @@ Auth::requireRole('admin', 'superviseur', 'agent');
                     </div>
                 </div>
             </div>
-
-            <!-- CHARTS ROW 2 -->
             <div class="charts-row">
                 <div class="chart-card">
                     <div class="chart-title">Réclamations par catégorie</div>
@@ -409,8 +400,6 @@ Auth::requireRole('admin', 'superviseur', 'agent');
                     </div>
                 </div>
             </div>
-
-            <!-- RECENT TABLE -->
             <div class="card">
                 <div class="card-header">
                     <h2>Réclamations récentes</h2>
@@ -437,14 +426,11 @@ Auth::requireRole('admin', 'superviseur', 'agent');
                     </table>
                 </div>
             </div>
-
         </div>
     </div>
-
     <div class="toast" id="toast"><span id="toastMsg"></span></div>
-
     <script type="module" src="../../assets/js/app.js"></script>
-    <script type="module" src="../../assets/js/pages/dashboard.js"></script>
+    <script type="module" src="../../assets/js/pages/admin/index.js"></script>
 </body>
 
 </html>

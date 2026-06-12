@@ -367,45 +367,45 @@ tbody td {
   white-space: nowrap;
 }
 .status-nouvelle {
-  background: #e0f2fe;  /* sky */
+  background: #e0f2fe;
   color: #0c4a6e;
 }
 
 .status-attente_affectation {
-  background: #fde68a;  /* amber */
+  background: #fde68a;
   color: #92400e;
 }
 
 .status-affectee {
-  background: #d1fae5;  /* emerald */
+  background: #d1fae5;
   color: #065f46;
 }
 
 .status-en_cours {
-  background: #ede9fe;  /* violet */
+  background: #ede9fe;
   color: #3b0764;
 }
 
 .status-attente_info {
-  background: #fed7aa;  /* orange */
+  background: #fed7aa;
   color: #9a3412;
 }
 
 .status-resolue {
-  background: #bbf7d0;  /* green */
+  background: #bbf7d0;
   color: #14532d;
 }
 
 .status-cloturee {
-  background: #e2e8f0;  /* slate */
+  background: #e2e8f0;
   color: #1e293b;
 }
 
 .status-rejetee {
-  background: #fecaca;  /* red */
+  background: #fecaca;
   color: #7f1d1d;
 }
-/* TO BE DETERMINED */
+
 .table-objet {
   font-weight: 600;
   font-size: 13.5px;

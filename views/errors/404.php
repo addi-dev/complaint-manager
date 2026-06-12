@@ -1,7 +1,6 @@
 <?php http_response_code(404); ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>404 - Page Not Found</title>

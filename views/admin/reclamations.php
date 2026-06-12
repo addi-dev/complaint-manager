@@ -1,17 +1,12 @@
 <?php
-session_start();
-
 require __DIR__ . '/../../config/app.php';
 require __DIR__ . '/../../core/Auth.php';
 Auth::requireRole('admin', 'superviseur');
 
-// fetch caregories for filter dropdown
 $stmt = $pdo->query("SELECT * FROM categories_reclamation ORDER BY libelle");
 $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
-// fetch priorities for filter dropdown
 $stmt = $pdo->query("SELECT * FROM priorites ORDER BY libelle");
 $priorites = $stmt->fetchAll(PDO::FETCH_ASSOC);
-// fetch status for filter dropdown
 $stmt = $pdo->query("SELECT * FROM statuts ORDER BY libelle");
 $statuts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -32,7 +27,6 @@ $statuts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body>
-    <!-- SIDEBAR -->
     <aside class="sidebar">
         <div class="sidebar-logo">
             <div class="logo-icon">
@@ -78,7 +72,6 @@ $statuts = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </svg>
                         <input type="text" id="searchInput" placeholder="Rechercher..." />
                     </div>
-
                     <select class="filter-select" id="sortSelect">
                         <option value="">Par défaut</option>
                         <option value="name">Nom A→Z</option>
@@ -86,7 +79,6 @@ $statuts = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <option value="date_desc">Plus récents</option>
                         <option value="date_asc">Plus anciens</option>
                     </select>
-
                     <select class="filter-select" id="categoryFilter">
                         <option value="">Toutes les catégories</option>
                         <?php foreach ($categories as $cat): ?>
@@ -95,7 +87,6 @@ $statuts = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </option>
                         <?php endforeach; ?>
                     </select>
-
                     <select class="filter-select" id="priorityFilter">
                         <option value="">Toutes les priorités</option>
                         <?php foreach ($priorites as $priority): ?>
@@ -104,10 +95,8 @@ $statuts = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </option>
                         <?php endforeach; ?>
                     </select>
-
                     <select class="filter-select" id="statusFilter">
                         <option value="">Tous les statuts</option>
-
                         <?php foreach ($statuts as $s): ?>
                             <option value="<?= strtolower($s['code']) ?>">
                                 <?= htmlspecialchars($s['libelle']) ?>

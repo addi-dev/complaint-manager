@@ -1,68 +1,89 @@
-/* ── SIDEBAR ── */
-  .sidebar {
-    width: 240px;
-    min-height: 100vh;
-    background: var(--sidebar-bg);
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 0; left: 0; bottom: 0;
-    z-index: 10;
-    overflow-y: auto;
-  }
-  .sidebar-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 22px 20px 18px;
-    font-weight: 800;
-    font-size: 18px;
-    color: var(--brand);
-    border-bottom: 1px solid var(--border);
-    flex-shrink: 0;
-  }
-  .logo-icon {
-    width: 34px; height: 34px;
-    background: var(--brand);
-    border-radius: 9px;
-    display: flex; align-items: center; justify-content: center;
-    color: #fff; font-size: 16px;
-  }
-  .sidebar-section-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: .1em;
-    color: var(--text-muted);
-    padding: 18px 20px 6px;
-    text-transform: uppercase;
-  }
-  .nav-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 16px;
-    margin: 2px 10px;
-    border-radius: 9px;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-label);
-    cursor: pointer;
-    position: relative;
-    transition: background .15s, color .15s;
-    text-decoration: none;
-  }
-  .nav-item:hover { background: var(--brand-light); color: var(--brand); }
-  .nav-item.active { background: var(--brand); color: #fff; font-weight: 600; }
-  .nav-item svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; flex-shrink: 0; }
-  .badge {
-    margin-left: auto;
-    background: #ef4444;
-    color: #fff;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 1px 6px;
-    border-radius: 20px;
-    min-width: 18px;
-    text-align: center;
-  }
+.sidebar {
+  width: 240px;
+  min-height: 100vh;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+  overflow-y: auto;
+}
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 22px 20px 18px;
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--brand);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.logo-icon {
+  width: 34px;
+  height: 34px;
+  background: var(--brand);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 16px;
+}
+.sidebar-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  padding: 18px 20px 6px;
+  text-transform: uppercase;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  margin: 2px 10px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-label);
+  cursor: pointer;
+  position: relative;
+  transition:
+    background 0.15s,
+    color 0.15s;
+  text-decoration: none;
+}
+.nav-item:hover {
+  background: var(--brand-light);
+  color: var(--brand);
+}
+.nav-item.active {
+  background: var(--brand);
+  color: #fff;
+  font-weight: 600;
+}
+.nav-item svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+.badge {
+  margin-left: auto;
+  background: #ef4444;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 20px;
+  min-width: 18px;
+  text-align: center;
+}

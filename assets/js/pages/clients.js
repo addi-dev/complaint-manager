@@ -7,7 +7,7 @@ let filtered = [];
 let page = 1;
 const PER = 10;
 
-function applyFilters() {
+function filtrerEtAfficher() {
   const search = document.getElementById("searchInput").value.toLowerCase();
   const roleFilter = document.getElementById("roleFilter").value;
   const statusFilter = document.getElementById("statusFilter").value;
@@ -25,33 +25,35 @@ function applyFilters() {
   });
 
   filtered.sort((a, b) => {
-    if (sortBy === "name")
-      return (a.nom + a.prenom).localeCompare(b.nom + b.prenom);
+    if (sortBy === "name" || sortBy === "name_desc") {
+      const cmp = (a.nom + a.prenom).localeCompare(b.nom + b.prenom);
+      return sortBy === "name_desc" ? -cmp : cmp; // reverse if desc
+    }
     if (sortBy === "name_desc")
       return (b.nom + b.prenom).localeCompare(a.nom + a.prenom);
     if (sortBy === "date_asc")
       return new Date(a.created_at) - new Date(b.created_at);
     if (sortBy === "date_desc")
       return new Date(b.created_at) - new Date(a.created_at);
-    return 0;
+    return 0; // Won't return anything, so the whole list shwos
   });
 
   page = 1;
-  renderClients();
+  afficherClients();
 }
 
-function getClients() {
+function obtenirLesClients() {
   fetch("../../api/clients_api.php")
     .then((res) => res.json())
     .then((data) => {
       clients.length = 0;
       clients.push(...data.clients);
-      applyFilters();
+      filtrerEtAfficher();
     })
     .catch((err) => console.error(err));
 }
 
-function renderClients() {
+function afficherClients() {
   const total = filtered.length;
   const pages = Math.max(1, Math.ceil(total / PER));
   if (page > pages) page = pages;
@@ -104,7 +106,7 @@ function renderClients() {
     b.textContent = label;
     b.onclick = () => {
       page = p;
-      renderClients();
+      afficherClients();
     };
     return b;
   };
@@ -127,16 +129,20 @@ function renderClients() {
     clients.length + " " + "clients inscrits";
 }
 
-getClients();
+obtenirLesClients();
 
-// Apply Filters
-
-document.getElementById("searchInput").addEventListener("input", applyFilters);
-document.getElementById("roleFilter").addEventListener("change", applyFilters);
+document
+  .getElementById("searchInput")
+  .addEventListener("input", filtrerEtAfficher);
+document
+  .getElementById("roleFilter")
+  .addEventListener("change", filtrerEtAfficher);
 document
   .getElementById("statusFilter")
-  .addEventListener("change", applyFilters);
-document.getElementById("sortSelect").addEventListener("change", applyFilters);
+  .addEventListener("change", filtrerEtAfficher);
+document
+  .getElementById("sortSelect")
+  .addEventListener("change", filtrerEtAfficher);
 window.clients = clients;
 
 window.closeDeleteModal = function () {
@@ -163,8 +169,9 @@ window.deleteRow = function (id) {
 
       if (data.success) {
         closeDeleteModal();
+        console.log("cleint suprimmer");
         showToast("Client supprimé avec succès");
-        getClients();
+        obtenirLesClients();
       } else {
         console.error(data.error);
         closeDeleteModal();
@@ -178,7 +185,7 @@ window.deleteRow = function (id) {
   };
 };
 
-//! Handle ajouter.php (insertion using api)
+//! Handle Insterting (insertion using api)
 
 document
   .getElementById("formModal")

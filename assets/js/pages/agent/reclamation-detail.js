@@ -145,7 +145,7 @@ window.updateStatut = async function () {
   }
 
   const res = await fetch(
-    "/complaint-manager/actions/affectations/update-status.php",
+    "/complaint-manager/actions/affectations/mise_a_jour_statut.php",
     {
       method: "POST",
       headers: {

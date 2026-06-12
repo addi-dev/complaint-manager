@@ -9,7 +9,7 @@ let filtered = [];
 let page = 1;
 const PER = 10;
 
-function applyFilters() {
+function filtrageEtAfichage() {
   const search = document.getElementById("searchInput").value.toLowerCase();
   const sortBy = document.getElementById("sortSelect").value;
   const statusFilter = document.getElementById("statusFilter").value;
@@ -42,22 +42,22 @@ function applyFilters() {
   });
 
   page = 1;
-  renderMesReclamations();
+  afficherMesReclamations();
 }
 
-function getMesReclamations() {
+function loadMesReclamations() {
   fetch("../../api/mes_reclamations_api.php")
     .then((res) => res.json())
     .then((data) => {
       mes_reclamations.length = 0;
       console.log(data);
       mes_reclamations.push(...data.mes_reclamations);
-      applyFilters();
+      filtrageEtAfichage();
     })
     .catch((err) => console.error(err));
 }
 
-function renderMesReclamations() {
+function afficherMesReclamations() {
   const total = filtered.length;
   const pages = Math.max(1, Math.ceil(total / PER));
   if (page > pages) page = pages;
@@ -103,7 +103,7 @@ function renderMesReclamations() {
     b.textContent = label;
     b.onclick = () => {
       page = p;
-      renderMesReclamations();
+      afficherMesReclamations();
     };
     return b;
   };
@@ -125,21 +125,21 @@ function renderMesReclamations() {
     `${mes_reclamations.length} réclamation${mes_reclamations.length > 1 ? "s" : ""}`;
 }
 
-getMesReclamations();
+loadMesReclamations();
 
 // Apply Filters
 
-document.getElementById("searchInput").addEventListener("input", applyFilters);
+document.getElementById("searchInput").addEventListener("input", filtrageEtAfichage);
 document
   .getElementById("prioriteFilter")
-  .addEventListener("change", applyFilters);
+  .addEventListener("change", filtrageEtAfichage);
 document
   .getElementById("statusFilter")
-  .addEventListener("change", applyFilters);
+  .addEventListener("change", filtrageEtAfichage);
 document
   .getElementById("categorieFilter")
-  .addEventListener("change", applyFilters);
-document.getElementById("sortSelect").addEventListener("change", applyFilters);
+  .addEventListener("change", filtrageEtAfichage);
+document.getElementById("sortSelect").addEventListener("change", filtrageEtAfichage);
 
 window.mes_reclamations = mes_reclamations;
 window.closeDeleteModal = function () {
@@ -167,7 +167,7 @@ window.deleteRow = function (id) {
       if (data.success) {
         closeDeleteModal();
         showToast("Réclamation supprimée avec succès");
-        getMesReclamations();
+        loadMesReclamations();
       } else {
         console.error(data.error);
         showToast("Échec de la suppression");
@@ -229,7 +229,7 @@ document
             ? "Réclamation mis à jour avec succès"
             : "Réclamation ajouté avec succès",
         );
-        getMesReclamations();
+        loadMesReclamations();
       } else if (data.errors) {
         Object.values(data.errors).forEach((msg) => showToast(msg));
       } else {

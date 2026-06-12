@@ -6,22 +6,22 @@ const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
 
-function getReclamationDetails() {
+function obtein_details_reclamations() {
   if (!id) return;
   fetch(`../../api/reclamation_details_api.php?id=${id}`)
     .then((res) => res.json())
     .then((data) => {
       if (!data.success) return;
-      renderDetails(data.reclamation);
+      afficher_details_reclamations(data.reclamation);
       renderCommentaires(data.commentaires);
       renderAttachements(data.pieces_jointes);
-      renderAffectations(data.affectations);
-      renderHistorique(data.historique);
-      renderCurrentAgent(data.reclamation);
+      remplirAffectations(data.affectations);
+      remplirHistorique(data.historique);
+      afficherLagentActuell(data.reclamation);
     });
 }
 
-function loadAgents() {
+function obteinLesAgents() {
   fetch("../../api/users_api.php")
     .then((res) => res.json())
     .then((data) => {
@@ -38,10 +38,10 @@ function loadAgents() {
     });
 }
 
-getReclamationDetails();
-loadAgents();
+obtein_details_reclamations();
+obteinLesAgents();
 
-function renderCurrentAgent(reclamation) {
+function afficherLagentActuell(reclamation) {
   const el = document.getElementById("current-agent");
   if (reclamation.agent_id) {
     el.innerHTML = `<strong>Agent assigné :</strong> ${reclamation.agent_nom} ${reclamation.agent_prenom} <span style="color:var(--text-muted)">(${reclamation.agent_email})</span>`;
@@ -50,7 +50,7 @@ function renderCurrentAgent(reclamation) {
   }
 }
 
-function renderDetails(reclamation) {
+function afficher_details_reclamations(reclamation) {
   document.getElementById("rec-ref").textContent = reclamation.numero_unique;
   document.getElementById("rec-objet").textContent = reclamation.objet;
   document.getElementById("rec-status").textContent =
@@ -143,7 +143,7 @@ function renderAttachements(pieces_jointes) {
     `${count} fichier${count > 1 ? "s" : ""}`;
 }
 
-function renderAffectations(affectations) {
+function remplirAffectations(affectations) {
   const el = document.getElementById("affectations-container");
   if (!affectations.length) {
     el.innerHTML =
@@ -162,7 +162,7 @@ function renderAffectations(affectations) {
     .join("");
 }
 
-function renderHistorique(historique) {
+function remplirHistorique(historique) {
   const el = document.getElementById("historique-container");
   if (!historique.length) {
     el.innerHTML =
@@ -208,7 +208,7 @@ window.assignAgent = async function () {
   const data = await res.json();
   if (data.success) {
     showToast("Agent affecté avec succès");
-    getReclamationDetails();
+    obtein_details_reclamations();
   } else {
     showToast(data.message || "Échec de l'affectation");
   }
@@ -223,7 +223,7 @@ window.updateStatut = async function () {
   }
 
   const res = await fetch(
-    "/complaint-manager/actions/affectations/update-status.php",
+    "/complaint-manager/actions/affectations/mise_a_jour_statut.php",
     {
       method: "POST",
       headers: {
@@ -240,7 +240,7 @@ window.updateStatut = async function () {
   const data = await res.json();
   if (data.success) {
     showToast("Statut mis à jour");
-    getReclamationDetails();
+    obtein_details_reclamations();
   } else {
     showToast(data.message || "Échec de la mise à jour");
   }
@@ -267,7 +267,7 @@ window.addComment = async function () {
   const data = await res.json();
   if (data.success) {
     document.getElementById("newComment").value = "";
-    getReclamationDetails();
+    obtein_details_reclamations();
   } else {
     showToast(data.message || "Échec");
   }

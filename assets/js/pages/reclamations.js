@@ -7,7 +7,7 @@ let filtered = [];
 let page = 1;
 const PER = 10;
 
-function applyFilters() {
+function applicerLesFiltres() {
   const search = document.getElementById("searchInput").value.toLowerCase();
   const statusFilter = document.getElementById("statusFilter").value;
   const categoryFilter = document.getElementById("categoryFilter").value;
@@ -51,7 +51,7 @@ function getReclamations() {
     .then((data) => {
       reclamations.length = 0;
       reclamations.push(...data.reclamations);
-      applyFilters();
+      applicerLesFiltres();
     })
     .catch((err) => console.error(err));
 }
@@ -134,14 +134,14 @@ getReclamations();
 
 // Apply Filters
 
-document.getElementById("searchInput").addEventListener("input", applyFilters);
+document.getElementById("searchInput").addEventListener("input", applicerLesFiltres);
 document
   .getElementById("priorityFilter")
-  .addEventListener("change", applyFilters);
+  .addEventListener("change", applicerLesFiltres);
 document
   .getElementById("statusFilter")
-  .addEventListener("change", applyFilters);
+  .addEventListener("change", applicerLesFiltres);
 document
   .getElementById("categoryFilter")
-  .addEventListener("change", applyFilters);
-document.getElementById("sortSelect").addEventListener("change", applyFilters);
+  .addEventListener("change", applicerLesFiltres);
+document.getElementById("sortSelect").addEventListener("change", applicerLesFiltres);

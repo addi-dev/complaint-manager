@@ -1,15 +1,11 @@
 <?php
-session_start();
-
 require __DIR__ . '/../../config/app.php';
 require_once __DIR__ . '/../../core/Auth.php';
 require __DIR__ . '/../../core/CSRF.php';
-
 Auth::requireRole('admin', 'superviseur');
 ?>
 <!doctype html>
 <html lang="fr">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,9 +19,7 @@ Auth::requireRole('admin', 'superviseur');
   <style>
   </style>
 </head>
-
 <body>
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-logo">
       <div class="logo-icon">
@@ -42,7 +36,6 @@ Auth::requireRole('admin', 'superviseur');
     <a class="nav-item" href="../../actions/auth/deconnexion.php"><i
         class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
   </aside>
-
   <div class="main">
     <header class="topbar">
       <div class="topbar-actions">

@@ -8,7 +8,7 @@ let filtered = [];
 let page = 1;
 const PER = 10;
 
-function applyFilters() {
+function applicerLesFiltres() {
   const search = document.getElementById("searchInput").value.toLowerCase();
   const roleFilter = document.getElementById("roleFilter").value;
   const statusFilter = document.getElementById("statusFilter").value;
@@ -45,7 +45,7 @@ function getUsers() {
     .then((data) => {
       users.length = 0;
       users.push(...data.users);
-      applyFilters();
+      applicerLesFiltres();
     })
     .catch((err) => console.error(err));
 }
@@ -134,12 +134,12 @@ getUsers();
 
 // Apply Filters
 
-document.getElementById("searchInput").addEventListener("input", applyFilters);
-document.getElementById("roleFilter").addEventListener("change", applyFilters);
+document.getElementById("searchInput").addEventListener("input", applicerLesFiltres);
+document.getElementById("roleFilter").addEventListener("change", applicerLesFiltres);
 document
   .getElementById("statusFilter")
-  .addEventListener("change", applyFilters);
-document.getElementById("sortSelect").addEventListener("change", applyFilters);
+  .addEventListener("change", applicerLesFiltres);
+document.getElementById("sortSelect").addEventListener("change", applicerLesFiltres);
 
 window.users = users;
 window.closeDeleteModal = function () {

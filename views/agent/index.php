@@ -408,6 +408,7 @@ Auth::requireRole('admin', 'superviseur', 'agent');
     <div class="toast" id="toast"><span id="toastMsg"></span></div>
 
     <script type="module" src="../../assets/js/app.js"></script>
+    <script type="module" src="../../assets/js/pages/dashboard.js"></script>
     <script type="module">
         import {
             formatDate
@@ -416,8 +417,6 @@ Auth::requireRole('admin', 'superviseur', 'agent');
             initials,
             colorFor
         } from "../../assets/js/lib/string.js";
-
-        // Date header
         const now = new Date();
         document.getElementById("dashDate").textContent = now.toLocaleDateString("fr-FR", {
             weekday: "long",

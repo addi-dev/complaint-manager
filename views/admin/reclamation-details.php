@@ -4,7 +4,6 @@ require __DIR__ . '/../../config/app.php';
 require __DIR__ . '/../../core/Auth.php';
 require __DIR__ . '/../../core/CSRF.php';
 Auth::requireRole('admin', 'superviseur');
-
 $statuts = $pdo->query("SELECT id, code, libelle FROM statuts ORDER BY id")->fetchAll();
 $categories = $pdo->query("SELECT id, libelle FROM categories_reclamation")->fetchAll();
 $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
@@ -28,7 +27,6 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
 </head>
 
 <body>
-    <!-- SIDEBAR -->
     <aside class="sidebar">
         <div class="sidebar-logo">
             <div class="logo-icon">LG</div>
@@ -56,7 +54,6 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
             </div>
         </header>
         <div class="content">
-            <!-- HEADER CARD -->
             <div class="header-card">
                 <div class="header-top">
                     <div class="header-left">
@@ -87,7 +84,6 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
                     </div>
                 </div>
             </div>
-            <!-- DESCRIPTION -->
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
@@ -98,7 +94,6 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
                     <p class="desc-text" id="rec-description"></p>
                 </div>
             </div>
-            <!-- AFFECTATION -->
             <div class="card">
                 <div class="card-header">
                     <div class="card-title"><i class="fa-solid fa-user-check"></i> Affectation</div>
@@ -114,8 +109,6 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
                     </div>
                 </div>
             </div>
-
-            <!-- STATUS UPDATE -->
             <div class="card">
                 <div class="card-header">
                     <div class="card-title"><i class="fa-solid fa-rotate"></i> Changer le statut</div>
@@ -133,23 +126,18 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
                     </div>
                 </div>
             </div>
-
-            <!-- AFFECTATION HISTORY -->
             <div class="card">
                 <div class="card-header">
                     <div class="card-title"><i class="fa-solid fa-clock-rotate-left"></i> Historique des affectations</div>
                 </div>
                 <div class="card-body" id="affectations-container"></div>
             </div>
-
-            <!-- AUDIT TRAIL -->
             <div class="card">
                 <div class="card-header">
                     <div class="card-title"><i class="fa-solid fa-list-check"></i> Historique des actions</div>
                 </div>
                 <div class="card-body" id="historique-container"></div>
             </div>
-            <!-- COMMENTS -->
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
@@ -168,7 +156,6 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
                     </div>
                 </div>
             </div>
-            <!-- ATTACHMENTS -->
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
@@ -181,7 +168,6 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
             </div>
         </div>
     </div>
-    <!-- ENROLL MODAL -->
     <div class="overlay" id="overlay" onclick="closeOnOverlay(event)">
         <div class="modal">
             <form id="formModal" action="" method="POST">
@@ -223,7 +209,6 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
             </form>
         </div>
     </div>
-    <!-- DELETE MODAL -->
     <div class="overlay" id="deleteOverlay" onclick="if(event.target===this)closeDeleteModal()">
         <form class="modal" id="deleteForm" method="POST" style="max-width:380px">
             <div class="modal-header">
