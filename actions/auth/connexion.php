@@ -50,7 +50,7 @@ if (!$email || !$password) {
 $stmt = $pdo->prepare("SELECT u.id, u.nom, u.prenom, u.email, u.mot_de_passe, r.nom AS role_nom
     FROM utilisateurs u
     JOIN roles r ON r.id = u.role_id
-    WHERE u.email = ? LIMIT 1");
+    WHERE u.email = ? AND u.actif = 1 AND u.deleted_at IS NULL LIMIT 1");
 $stmt->execute([$email]);
 $user = $stmt->fetch();
 if ($user && password_verify($password, $user['mot_de_passe'])) {
@@ -73,7 +73,7 @@ if ($user && password_verify($password, $user['mot_de_passe'])) {
         'redirect' => $redirects[$user['role_nom']] ?? '/complaint-manager/views/auth/connexion.php'
     ]);
 }
-$stmt = $pdo->prepare("SELECT id, nom, prenom, email, mot_de_passe FROM clients WHERE email = ? LIMIT 1");
+$stmt = $pdo->prepare("SELECT id, nom, prenom, email, mot_de_passe FROM clients WHERE email = ? AND deleted_at IS NULL LIMIT 1");
 $stmt->execute([$email]);
 $client = $stmt->fetch();
 if ($client && password_verify($password, $client['mot_de_passe'])) {

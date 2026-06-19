@@ -29,8 +29,10 @@ $priorites = $pdo->query("SELECT id, libelle FROM priorites")->fetchAll();
 <body>
     <aside class="sidebar">
         <div class="sidebar-logo">
-            <div class="logo-icon">LG</div>
-            ReclamationOS
+            <div class="logo-icon">
+                <i class="<?php echo APP_LOGO ?>"></i>
+            </div>
+            <?php echo APP_NAME ?>
         </div>
         <div class="sidebar-section-label">Menu</div>
         <a class="nav-item active" href="index.php"><i class="fa-solid fa-house"></i>Tableau de bord</a>

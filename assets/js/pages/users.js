@@ -1,12 +1,12 @@
 import { initials, colorFor } from "../lib/string.js";
 import { formatDate } from "../lib/date.js";
-import { showToast } from "../lib/toast.js";
+                        import { showToast } from "../lib/toast.js";
 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
 
-const users = [];
+const users   = [];
 let filtered = [];
 let page = 1;
-const PER = 10;
+const PER  = 10;
 
 function applicerLesFiltres() {
   const search = document.getElementById("searchInput").value.toLowerCase();
@@ -17,13 +17,13 @@ function applicerLesFiltres() {
   filtered = users.filter((u) => {
     const fullname = (u.nom + " " + u.prenom).toLowerCase();
     const matchSearch =
-      fullname.includes(search) || u.email.toLowerCase().includes(search);
+                             fullname.includes(search) || u.email.toLowerCase().includes(search);
     const matchRole = !roleFilter || u.role.toLowerCase() === roleFilter;
     const matchStatus = statusFilter === "" ? true : u.actif == statusFilter;
     return matchSearch && matchRole && matchStatus;
   });
 
-  filtered.sort((a, b) => {
+  filtered.sort((a, b)                        => {
     if (sortBy === "name")
       return (a.nom + a.prenom).localeCompare(b.nom + b.prenom);
     if (sortBy === "name_desc")
@@ -36,10 +36,10 @@ function applicerLesFiltres() {
   });
 
   page = 1;
-  renderUsers();
+  affichageUtilisateurs();
 }
 
-function getUsers() {
+function getUtilisateurs() {
   fetch("../../api/users_api.php")
     .then((res) => res.json())
     .then((data) => {
@@ -50,12 +50,12 @@ function getUsers() {
     .catch((err) => console.error(err));
 }
 
-function renderUsers() {
+function affichageUtilisateurs() {
   const total = filtered.length;
   const pages = Math.max(1, Math.ceil(total / PER));
   if (page > pages) page = pages;
   const start = (page - 1) * PER;
-  const slice = filtered.slice(start, start + PER);
+  const slice =                        filtered.slice(start, start + PER);
 
   document.getElementById("tableBody").innerHTML = slice
     .map(
@@ -65,27 +65,27 @@ function renderUsers() {
             <div class="table-cell">
               <div class="table-avatar" style="background:${colorFor(data.nom + " " + data.prenom)}">${initials(data.nom + " " + data.prenom)}</div>
               <div>
-                <div class="table-fullname">${data.nom + " " + data.prenom}</div>
-                <div class="table-email">${data.email}</div>
-              </div>
+                    <div class="table-fullname">${data.nom + " " + data.prenom}</div>
+                   <div class="table-email">${data.email}</div>
+                </div>
             </div>
           </td>
-          <td>${data.numero_cin}</td>
-          <td><span class="role-badge role-${data.role.toLowerCase()}">${data.role}</span></td>
+            <td>${data.numero_cin}   </td>
+               <td><span class="role-badge role-${data.role.toLowerCase()}">${data.role}</span></td>
           <td>
-            <span class="status-badge status-${data.actif == 1 ? "active" : "inactive"}">
+                 <span class="status-badge status-${data.actif == 1 ? "active" : "inactive"}">
               ${data.actif == 1 ? "Actif" : "Inactif"}
-            </span>
+                </span>
           </td>
           <td>${formatDate(data.created_at)}</td>
-          <td>
+               <td>
             <div class="action-btns">
-              <button class="action-btn action-btn-edit" title="Modifier" onclick="openEditModal(${data.id})">
+                  <button class="action-btn action-btn-edit" title="Modifier" onclick="openEditModal(${data.id})">
                 <i class="fa-regular fa-pen-to-square"></i>
-              </button>
+                  </button>
               <button class="action-btn action-btn-delete" title="Supprimer" onclick="deleteRow('${data.id}')">
                 <i class="fa-regular fa-trash-can"></i>
-              </button>
+            </button>
             </div>
           </td>
         </tr>
@@ -94,7 +94,7 @@ function renderUsers() {
     .join("");
 
   const end = Math.min(start + PER, total);
-  document.getElementById("tfInfo").innerHTML =
+  document.getElementById("tfInfo").innerHTML                        =
     total === 0
       ? "Aucun utilisateur trouvé"
       : `${start + 1}–${end} sur ${total} utilisateurs inscrits`;
@@ -107,7 +107,7 @@ function renderUsers() {
     b.textContent = label;
     b.onclick = () => {
       page = p;
-      renderUsers();
+      affichageUtilisateurs();
     };
     return b;
   };
@@ -130,11 +130,11 @@ function renderUsers() {
     users.length + " " + "utilisateurs inscrits";
 }
 
-getUsers();
+getUtilisateurs();
 
 // Apply Filters
 
-document.getElementById("searchInput").addEventListener("input", applicerLesFiltres);
+                        document.getElementById("searchInput").addEventListener("input", applicerLesFiltres);
 document.getElementById("roleFilter").addEventListener("change", applicerLesFiltres);
 document
   .getElementById("statusFilter")
@@ -166,14 +166,14 @@ window.deleteRow = function (id) {
       if (data.success) {
         closeDeleteModal();
         showToast("Utilisateur supprimé avec succès");
-        getUsers();
+        getUtilisateurs();
       } else {
         console.error(data.error);
         showToast("Échec de la suppression");
       }
     } catch (err) {
       console.error(err);
-      showToast("Une erreur est survenue");
+                              showToast("Une erreur est survenue");
     }
   };
 };
@@ -223,7 +223,7 @@ document
             8000,
           );
         }
-        getUsers();
+        getUtilisateurs();
       } else if (data.errors) {
         Object.values(data.errors).forEach((msg) => showToast(msg));
       } else {

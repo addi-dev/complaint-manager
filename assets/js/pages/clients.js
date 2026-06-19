@@ -230,7 +230,7 @@ document
             8000,
           );
         }
-        getUsers();
+        obtenirLesClients();
       } else if (data.errors) {
         Object.values(data.errors).forEach((msg) => showToast(msg));
       } else {

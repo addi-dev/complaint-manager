@@ -41,7 +41,7 @@ try {
     $date_naissance = trim($body['date_naissance']);
     $numero_cin = trim($body['numero_cin']);
     $email = trim($body['email']);
-    $mot_de_passe_brut = Helpers::generer_mot_de_passe();
+    $mot_de_passe_brut = Helpers::generer_motdePasse();
     $mot_de_passe = password_hash($mot_de_passe_brut, PASSWORD_BCRYPT);
     $role_id = intval($body['role_id']);
     $actif = intval($body['actif']);

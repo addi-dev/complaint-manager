@@ -23,9 +23,9 @@ Auth::requireRole('admin', 'superviseur');
   <aside class="sidebar">
     <div class="sidebar-logo">
       <div class="logo-icon">
-        LG
+        <i class="<?php echo APP_LOGO ?>"></i>
       </div>
-      ReclamationOS
+      <?php echo APP_NAME ?>
     </div>
     <div class="sidebar-section-label">Menu</div>
     <a class="nav-item" href="index.php"><i class="fa-solid fa-house"></i>Tableau de bord</a>

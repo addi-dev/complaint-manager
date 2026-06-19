@@ -27,9 +27,9 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <aside class="sidebar">
         <div class="sidebar-logo">
             <div class="logo-icon">
-                LG
+                <i class="<?php echo APP_LOGO ?>"></i>
             </div>
-            ReclamationOS
+            <?php echo APP_NAME ?>
         </div>
         <div class="sidebar-section-label">Menu</div>
         <a class="nav-item" href=""><i class="fa-solid fa-house"></i>Tableau de bord</a>
@@ -186,6 +186,7 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             document.getElementById("overlay").classList.add("open");
         }
+
         function openEditModal(id) {
             const user = clients.find(u => u.id == id);
             if (!user) return;
@@ -201,12 +202,15 @@ $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
             document.getElementById('f-adresse').value = user.adresse;
             document.getElementById('overlay').classList.add('open');
         }
+
         function closeModal() {
             document.getElementById('overlay').classList.remove('open');
         }
+
         function closeOnOverlay(e) {
             if (e.target === e.currentTarget) closeModal();
         }
     </script>
 </body>
+
 </html>

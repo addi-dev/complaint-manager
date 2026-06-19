@@ -286,8 +286,10 @@ Auth::requireRole('admin', 'superviseur', 'agent');
         <div class="sidebar-section-label">Menu</div>
         <a class="nav-item active" href="index.php"><i class="fa-solid fa-house"></i>Tableau de bord</a>
         <a class="nav-item" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Réclamations</a>
-        <a class="nav-item" href="notifications.php"><i class="fa-solid fa-users"></i>Notifications</a>
-        <a class="nav-item" href="historiques.php"><i class="fa-solid fa-user"></i>Historiques</a>
+        <a class="nav-item" href="notifications.php">
+            <i class="fa-solid fa-bell"></i>Notifications
+            <span class="badge-notif" id="sidebarNotifBadge" style="display:none"></span>
+        </a> <a class="nav-item" href="historiques.php"><i class="fa-solid fa-user"></i>Historiques</a>
         <div class="sidebar-section-label">Other</div>
         <a class="nav-item" href="../../actions/auth/deconnexion.php"><i
                 class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
@@ -319,57 +321,33 @@ Auth::requireRole('admin', 'superviseur', 'agent');
                 <div class="stat-card">
                     <div class="stat-icon purple"><i class="fa-solid fa-file-circle-exclamation"></i></div>
                     <div>
-                        <div class="stat-label">Réclamations</div>
+                        <div class="stat-label">Mes réclamations</div>
                         <div class="stat-value" id="statTotal">—</div>
-                        <div class="stat-sub" id="statMonth">ce mois</div>
+                        <div class="stat-sub">Total assignées</div>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon green"><i class="fa-solid fa-user"></i></div>
+                    <div class="stat-icon amber"><i class="fa-solid fa-spinner"></i></div>
                     <div>
-                        <div class="stat-label">Clients</div>
-                        <div class="stat-value" id="statClients">—</div>
-                        <div class="stat-sub" id="statNewClients">ce mois</div>
+                        <div class="stat-label">En cours</div>
+                        <div class="stat-value" id="statEnCours">—</div>
+                        <div class="stat-sub">En traitement</div>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon amber"><i class="fa-solid fa-hourglass-half"></i></div>
+                    <div class="stat-icon green"><i class="fa-solid fa-circle-check"></i></div>
                     <div>
-                        <div class="stat-label">Non résolues</div>
-                        <div class="stat-value" id="statUnresolved">—</div>
-                        <div class="stat-sub">En attente</div>
+                        <div class="stat-label">Résolues</div>
+                        <div class="stat-value" id="statResolues">—</div>
+                        <div class="stat-sub">Traitées</div>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon red"><i class="fa-solid fa-users-gear"></i></div>
+                    <div class="stat-icon red"><i class="fa-solid fa-clock"></i></div>
                     <div>
-                        <div class="stat-label">Agents actifs</div>
-                        <div class="stat-value" id="statAgents">—</div>
-                        <div class="stat-sub">En service</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CHARTS -->
-            <div class="charts-row">
-                <div class="chart-card">
-                    <div class="chart-title">Réclamations par statut</div>
-                    <div class="donut-wrap">
-                        <canvas id="donutCanvas" width="130" height="130"></canvas>
-                        <div class="legend" id="donutLegend">
-                            <div class="skeleton" style="height:14px;width:80%"></div>
-                            <div class="skeleton" style="height:14px;width:70%"></div>
-                            <div class="skeleton" style="height:14px;width:75%"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="chart-card">
-                    <div class="chart-title">Réclamations par priorité</div>
-                    <div class="bars" id="prioriteBars">
-                        <div class="skeleton" style="height:14px"></div>
-                        <div class="skeleton" style="height:14px"></div>
-                        <div class="skeleton" style="height:14px"></div>
-                        <div class="skeleton" style="height:14px"></div>
+                        <div class="stat-label">Délai moyen</div>
+                        <div class="stat-value" id="statDelai">—</div>
+                        <div class="stat-sub">De résolution</div>
                     </div>
                 </div>
             </div>
@@ -377,7 +355,7 @@ Auth::requireRole('admin', 'superviseur', 'agent');
             <!-- RECENT TABLE -->
             <div class="card">
                 <div class="card-header">
-                    <h2>Réclamations récentes</h2>
+                    <h2>Activité récente</h2>
                     <a class="view-all" href="reclamations.php">Voir tout →</a>
                 </div>
                 <div class="table-wrapper">
@@ -385,17 +363,14 @@ Auth::requireRole('admin', 'superviseur', 'agent');
                         <thead>
                             <tr>
                                 <th>Numéro</th>
-                                <th>Client</th>
                                 <th>Objet</th>
-                                <th>Priorité</th>
                                 <th>Statut</th>
-                                <th>Créée le</th>
+                                <th>Date</th>
                             </tr>
                         </thead>
-                        <tbody id="recentBody">
+                        <tbody id="activityBody">
                             <tr>
-                                <td colspan="6" style="text-align:center;padding:24px;color:var(--text-muted)">
-                                    Chargement...</td>
+                                <td colspan="4" style="text-align:center;padding:24px;color:var(--text-muted)">Chargement...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -408,166 +383,7 @@ Auth::requireRole('admin', 'superviseur', 'agent');
     <div class="toast" id="toast"><span id="toastMsg"></span></div>
 
     <script type="module" src="../../assets/js/app.js"></script>
-    <script type="module" src="../../assets/js/pages/dashboard.js"></script>
-    <script type="module">
-        import {
-            formatDate
-        } from "../../assets/js/lib/date.js";
-        import {
-            initials,
-            colorFor
-        } from "../../assets/js/lib/string.js";
-        const now = new Date();
-        document.getElementById("dashDate").textContent = now.toLocaleDateString("fr-FR", {
-            weekday: "long",
-            day: "numeric",
-            month: "long",
-            year: "numeric"
-        });
-
-        const STATUT_COLORS = {
-            NOUVELLE: "#6c4ef8",
-            ATTENTE_AFFECTATION: "#3b82f6",
-            AFFECTEE: "#0ea5e9",
-            EN_COURS: "#d97706",
-            ATTENTE_INFO: "#7c3aed",
-            RESOLUE: "#16a34a",
-            CLOTUREE: "#8c93a8",
-            REJETEE: "#dc2626",
-        };
-
-        const PRIO_COLORS = {
-            Critique: "#dc2626",
-            Haute: "#d97706",
-            Normale: "#6c4ef8",
-            Faible: "#16a34a",
-        };
-
-        const PRIO_CLASSES = {
-            Critique: "prio-critique",
-            Haute: "prio-haute",
-            Normale: "prio-normale",
-            Faible: "prio-faible",
-        };
-
-        const STATUT_BADGE = {
-            NOUVELLE: "s-nouvelle",
-            ATTENTE_AFFECTATION: "s-attente",
-            AFFECTEE: "s-attente",
-            EN_COURS: "s-encours",
-            ATTENTE_INFO: "s-attente",
-            RESOLUE: "s-resolue",
-            CLOTUREE: "s-cloturee",
-            REJETEE: "s-rejetee",
-        };
-
-        async function loadStats() {
-            try {
-                const res = await fetch("../../api/stats_api.php");
-                const data = await res.json();
-                if (!data.success) return;
-
-                document.getElementById("statTotal").textContent = data.total_reclamations;
-                document.getElementById("statClients").textContent = data.total_clients;
-                document.getElementById("statUnresolved").textContent = data.unresolved;
-                document.getElementById("statAgents").textContent = data.total_agents;
-                document.getElementById("statMonth").textContent = `+${data.this_month} ce mois`;
-                document.getElementById("statNewClients").textContent = `+${data.new_clients} ce mois`;
-
-                drawDonut(data.by_statut);
-                drawBars(data.by_priorite);
-                drawRecent(data.recent);
-            } catch (err) {
-                console.error(err);
-            }
-        }
-
-        function drawDonut(byStatut) {
-            const canvas = document.getElementById("donutCanvas");
-            const ctx = canvas.getContext("2d");
-            const cx = 65,
-                cy = 65,
-                ro = 55,
-                ri = 36;
-            const total = byStatut.reduce((s, r) => s + parseInt(r.total), 0);
-
-            let start = -Math.PI / 2;
-            byStatut.forEach(row => {
-                const v = parseInt(row.total);
-                const angle = total > 0 ? (v / total) * Math.PI * 2 : 0;
-                const color = STATUT_COLORS[row.code] || "#8c93a8";
-                ctx.beginPath();
-                ctx.moveTo(cx + ro * Math.cos(start), cy + ro * Math.sin(start));
-                ctx.arc(cx, cy, ro, start, start + angle);
-                ctx.arc(cx, cy, ri, start + angle, start, true);
-                ctx.closePath();
-                ctx.fillStyle = color;
-                ctx.fill();
-                start += angle;
-            });
-
-            ctx.fillStyle = "#fff";
-            ctx.beginPath();
-            ctx.arc(cx, cy, ri - 2, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.fillStyle = "#1a1d2e";
-            ctx.font = "bold 18px Plus Jakarta Sans, sans-serif";
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText(total, cx, cy - 8);
-            ctx.font = "11px Plus Jakarta Sans, sans-serif";
-            ctx.fillStyle = "#8c93a8";
-            ctx.fillText("total", cx, cy + 10);
-
-            const legend = document.getElementById("donutLegend");
-            legend.innerHTML = byStatut.filter(r => r.total > 0).map(row => `
-        <div class="legend-item">
-          <div class="legend-dot" style="background:${STATUT_COLORS[row.code] || '#8c93a8'}"></div>
-          <span class="legend-label">${row.libelle}</span>
-          <span class="legend-val">${row.total}</span>
-        </div>
-      `).join("");
-        }
-
-        function drawBars(byPriorite) {
-            const max = Math.max(...byPriorite.map(r => parseInt(r.total)), 1);
-            document.getElementById("prioriteBars").innerHTML = byPriorite.map(row => `
-        <div class="bar-row">
-          <div class="bar-label">${row.libelle}</div>
-          <div class="bar-track">
-            <div class="bar-fill" style="width:${Math.round((row.total / max) * 100)}%;background:${PRIO_COLORS[row.libelle] || '#6c4ef8'}"></div>
-          </div>
-          <div class="bar-val">${row.total}</div>
-        </div>
-      `).join("");
-        }
-
-        function drawRecent(rows) {
-            if (!rows || rows.length === 0) {
-                document.getElementById("recentBody").innerHTML = `
-          <tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-muted)">Aucune réclamation</td></tr>
-        `;
-                return;
-            }
-            document.getElementById("recentBody").innerHTML = rows.map((r, i) => `
-        <tr style="animation-delay:${i * 0.04}s">
-          <td><span class="num-badge">${r.numero_unique}</span></td>
-          <td>
-            <div class="table-cell">
-              <div class="table-avatar" style="background:${colorFor(r.client_nom + ' ' + r.client_prenom)}">${initials(r.client_nom + ' ' + r.client_prenom)}</div>
-              ${r.client_nom} ${r.client_prenom}
-            </div>
-          </td>
-          <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.objet}</td>
-          <td><span class="prio-badge ${PRIO_CLASSES[r.priorite] || ''}">${r.priorite}</span></td>
-          <td><span class="status-badge ${STATUT_BADGE[r.statut_code] || ''}">${r.statut}</span></td>
-          <td style="color:var(--text-muted);font-size:13px">${formatDate(r.created_at)}</td>
-        </tr>
-      `).join("");
-        }
-
-        loadStats();
-    </script>
+    <script type="module" src="../../assets/js/pages/agent/index.js"></script>
 </body>
 
 </html>

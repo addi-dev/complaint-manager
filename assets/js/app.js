@@ -15,6 +15,26 @@ document.addEventListener("DOMContentLoaded", async () => {
     avatar.style.background = colorFor(fullName);
     nameEl.textContent = fullName;
     roleEl.textContent = user.role;
+    //! aficher les icons des mesage non lues
+    const badge = document.getElementById("sidebarNotifBadge");
+    console.log("badge:", badge, "role:", data.user?.role);
+    if (badge && data.user?.role === "client") {
+      try {
+        const notifRes = await fetch(
+          "../../api/client_notifications_api.php?action=list",
+          {
+            credentials: "include",
+          },
+        );
+        const notifData = await notifRes.json();
+        if (notifData.success && notifData.unread > 0) {
+          badge.textContent = notifData.unread;
+          badge.style.display = "inline-block";
+        }
+      } catch (err) {
+        console.log("error not showing");
+      }
+    }
   } catch (err) {
     console.error("Auth API error:", err);
   }

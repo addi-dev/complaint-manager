@@ -8,7 +8,7 @@ const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
 
 function getReclamationDetails() {
   if (!id) return;
-  fetch(`../../../api/reclamation_details_api.php?id=${id}`)
+  fetch(`../../api/reclamation_details_api.php?id=${id}`)
     .then((res) => res.json())
     .then((data) => {
       if (!data.success) return;

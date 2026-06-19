@@ -1,7 +1,7 @@
 <?php
 class Helpers
 {
-    public static function generer_mot_de_passe(): string
+    public static function generer_motdePasse(): string
     {
         $lettres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
         $chiffres = '0123456789';

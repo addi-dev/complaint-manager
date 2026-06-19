@@ -99,12 +99,18 @@ Auth::requireRole('client');
 <body>
     <aside class="sidebar">
         <div class="sidebar-logo">
-            <div class="logo-icon">LG</div>ReclamationOS
+            <div class="logo-icon">
+                <i class="<?php echo APP_LOGO ?>"></i>
+            </div>
+            <?php echo APP_NAME ?>
         </div>
         <div class="sidebar-section-label">Menu</div>
         <a class="nav-item" href="index.php"><i class="fa-solid fa-house"></i>Tableau de bord</a>
         <a class="nav-item" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Mes réclamations</a>
-        <a class="nav-item active" href="notifications.php"><i class="fa-solid fa-bell"></i>Notifications</a>
+        <a class="nav-item" href="notifications.php">
+            <i class="fa-solid fa-bell"></i>Notifications
+            <span class="badge-notif" id="sidebarNotifBadge" style="display:none"></span>
+        </a>
         <div class="sidebar-section-label">Other</div>
         <a class="nav-item" href="profile.php"><i class="fa-solid fa-user"></i>Mon profil</a>
         <a class="nav-item" href="../../actions/auth/deconnexion.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>

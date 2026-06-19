@@ -24,8 +24,10 @@ Auth::requireRole('agent', 'admin', 'superviseur');
         <div class="sidebar-section-label">Menu</div>
         <a class="nav-item" href="index.php"><i class="fa-solid fa-house"></i>Tableau de bord</a>
         <a class="nav-item" href="reclamations.php"><i class="fa-solid fa-file-circle-exclamation"></i>Réclamations</a>
-        <a class="nav-item" href="notifications.php"><i class="fa-solid fa-bell"></i>Notifications</a>
-        <a class="nav-item active" href="historiques.php"><i class="fa-solid fa-clock-rotate-left"></i>Historiques</a>
+        <a class="nav-item" href="notifications.php">
+            <i class="fa-solid fa-bell"></i>Notifications
+            <span class="badge-notif" id="sidebarNotifBadge" style="display:none"></span>
+        </a> <a class="nav-item active" href="historiques.php"><i class="fa-solid fa-clock-rotate-left"></i>Historiques</a>
         <div class="sidebar-section-label">Other</div>
         <a class="nav-item" href="../../actions/auth/deconnexion.php"><i class="fa-solid fa-arrow-right-from-bracket"></i>Déconnexion</a>
     </aside>
@@ -94,7 +96,7 @@ Auth::requireRole('agent', 'admin', 'superviseur');
                     <td><span class="ref-badge">${h.numero_unique}</span></td>
                     <td><strong>${h.action}</strong></td>
                     <td><span class="status-badge">—</span></td>
-                    <td><span class="status-badge status-${(h.nouveau_statut || '').toLowerCase().replace(/ /g, '_')}">${h.nouveau_statut || '—'}</span></td>
+                    <td><span class="r-status-badge status-${(h.nouveau_statut || '').toLowerCase().replace(/ /g, '_')}">${h.nouveau_statut || '—'}</span></td>
                     <td style="color:var(--text-muted);font-size:13px">${h.details || '—'}</td>
                     <td style="color:var(--text-muted);font-size:13px">${formatDate(h.created_at)}</td>
                 </tr>

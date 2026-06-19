@@ -1,6 +1,7 @@
 <?php
 header('Content-Type: application/json');
 require __DIR__ . '/../config/app.php';
+require __DIR__ . '/../core/Response.php';
 require __DIR__ . '/../core/Auth.php';
 Auth::requireRole('agent');
 $agent_id = $_SESSION['user_id'];
@@ -32,7 +33,8 @@ try {
         SELECT
             h.action, h.details, h.created_at,
             r.numero_unique, r.objet,
-            s_new.libelle AS nouveau_statut
+            s_new.libelle AS nouveau_statut,
+            s_new.code AS status_code
         FROM historique_actions h
         JOIN reclamations r ON r.id = h.reclamation_id
         LEFT JOIN statuts s_new ON s_new.id = h.nouveau_statut_id

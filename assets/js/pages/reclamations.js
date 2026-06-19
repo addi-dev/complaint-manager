@@ -42,10 +42,10 @@ function applicerLesFiltres() {
   });
 
   page = 1;
-  renderReclamations();
+  afficherLesReclamations();
 }
 
-function getReclamations() {
+function fetch_tous_reclamations() {
   fetch("../../api/reclamations_api.php")
     .then((res) => res.json())
     .then((data) => {
@@ -56,12 +56,12 @@ function getReclamations() {
     .catch((err) => console.error(err));
 }
 
-function renderReclamations() {
+function afficherLesReclamations() {
   const total = filtered.length;
   const pages = Math.max(1, Math.ceil(total / PER));
   if (page > pages) page = pages;
   const start = (page - 1) * PER;
-  const slice = filtered.slice(start, start + PER); // ← defined here, used below
+  const slice = filtered.slice(start, start + PER);
   document.getElementById("tableBody").innerHTML = slice
     .map(
       (data, i) => `
@@ -71,11 +71,11 @@ function renderReclamations() {
           </td>
           <td>${data.client}</td>
           <td class="table-objet">${data.objet}</td>
-          <td><span class="category-badge">${data.categorie}</span></td>
-          <td><span class="priority-badge ${data.priorite.toLowerCase()}">${data.priorite}</span></td>
-          <td><span class="r-status-badge status-${data.statut_code.toLowerCase()}">${data.statut}</span></td>
+          <td><span   class="category-badge">${data.categorie}</span></td>
+          <td><span    class="priority-badge ${data.priorite.toLowerCase()}">${data.priorite}</span></td>
+          <td><span    class="r-status-badge status-${data.statut_code.toLowerCase()}">${data.statut}</span></td>
           <td>${data.agent}</td>
-          <td>${formatDate(data.created_at)}</td>
+          <td> ${formatDate(data.created_at)}</td>
           <td>
             <div class="action-btns">
               <button class="action-btn action-btn-view" title="Voir les détails" onclick="window.location.href='reclamation-details.php?id=${data.id}'">
@@ -107,7 +107,7 @@ function renderReclamations() {
     b.textContent = label;
     b.onclick = () => {
       page = p;
-      renderReclamations();
+      afficherLesReclamations();
     };
     return b;
   };
@@ -130,7 +130,7 @@ function renderReclamations() {
     `${reclamations.length} réclamation${reclamations.length > 1 ? "s" : ""}`;
 }
 
-getReclamations();
+fetch_tous_reclamations();
 
 // Apply Filters
 

@@ -70,7 +70,7 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center center;
+            object-position: left center;
             display: block;
         }
 
@@ -294,7 +294,7 @@ if (!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
 
     <!-- Left photo panel -->
     <div class="photo-panel">
-        <img src="../../assets/images/loginbg.webp" alt="" />
+        <img src="../../assets/images/loginbg2.png" alt="" />
     </div>
 
     <!-- Right form panel -->
