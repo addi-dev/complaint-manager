@@ -1,3 +1,4 @@
+// 23 / June / 2026
 import { initials, colorFor } from "../js/lib/string.js";
 document.addEventListener("DOMContentLoaded", async () => {
   const avatar = document.getElementById("avatar");
