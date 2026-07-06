@@ -1,0 +1,86 @@
+complaint-manager-frontend/
+├── public/
+│   └── favicon.ico, index.html
+├── src/
+│   ├── api/                          # 🔌 Axios instances & API calls (mirrors your old /api folder)
+│   │   ├── axiosClient.js
+│   │   ├── authApi.js
+│   │   ├── reclamationsApi.js
+│   │   ├── clientsApi.js
+│   │   ├── usersApi.js
+│   │   ├── notificationsApi.js
+│   │   └── statsApi.js
+│   │
+│   ├── assets/                       # 🖼️ images, fonts, global styles
+│   │   ├── images/
+│   │   └── styles/
+│   │       ├── globals.css
+│   │       └── variables.css
+│   │
+│   ├── components/                   # 🧩 Reusable UI components
+│   │   ├── table/                    # 🆕 Everything table-related lives here
+│   │   ├── common/                   # Button, Modal, Table, Toast, Loader...
+│   │   ├── layout/                   # Sidebar, Topbar, DashboardLayout
+│   │   └── forms/                    # ReclamationForm, ClientForm, UserForm
+│   │
+│   ├── features/                     # 🗂️ Feature-based modules (business logic + hooks)
+│   │   ├── auth/
+│   │   │   ├── hooks/useAuth.js
+│   │   │   └── authSlice.js (if using Redux) 
+│   │   ├── reclamations/
+│   │   │   ├── hooks/useReclamations.js
+│   │   │   └── reclamationsSlice.js
+│   │   ├── affectations/
+│   │   ├── clients/
+│   │   ├── users/
+│   │   ├── commentaires/
+│   │   └── notifications/
+│   │
+│   ├── pages/                        # 📄 Route-level pages (organized by role like your /views)
+│   │   ├── admin/
+│   │   │   ├── Dashboard.jsx
+│   │   │   ├── Clients.jsx
+│   │   │   ├── Users.jsx
+│   │   │   ├── Reclamations.jsx
+│   │   │   └── ReclamationDetails.jsx
+│   │   ├── agent/
+│   │   │   ├── Dashboard.jsx
+│   │   │   ├── Reclamations.jsx
+│   │   │   ├── ReclamationDetails.jsx
+│   │   │   ├── Historiques.jsx
+│   │   │   └── Notifications.jsx
+│   │   ├── client/
+│   │   │   ├── Dashboard.jsx
+│   │   │   ├── Reclamations.jsx
+│   │   │   ├── ReclamationDetails.jsx
+│   │   │   ├── Notifications.jsx
+│   │   │   └── Profile.jsx
+│   │   ├── auth/
+│   │   │   ├── Login.jsx
+│   │   │   └── ResetPassword.jsx
+│   │   └── errors/
+│   │       └── NotFound.jsx
+│   │
+│   ├── routes/                       # 🛣️ Route definitions + role-based guards
+│   │   ├── AppRoutes.jsx
+│   │   ├── PrivateRoute.jsx
+│   │   └── RoleRoute.jsx             # admin/agent/client guards
+│   │
+│   ├── context/                      # 🌐 Global state (if not using Redux)
+│   │   ├── AuthContext.jsx
+│   │   └── NotificationContext.jsx
+│   │
+│   ├── hooks/                        # 🪝 Generic reusable hooks
+│   │   ├── useDebounce.js
+│   │   └── useLocalStorage.js
+│   │
+│   ├── utils/                        # 🛠️ Helpers (mirrors core/Helpers.php)
+│   │   ├── formatDate.js
+│   │   ├── validators.js
+│   │   └── constants.js
+│   │
+│   ├── App.jsx
+│   └── main.jsx
+├── .env
+├── package.json
+└── vite.config.js (or webpack config)

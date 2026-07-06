@@ -6,5 +6,15 @@ database/seed_reclamations.sql
 audit.md
 getrole.php
 storage/*
-backend
-frontend
+
+# Backend (Laravel)
+backend/vendor/
+backend/.env
+backend/storage/*.key
+backend/node_modules/
+
+# Frontend (React)
+frontend/node_modules/
+frontend/.env
+frontend/dist/
+frontend/build/

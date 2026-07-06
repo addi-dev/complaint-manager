@@ -1,0 +1,35 @@
+complaint-manager-backend/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Auth/AuthController.php
+│   │   │   ├── ReclamationController.php
+│   │   │   ├── AffectationController.php
+│   │   │   ├── CommentaireController.php
+│   │   │   ├── ClientController.php
+│   │   │   ├── UserController.php
+│   │   │   └── NotificationController.php
+│   │   ├── Middleware/
+│   │   │   └── RoleMiddleware.php     # replaces your role-checking logic
+│   │   ├── Requests/                  # replaces core/Validator.php
+│   │   │   ├── StoreReclamationRequest.php
+│   │   │   └── StoreClientRequest.php
+│   │   └── Resources/                 # replaces core/Response.php (API JSON shaping)
+│   │       ├── ReclamationResource.php
+│   │       └── ClientResource.php
+│   ├── Models/
+│   │   ├── User.php
+│   │   ├── Client.php
+│   │   ├── Reclamation.php
+│   │   ├── Affectation.php
+│   │   └── Commentaire.php
+│   └── Services/                      # business logic (optional but clean)
+│       └── ReclamationService.php
+├── database/
+│   ├── migrations/                    # replaces database/*.sql files
+│   └── seeders/                       # replaces seed.sql, seed_reclamations.sql
+├── routes/
+│   └── api.php                        # replaces your /api/*.php files
+├── storage/
+│   └── app/public/pieces_jointes/     # file uploads (same idea as before)
+└── .env
