@@ -6,3 +6,5 @@ database/seed_reclamations.sql
 audit.md
 getrole.php
 storage/*
+backend
+frontend

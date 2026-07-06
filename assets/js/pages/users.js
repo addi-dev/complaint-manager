@@ -1,61 +1,62 @@
 import { initials, colorFor } from "../lib/string.js";
 import { formatDate } from "../lib/date.js";
-                        import { showToast } from "../lib/toast.js";
+import { showToast } from "../lib/toast.js";
 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
 
-const users   = [];
+const users = [];
 let filtered = [];
 let page = 1;
-const PER  = 10;
+const PER = 10;
 
-function applicerLesFiltres() {
+function applyFilters() {
   const search = document.getElementById("searchInput").value.toLowerCase();
   const roleFilter = document.getElementById("roleFilter").value;
   const statusFilter = document.getElementById("statusFilter").value;
-  const sortBy = document.getElementById("sortSelect").value;
 
   filtered = users.filter((u) => {
     const fullname = (u.nom + " " + u.prenom).toLowerCase();
     const matchSearch =
-                             fullname.includes(search) || u.email.toLowerCase().includes(search);
+      fullname.includes(search) || u.email.toLowerCase().includes(search);
     const matchRole = !roleFilter || u.role.toLowerCase() === roleFilter;
     const matchStatus = statusFilter === "" ? true : u.actif == statusFilter;
     return matchSearch && matchRole && matchStatus;
   });
 
-  filtered.sort((a, b)                        => {
-    if (sortBy === "name")
-      return (a.nom + a.prenom).localeCompare(b.nom + b.prenom);
-    if (sortBy === "name_desc")
-      return (b.nom + b.prenom).localeCompare(a.nom + a.prenom);
-    if (sortBy === "date_asc")
-      return new Date(a.created_at) - new Date(b.created_at);
-    if (sortBy === "date_desc")
-      return new Date(b.created_at) - new Date(a.created_at);
-    return 0;
-  });
 
   page = 1;
-  affichageUtilisateurs();
+  renderUsers();
 }
 
-function getUtilisateurs() {
-  fetch("../../api/users_api.php")
+function getUsers() {
+  const sort = document.getElementById("sortSelect").value;
+  fetch(`../../api/users_api.php?sort=${sort}`)
     .then((res) => res.json())
     .then((data) => {
       users.length = 0;
       users.push(...data.users);
-      applicerLesFiltres();
+      applyFilters();
     })
     .catch((err) => console.error(err));
 }
 
-function affichageUtilisateurs() {
+function reloadUsers() {
+  const sort = document.getElementById("sortSelect").value;
+  fetch(`../../api/users_api.php?sort=${sort}`)
+    .then((res) => res.json())
+    .then((data) => {
+      users.length = 0;
+      users.push(...data.users);
+      applyFilters();
+    })
+    .catch(console.error);
+}
+
+function renderUsers() {
   const total = filtered.length;
   const pages = Math.max(1, Math.ceil(total / PER));
   if (page > pages) page = pages;
   const start = (page - 1) * PER;
-  const slice =                        filtered.slice(start, start + PER);
+  const slice = filtered.slice(start, start + PER);
 
   document.getElementById("tableBody").innerHTML = slice
     .map(
@@ -94,7 +95,7 @@ function affichageUtilisateurs() {
     .join("");
 
   const end = Math.min(start + PER, total);
-  document.getElementById("tfInfo").innerHTML                        =
+  document.getElementById("tfInfo").innerHTML =
     total === 0
       ? "Aucun utilisateur trouvé"
       : `${start + 1}–${end} sur ${total} utilisateurs inscrits`;
@@ -107,7 +108,7 @@ function affichageUtilisateurs() {
     b.textContent = label;
     b.onclick = () => {
       page = p;
-      affichageUtilisateurs();
+      renderUsers();
     };
     return b;
   };
@@ -130,16 +131,16 @@ function affichageUtilisateurs() {
     users.length + " " + "utilisateurs inscrits";
 }
 
-getUtilisateurs();
+getUsers();
 
 // Apply Filters
 
-                        document.getElementById("searchInput").addEventListener("input", applicerLesFiltres);
-document.getElementById("roleFilter").addEventListener("change", applicerLesFiltres);
+document.getElementById("searchInput").addEventListener("input", applyFilters);
+document.getElementById("roleFilter").addEventListener("change", applyFilters);
 document
   .getElementById("statusFilter")
-  .addEventListener("change", applicerLesFiltres);
-document.getElementById("sortSelect").addEventListener("change", applicerLesFiltres);
+  .addEventListener("change", applyFilters);
+document.getElementById("sortSelect").addEventListener("change", reloadUsers);
 
 window.users = users;
 window.closeDeleteModal = function () {
@@ -166,14 +167,14 @@ window.deleteRow = function (id) {
       if (data.success) {
         closeDeleteModal();
         showToast("Utilisateur supprimé avec succès");
-        getUtilisateurs();
+        getUsers();
       } else {
         console.error(data.error);
         showToast("Échec de la suppression");
       }
     } catch (err) {
       console.error(err);
-                              showToast("Une erreur est survenue");
+      showToast("Une erreur est survenue");
     }
   };
 };
@@ -223,7 +224,7 @@ document
             8000,
           );
         }
-        getUtilisateurs();
+        getUsers();
       } else if (data.errors) {
         Object.values(data.errors).forEach((msg) => showToast(msg));
       } else {
